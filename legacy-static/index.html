@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OpenMind — L'analista dati AI della tua azienda</title>
+<meta name="description" content="OpenMind è l'analista dati AI della tua azienda: fai domande in italiano su ordini, costi, margini e magazzino e ottieni risposte precise, grafici e cruscotti sempre aggiornati — direttamente dai tuoi dati reali.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231e3a8a'/%3E%3Ctext x='32' y='43' font-family='Georgia,serif' font-size='30' fill='%23fafaf7' text-anchor='middle'%3EOm%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<script>document.documentElement.classList.add('js')</script>
+</head>
+<body>
+
+<header class="site-head" id="top">
+  <div class="wrap head-row">
+    <a class="brand" href="#top" aria-label="OpenMind, torna all'inizio">
+      <span class="brand-mark" aria-hidden="true">Om</span>
+      <span class="brand-word">OpenMind</span>
+    </a>
+    <nav class="site-nav" aria-label="Sezioni della pagina">
+      <a href="#come-funziona">Come funziona</a>
+      <a href="#funzionalita">Funzionalità</a>
+      <a href="#esempi">Esempi</a>
+      <a href="#sicurezza">Sicurezza</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <div class="head-cta">
+      <a class="btn btn-ghost-dark" href="https://openmind-drab.vercel.app">Accedi</a>
+      <a class="btn btn-paper" href="mailto:info.virtechsrl@gmail.com?subject=Demo%20OpenMind">Richiedi una demo</a>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <h1>Fai una domanda ai tuoi dati. In&nbsp;italiano.</h1>
+      <p class="hero-sub">OpenMind è l'analista AI che interroga in tempo reale ordini, produzione, costi e magazzino della tua azienda e risponde con numeri esatti, grafici e consigli operativi.</p>
+      <div class="hero-actions">
+        <a class="btn btn-paper btn-lg" href="mailto:info.virtechsrl@gmail.com?subject=Demo%20OpenMind">Richiedi una demo</a>
+        <a class="btn btn-ghost-dark btn-lg" href="#come-funziona">Guarda come funziona</a>
+      </div>
+      <p class="hero-note">Per chi vive di gestionale ed Excel, non di SQL: le risposte che oggi richiedono mezza giornata, in trenta secondi di chat.</p>
+    </div>
+
+    <!-- Mockup fedele dell'app reale -->
+    <div class="chat-card" role="img" aria-label="L'interfaccia di OpenMind: alla domanda «Che margine ho fatto sull'ordine 2025/114?» risponde con il margine calcolato, il dettaglio di ricavi e costi e un consiglio operativo.">
+      <div class="chat-top" aria-hidden="true">
+        <span class="chat-mark">Om</span>
+        <span class="chat-title">OpenMind</span>
+        <span class="chat-ver">v2.0.0</span>
+      </div>
+      <div class="chat-body" aria-hidden="true">
+        <p class="chat-hello"><strong>Buongiorno.</strong> Come posso aiutarti oggi?</p>
+
+        <div class="msg msg-user" data-step="1">Che margine ho fatto sull'ordine 2025/114?</div>
+
+        <div class="msg-status" data-step="2">
+          <span class="status-dot"></span>
+          <span class="status-text" data-states='["Esploro il database…","Confronto le metriche…","Compongo la visualizzazione…"]'>Esploro il database…</span>
+        </div>
+
+        <div class="msg msg-ai" data-step="3">
+          <p>Sull'ordine <strong>2025/114</strong> il margine è del <strong>23,4%</strong>: ricavo 48.600&nbsp;€ contro 37.230&nbsp;€ di costi tra materiali e manodopera.</p>
+          <div class="mini-chart">
+            <div class="bar-row"><span class="bar-label">Ricavo</span><span class="bar-track"><span class="bar" style="--w:100%"></span></span><span class="bar-val">48.600&nbsp;€</span></div>
+            <div class="bar-row"><span class="bar-label">Materiali</span><span class="bar-track"><span class="bar" style="--w:52%"></span></span><span class="bar-val">25.270&nbsp;€</span></div>
+            <div class="bar-row"><span class="bar-label">Manodopera</span><span class="bar-track"><span class="bar" style="--w:25%"></span></span><span class="bar-val">11.960&nbsp;€</span></div>
+            <div class="bar-row"><span class="bar-label">Margine</span><span class="bar-track"><span class="bar bar-ember" style="--w:23%"></span></span><span class="bar-val">11.370&nbsp;€</span></div>
+          </div>
+          <p class="msg-insight">Ho valorizzato i materiali a costo medio ponderato — fammi sapere se preferisci un altro metodo.</p>
+        </div>
+      </div>
+      <div class="chat-input" aria-hidden="true">
+        <span class="chat-placeholder">Chiedi qualcosa a OpenMind…</span>
+        <span class="chat-send">Invia</span>
+      </div>
+      <div class="chat-chips" aria-hidden="true">
+        <span>Fammi un'analisi ABC del fatturato 2024</span>
+        <span>Confronta fatturato 2023 vs 2024</span>
+        <span>Quali clienti hanno ridotto gli ordini?</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ COME FUNZIONA ============ -->
+<section class="section" id="come-funziona">
+  <div class="wrap">
+    <h2 class="section-title">Come funziona</h2>
+    <ol class="steps">
+      <li class="step reveal">
+        <span class="step-num" aria-hidden="true">1</span>
+        <h3>Chiedi</h3>
+        <p>Scrivi la domanda come la faresti a un collega: <em>«Che margine ho fatto sull'ordine 2025/114?»</em>, <em>«Riesco a consegnare tutto quello che ho in portafoglio?»</em>.</p>
+      </li>
+      <li class="step reveal">
+        <span class="step-num" aria-hidden="true">2</span>
+        <h3>OpenMind interroga i dati veri</h3>
+        <p>Genera ed esegue la query sul database aziendale in quel momento: niente risposte precotte, niente report statici. Se la domanda è ambigua, ti chiede un chiarimento invece di tirare a indovinare.</p>
+      </li>
+      <li class="step reveal">
+        <span class="step-num" aria-hidden="true">3</span>
+        <h3>Ricevi un'analisi, non solo un numero</h3>
+        <p>Risposta diretta, cifre esatte con percentuali, confronto con il contesto, grafico quando aiuta e un insight operativo su cosa fare.</p>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<!-- ============ FUNZIONALITÀ ============ -->
+<section class="section section-alt" id="funzionalita">
+  <div class="wrap">
+    <h2 class="section-title">Tre viste, un solo posto per i tuoi numeri</h2>
+    <div class="views">
+      <article class="view-card reveal">
+        <div class="vignette vignette-chat" aria-hidden="true">
+          <span class="v-line v-line-user"></span>
+          <span class="v-line v-line-ai"></span>
+          <span class="v-line v-line-ai short"></span>
+          <span class="v-bars"><i></i><i></i><i></i><i></i></span>
+        </div>
+        <h3>Chat analitica</h3>
+        <p>Domande in italiano, risposte in streaming con tabelle, grafici interattivi e lo storico di tutte le conversazioni, ricercabile.</p>
+      </article>
+      <article class="view-card reveal">
+        <div class="vignette vignette-dash" aria-hidden="true">
+          <span class="v-tile"><i class="v-spark"></i></span>
+          <span class="v-tile"><i class="v-num"></i></span>
+          <span class="v-tile wide"><i class="v-rows"></i></span>
+        </div>
+        <h3>Cruscotti sempre aggiornati</h3>
+        <p>Crei una dashboard conversando — <em>«top 10 fornitori per fatturato 2025»</em> — e OpenMind la salva. A ogni apertura i dati si riallineano a oggi, senza rifare nulla.</p>
+      </article>
+      <article class="view-card reveal">
+        <div class="vignette vignette-notes" aria-hidden="true">
+          <span class="v-check done"></span>
+          <span class="v-check done"></span>
+          <span class="v-check"></span>
+        </div>
+        <h3>Promemoria</h3>
+        <p>Annota attività e scadenze direttamente dove analizzi i dati. Ogni utente vede solo i propri.</p>
+      </article>
+    </div>
+
+    <div class="traits reveal">
+      <div class="trait">
+        <h3>Chiede, non suppone</h3>
+        <p>«Il più venduto»: per valore, quantità o numero di ordini? Quando una domanda ha più letture, OpenMind chiede. E quando assume qualcosa, lo dichiara nella risposta.</p>
+      </div>
+      <div class="trait">
+        <h3>Parla il vostro gergo</h3>
+        <p>Fatturato, marginalità, giacenza, scostamento, DFFM: il glossario aziendale è mappato sui dati, così ogni termine finisce sulla colonna giusta.</p>
+      </div>
+      <div class="trait">
+        <h3>Analisi da vero analista</h3>
+        <p>ABC e Pareto, confronti anno su anno, scostamenti standard/effettivo: OpenMind esegue anche elaborazioni in Python e ti lascia il CSV dei risultati.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ESEMPI ============ -->
+<section class="section" id="esempi">
+  <div class="wrap">
+    <h2 class="section-title">Domande vere, risposte operative</h2>
+    <p class="section-lede">Produzione e acquisti sono il cuore di OpenMind: tre analisi guidate, già pronte, che partono da una semplice domanda in chat.</p>
+
+    <div class="qa-list">
+      <article class="qa reveal">
+        <h3 class="qa-q">«Riesco a consegnare tutto quello che ho in&nbsp;ordine?»</h3>
+        <p class="qa-a">OpenMind incrocia ordini clienti aperti, magazzino, distinte base, ordini di produzione e di acquisto in corso, e ti restituisce un verdetto: cosa è coperto, cosa manca, e l'elenco esatto degli ordini da emettere — con quantità e data ultima utile per emetterli.</p>
+      </article>
+      <article class="qa reveal">
+        <h3 class="qa-q">«Quanto ci è costato davvero l'ordine di produzione&nbsp;114?»</h3>
+        <p class="qa-a">Consuntivo completo: minuti standard contro effettivi per ogni fase, scarti, valorizzazione dei materiali sulla distinta multilivello, costo pieno al pezzo — confrontato con il ricavo.</p>
+      </article>
+      <article class="qa reveal">
+        <h3 class="qa-q">«Che margine ho fatto sui primi 250 pezzi dell'ordine di&nbsp;Rossi?»</h3>
+        <p class="qa-a">Ricavo contro costo materiali e manodopera, con il metodo di valorizzazione che scegli tu, dichiarato nero su bianco nella risposta.</p>
+      </article>
+    </div>
+
+    <p class="qa-more reveal">E poi: analisi ABC del fatturato, fornitori in ritardo sulle consegne, fatture emesse e incassato, confronto listini tra anni, rotazione di magazzino, lotti d'acquisto troppo grandi o troppo piccoli.</p>
+  </div>
+</section>
+
+<!-- ============ DATI COPERTI ============ -->
+<section class="section section-alt" id="dati">
+  <div class="wrap dati-grid">
+    <div class="dati-copy reveal">
+      <h2 class="section-title">Su quali dati lavora</h2>
+      <p>OpenMind lavora sull'archivio operativo completo dell'azienda: anagrafica articoli, distinte base multilivello, cicli di lavoro e centri di costo, ordini di produzione con gli avanzamenti di reparto, ordini clienti e fornitori con fatture e pagamenti, listini di acquisto e di vendita con le validità per anno, giacenze di magazzino. Un'unica interfaccia per domande che oggi attraversano tre uffici.</p>
+    </div>
+    <ul class="dati-chips reveal" aria-label="Aree dati coperte">
+      <li>Anagrafica articoli</li>
+      <li>Distinte base multilivello</li>
+      <li>Cicli e centri di costo</li>
+      <li>Ordini di produzione</li>
+      <li>Avanzamenti di reparto</li>
+      <li>Ordini clienti e fornitori</li>
+      <li>Fatture e pagamenti</li>
+      <li>Listini acquisto e vendita</li>
+      <li>Giacenze di magazzino</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ SICUREZZA ============ -->
+<section class="section" id="sicurezza">
+  <div class="wrap">
+    <h2 class="section-title">Affidabile per costruzione</h2>
+    <dl class="trust">
+      <div class="trust-item reveal">
+        <dt>Motore Claude di Anthropic</dt>
+        <dd>OpenMind è costruito sui modelli Claude, tra i più avanzati al mondo per l'analisi e il ragionamento sui dati.</dd>
+      </div>
+      <div class="trust-item reveal">
+        <dt>Accessi personali</dt>
+        <dd>Login con email e password; cruscotti, promemoria e conversazioni sono privati per ciascun utente.</dd>
+      </div>
+      <div class="trust-item reveal">
+        <dt>Solo lettura, per progetto</dt>
+        <dd>Le query dei cruscotti vengono riverificate a ogni aggiornamento: possono soltanto leggere i dati, mai modificarli.</dd>
+      </div>
+      <div class="trust-item reveal">
+        <dt>Costi sotto controllo</dt>
+        <dd>Ogni conversazione ha un tetto di spesa configurato: nessuna sorpresa a fine mese.</dd>
+      </div>
+    </dl>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section class="section section-alt" id="faq">
+  <div class="wrap wrap-narrow">
+    <h2 class="section-title">Domande frequenti</h2>
+    <div class="faq-list">
+      <details class="faq-item">
+        <summary>Serve saper scrivere SQL o usare strumenti di BI?</summary>
+        <p>No. Si scrive in italiano, come in una chat. SQL, calcoli e grafici li fa OpenMind.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Le risposte sono aggiornate?</summary>
+        <p>Sì: ogni domanda esegue una query sul database in quel momento, e i cruscotti salvati si riallineano a oggi a ogni apertura.</p>
+      </details>
+      <details class="faq-item">
+        <summary>E se la mia domanda è vaga?</summary>
+        <p>OpenMind chiede un chiarimento invece di inventare, e quando fa un'assunzione (per esempio «recente = ultimi 30 giorni») la dichiara esplicitamente nella risposta.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Può modificare i dati?</summary>
+        <p>No: OpenMind legge e analizza. Le query salvate nei cruscotti sono verificate come sola lettura a ogni esecuzione.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Chi vede le mie analisi?</summary>
+        <p>Solo tu: conversazioni, cruscotti e promemoria sono legati al tuo account.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CTA FINALE ============ -->
+<section class="closing">
+  <div class="wrap closing-inner reveal">
+    <h2>La prossima domanda, falla ai tuoi&nbsp;dati.</h2>
+    <p>Accedi a OpenMind e chiedi quello che chiederesti al tuo miglior analista.</p>
+    <div class="hero-actions">
+      <a class="btn btn-paper btn-lg" href="https://openmind-drab.vercel.app">Accedi a OpenMind</a>
+      <a class="btn btn-ghost-dark btn-lg" href="mailto:info.virtechsrl@gmail.com?subject=Demo%20OpenMind">Richiedi una demo</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-foot">
+  <div class="wrap foot-row">
+    <a class="brand brand-foot" href="#top">
+      <span class="brand-mark" aria-hidden="true">Om</span>
+      <span class="brand-word">OpenMind</span>
+    </a>
+    <p class="foot-meta">OpenMind v2.0.0 — Powered by Vanna AI · © 2026 Virtech Srl</p>
+  </div>
+</footer>
+
+<script src="main.js" defer></script>
+</body>
+</html>
