@@ -285,7 +285,7 @@ export default function Home() {
               <span className="hub-mark" aria-hidden="true">
                 Om
               </span>
-              <span className="hub-caption">Motore Claude di Anthropic</span>
+              <span className="hub-caption">Motore d&apos;analisi OpenMind</span>
             </div>
           </div>
         </section>
@@ -411,9 +411,9 @@ export default function Home() {
                 <span className="trust-check" aria-hidden="true">
                   ✓
                 </span>
-                <dt>Motore Claude di Anthropic</dt>
+                <dt>Motore AI di ultima generazione</dt>
                 <dd>
-                  OpenMind è costruito sui modelli Claude, tra i più avanzati al mondo per
+                  OpenMind è costruito su modelli AI tra i più avanzati al mondo per
                   l&apos;analisi e il ragionamento sui dati.
                 </dd>
               </Reveal>
@@ -545,7 +545,7 @@ export default function Home() {
           </div>
           <div className="foot-bottom">
             <span>© 2026 Virtech Srl</span>
-            <span>OpenMind v2.0.0 — Powered by Vanna AI</span>
+            <span>OpenMind v2.0.0 — Powered by Virtech</span>
           </div>
         </div>
       </footer>

@@ -82,7 +82,7 @@ export default function HubDiagram() {
 
       <div className="hub" aria-hidden="true">
         <span className="hub-mark">Om</span>
-        <span className="hub-caption">Motore d&apos;analisi · Claude di Anthropic</span>
+        <span className="hub-caption">Motore d&apos;analisi OpenMind</span>
       </div>
 
       {/* uscita: linea verticale e risposte */}

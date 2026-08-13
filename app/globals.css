@@ -1107,7 +1107,7 @@ a {
   font-style: italic;
 }
 
-/* hub centrale: motore Claude */
+/* hub centrale: motore d'analisi */
 .hub {
   margin-top: clamp(2.5rem, 5vw, 4rem);
   display: flex;
