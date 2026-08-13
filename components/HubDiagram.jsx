@@ -1,17 +1,20 @@
+import fs from "fs";
+import path from "path";
+
 const SOURCES_A = [
-  ["Anagrafica", "Articoli"],
-  ["Distinte base", "Multilivello"],
-  ["Cicli di lavoro", "Centri di costo"],
-  ["Produzione", "Ordini e avanzamenti"],
-  ["Vendite", "Ordini clienti"],
+  ["Anagrafica", "Articoli", "anagrafica"],
+  ["Distinte base", "Multilivello", "distinte"],
+  ["Cicli di lavoro", "Centri di costo", "cicli"],
+  ["Produzione", "Ordini e avanzamenti", "produzione"],
+  ["Vendite", "Ordini clienti", "vendite"],
 ];
 
 const SOURCES_B = [
-  ["Acquisti", "Ordini fornitori"],
-  ["Amministrazione", "Fatture e pagamenti"],
-  ["Listini", "Acquisto e vendita"],
-  ["Magazzino", "Giacenze"],
-  ["Glossario", "Il vostro gergo"],
+  ["Acquisti", "Ordini fornitori", "acquisti"],
+  ["Amministrazione", "Fatture e pagamenti", "amministrazione"],
+  ["Listini", "Acquisto e vendita", "listini"],
+  ["Magazzino", "Giacenze", "magazzino"],
+  ["Glossario", "Il vostro gergo", "glossario"],
 ];
 
 const OUTPUTS = [
@@ -23,6 +26,24 @@ const OUTPUTS = [
   "Chiarimento, se la domanda è ambigua",
 ];
 
+const ICONS_DIR = path.join(process.cwd(), "public", "dati");
+
+function DomainCard({ label, name, slug }) {
+  const hasIcon = slug && fs.existsSync(path.join(ICONS_DIR, `${slug}.jpg`));
+  return (
+    <div className={`domain-card${hasIcon ? " has-icon" : ""}`}>
+      {hasIcon && (
+        /* eslint-disable-next-line @next/next/no-img-element */
+        <img className="domain-icon" src={`/dati/${slug}.jpg`} alt="" loading="lazy" />
+      )}
+      <span className="domain-text">
+        <span className="domain-label">{label}</span>
+        <span className="domain-name">{name}</span>
+      </span>
+    </div>
+  );
+}
+
 /* Diagramma alla Compri: fonti dati → motore d'analisi → risposte.
    Tutto SVG + CSS, nessuna libreria: le linee tratteggiate «scorrono»
    verso il nodo centrale con una semplice animazione di stroke-dashoffset. */
@@ -32,21 +53,15 @@ export default function HubDiagram() {
       {/* fonti: due nastri che scorrono in direzioni opposte */}
       <div className="marquee" aria-hidden="true">
         <div className="marquee-track">
-          {[...SOURCES_A, ...SOURCES_B, ...SOURCES_A, ...SOURCES_B].map(([label, name], i) => (
-            <div className="domain-card" key={`a-${i}`}>
-              <span className="domain-label">{label}</span>
-              <span className="domain-name">{name}</span>
-            </div>
+          {[...SOURCES_A, ...SOURCES_B, ...SOURCES_A, ...SOURCES_B].map(([label, name, slug], i) => (
+            <DomainCard key={`a-${i}`} label={label} name={name} slug={slug} />
           ))}
         </div>
       </div>
       <div className="marquee marquee-gap" aria-hidden="true">
         <div className="marquee-track marquee-reverse">
-          {[...SOURCES_B, ...SOURCES_A, ...SOURCES_B, ...SOURCES_A].map(([label, name], i) => (
-            <div className="domain-card" key={`b-${i}`}>
-              <span className="domain-label">{label}</span>
-              <span className="domain-name">{name}</span>
-            </div>
+          {[...SOURCES_B, ...SOURCES_A, ...SOURCES_B, ...SOURCES_A].map(([label, name, slug], i) => (
+            <DomainCard key={`b-${i}`} label={label} name={name} slug={slug} />
           ))}
         </div>
       </div>
