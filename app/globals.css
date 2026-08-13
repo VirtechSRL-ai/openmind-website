@@ -1222,6 +1222,90 @@ a {
   }
 }
 
+/* ---------- Settori: slider di fogli tecnici ---------- */
+
+.sectors {
+  display: flex;
+  gap: 1rem;
+  margin-top: clamp(2.5rem, 5vw, 3.5rem);
+  padding-inline: clamp(1.25rem, 4vw, 2.5rem);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+.sectors::-webkit-scrollbar {
+  display: none;
+}
+
+.sector-card {
+  flex: 0 0 auto;
+  width: clamp(240px, 24vw, 300px);
+  scroll-snap-align: center;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.sector-label {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink);
+  padding: 1rem 1.1rem 0.85rem;
+  border-bottom: 1px solid var(--line);
+}
+
+/* il foglio millimetrato su cui vive l'illustrazione a matita */
+.sector-sheet {
+  aspect-ratio: 2 / 3;
+  background-color: #fdfcf8;
+  background-image: linear-gradient(rgba(30, 58, 138, 0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(30, 58, 138, 0.055) 1px, transparent 1px),
+    linear-gradient(rgba(30, 58, 138, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(30, 58, 138, 0.03) 1px, transparent 1px);
+  background-size: 40px 40px, 40px 40px, 8px 8px, 8px 8px;
+  position: relative;
+  display: grid;
+  place-items: center;
+}
+
+.sector-sheet img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  mix-blend-mode: multiply;
+}
+
+/* segni di registro agli angoli, in attesa dell'illustrazione */
+.sector-marks {
+  position: absolute;
+  inset: 0.9rem;
+}
+.sector-marks::before,
+.sector-marks::after {
+  content: "";
+  position: absolute;
+  width: 0.9rem;
+  height: 0.9rem;
+  border: 1.5px solid rgba(30, 58, 138, 0.35);
+}
+.sector-marks::before {
+  top: 0;
+  left: 0;
+  border-right: 0;
+  border-bottom: 0;
+}
+.sector-marks::after {
+  bottom: 0;
+  right: 0;
+  border-left: 0;
+  border-top: 0;
+}
+
 /* ---------- Dati coperti: nastro scorrevole di card ---------- */
 
 .marquee {

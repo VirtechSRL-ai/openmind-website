@@ -2,6 +2,7 @@ import ChatCard from "../components/ChatCard";
 import HubDiagram from "../components/HubDiagram";
 import LivePanel from "../components/LivePanel";
 import Reveal from "../components/Reveal";
+import Sectors from "../components/Sectors";
 
 const APP_URL = "https://openmind-drab.vercel.app";
 const DEMO_MAILTO = "mailto:info.virtechsrl@gmail.com?subject=Demo%20OpenMind";
@@ -364,6 +365,9 @@ export default function Home() {
             </Reveal>
           </div>
         </section>
+
+        {/* ============ SETTORI ============ */}
+        <Sectors />
 
         {/* ============ DATI COPERTI ============ */}
         <section className="section section-dots" id="dati">
