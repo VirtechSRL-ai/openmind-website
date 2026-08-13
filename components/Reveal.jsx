@@ -3,8 +3,17 @@
 import { useEffect, useRef, createElement } from "react";
 
 /* Rivela l'elemento quando entra in viewport. Con JS assente o
-   prefers-reduced-motion attivo il contenuto resta sempre visibile. */
-export default function Reveal({ as = "div", className = "", delay = 0, children, ...rest }) {
+   prefers-reduced-motion attivo il contenuto resta sempre visibile.
+   Con `spotlight` la card traccia il puntatore (via CSS custom properties)
+   per l'alone luminoso al passaggio del mouse. */
+export default function Reveal({
+  as = "div",
+  className = "",
+  delay = 0,
+  spotlight = false,
+  children,
+  ...rest
+}) {
   const ref = useRef(null);
 
   useEffect(() => {
@@ -66,5 +75,17 @@ export default function Reveal({ as = "div", className = "", delay = 0, children
     };
   }, [delay]);
 
-  return createElement(as, { ref, className: `reveal ${className}`.trim(), ...rest }, children);
+  const props = { ref, className: `reveal${spotlight ? " spot" : ""} ${className}`.trim(), ...rest };
+
+  if (spotlight) {
+    props.onPointerMove = (e) => {
+      const el = ref.current;
+      if (!el) return;
+      const r = el.getBoundingClientRect();
+      el.style.setProperty("--mx", `${e.clientX - r.left}px`);
+      el.style.setProperty("--my", `${e.clientY - r.top}px`);
+    };
+  }
+
+  return createElement(as, props, children);
 }

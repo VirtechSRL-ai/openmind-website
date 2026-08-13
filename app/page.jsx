@@ -128,9 +128,11 @@ export default function Home() {
               <span className="kicker kicker-pill">Come funziona</span>
               <h2>Dalla domanda all&apos;analisi in tre passi</h2>
             </div>
-            <div className="steps">
-              <Reveal className="step-card">
-                <span className="step-tag">Passo 01</span>
+            <ol className="flow">
+              <Reveal as="li" className="flow-step">
+                <span className="flow-num" aria-hidden="true">
+                  1
+                </span>
                 <h3>Chiedi</h3>
                 <p>
                   Scrivi la domanda come la faresti a un collega:{" "}
@@ -138,8 +140,10 @@ export default function Home() {
                   <em>«Riesco a consegnare tutto quello che ho in portafoglio?»</em>.
                 </p>
               </Reveal>
-              <Reveal className="step-card" delay={70}>
-                <span className="step-tag">Passo 02</span>
+              <Reveal as="li" className="flow-step" delay={70}>
+                <span className="flow-num" aria-hidden="true">
+                  2
+                </span>
                 <h3>OpenMind interroga i dati veri</h3>
                 <p>
                   Genera ed esegue la query sul database aziendale in quel momento: niente
@@ -147,15 +151,17 @@ export default function Home() {
                   chiarimento invece di tirare a indovinare.
                 </p>
               </Reveal>
-              <Reveal className="step-card" delay={140}>
-                <span className="step-tag">Passo 03</span>
+              <Reveal as="li" className="flow-step" delay={140}>
+                <span className="flow-num" aria-hidden="true">
+                  3
+                </span>
                 <h3>Ricevi un&apos;analisi, non solo un numero</h3>
                 <p>
                   Risposta diretta, cifre esatte con percentuali, confronto con il contesto,
                   grafico quando aiuta e un insight operativo su cosa fare.
                 </p>
               </Reveal>
-            </div>
+            </ol>
           </div>
         </section>
 
@@ -176,7 +182,19 @@ export default function Home() {
             </div>
 
             <div className="caps">
-              <Reveal className="cap-card">
+              <Reveal className="cap-card b-4" spotlight>
+                <div className="cap-vis" aria-hidden="true">
+                  <span className="cv-row cv-user" />
+                  <span className="cv-row cv-ai" />
+                  <span className="cv-row cv-ai short" />
+                  <span className="cv-bars">
+                    <i />
+                    <i />
+                    <i />
+                    <i />
+                    <i />
+                  </span>
+                </div>
                 <h3>Chat analitica</h3>
                 <p>
                   Domande in italiano, risposte in streaming con tabelle, grafici interattivi e lo
@@ -189,29 +207,7 @@ export default function Home() {
                   </span>
                 </div>
               </Reveal>
-              <Reveal className="cap-card" delay={60}>
-                <h3>Cruscotti sempre aggiornati</h3>
-                <p>
-                  Crei una dashboard conversando e OpenMind la salva. A ogni apertura i dati si
-                  riallineano a oggi, senza rifare nulla.
-                </p>
-                <div className="cap-doing">
-                  <span className="cap-doing-label">Domanda tipo</span>
-                  <span className="cap-doing-q">«Crea un cruscotto: top 10 fornitori 2025»</span>
-                </div>
-              </Reveal>
-              <Reveal className="cap-card" delay={120}>
-                <h3>Promemoria</h3>
-                <p>
-                  Annota attività e scadenze direttamente dove analizzi i dati. Ogni utente vede
-                  solo i propri.
-                </p>
-                <div className="cap-doing">
-                  <span className="cap-doing-label">Esempio</span>
-                  <span className="cap-doing-q">«Sollecitare il fornitore entro venerdì»</span>
-                </div>
-              </Reveal>
-              <Reveal className="cap-card">
+              <Reveal className="cap-card b-2" delay={60} spotlight>
                 <h3>Chiede, non suppone</h3>
                 <p>
                   «Il più venduto»: per valore, quantità o numero di ordini? Quando una domanda ha
@@ -224,7 +220,43 @@ export default function Home() {
                   </span>
                 </div>
               </Reveal>
-              <Reveal className="cap-card" delay={60}>
+              <Reveal className="cap-card b-2" spotlight>
+                <h3>Promemoria</h3>
+                <p>
+                  Annota attività e scadenze direttamente dove analizzi i dati. Ogni utente vede
+                  solo i propri.
+                </p>
+                <div className="cap-doing">
+                  <span className="cap-doing-label">Esempio</span>
+                  <span className="cap-doing-q">«Sollecitare il fornitore entro venerdì»</span>
+                </div>
+              </Reveal>
+              <Reveal className="cap-card b-4" delay={60} spotlight>
+                <div className="cap-vis cap-vis-tiles" aria-hidden="true">
+                  <span className="cvt">
+                    <span className="cvt-label">Ordini aperti</span>
+                    <span className="cvt-val">142</span>
+                  </span>
+                  <span className="cvt">
+                    <span className="cvt-label">OdP in corso</span>
+                    <span className="cvt-val">28</span>
+                  </span>
+                  <span className="cvt">
+                    <span className="cvt-label">In ritardo</span>
+                    <span className="cvt-val">5</span>
+                  </span>
+                </div>
+                <h3>Cruscotti sempre aggiornati</h3>
+                <p>
+                  Crei una dashboard conversando e OpenMind la salva. A ogni apertura i dati si
+                  riallineano a oggi, senza rifare nulla.
+                </p>
+                <div className="cap-doing">
+                  <span className="cap-doing-label">Domanda tipo</span>
+                  <span className="cap-doing-q">«Crea un cruscotto: top 10 fornitori 2025»</span>
+                </div>
+              </Reveal>
+              <Reveal className="cap-card b-3" spotlight>
                 <h3>Parla il vostro gergo</h3>
                 <p>
                   Fatturato, marginalità, giacenza, scostamento, DFFM: il glossario aziendale è
@@ -235,7 +267,7 @@ export default function Home() {
                   <span className="cap-doing-q">«scostamento» → standard vs effettivo</span>
                 </div>
               </Reveal>
-              <Reveal className="cap-card" delay={120}>
+              <Reveal className="cap-card b-3" delay={60} spotlight>
                 <h3>Analisi da vero analista</h3>
                 <p>
                   ABC e Pareto, confronti anno su anno, scostamenti standard/effettivo: OpenMind
@@ -357,36 +389,54 @@ export default function Home() {
 
         {/* ============ SICUREZZA ============ */}
         <section className="dark-band" id="sicurezza">
-          <div className="wrap">
-            <span className="kicker">Sicurezza</span>
-            <h2>
-              Affidabile per costruzione.
-              <br />
-              <span className="ai ai-dark">Senza sorprese.</span>
-            </h2>
-            <dl className="trust">
-              <Reveal className="trust-item">
+          <div className="wrap trust-split">
+            <div>
+              <span className="kicker">Sicurezza</span>
+              <h2>
+                Affidabile per costruzione.
+                <br />
+                <span className="ai ai-dark">Senza sorprese.</span>
+              </h2>
+              <p className="band-sub">
+                OpenMind legge e analizza: i tuoi dati non vengono mai modificati, e ogni accesso
+                è personale.
+              </p>
+            </div>
+            <dl className="trust-rows">
+              <Reveal className="trust-row">
+                <span className="trust-check" aria-hidden="true">
+                  ✓
+                </span>
                 <dt>Motore Claude di Anthropic</dt>
                 <dd>
                   OpenMind è costruito sui modelli Claude, tra i più avanzati al mondo per
                   l&apos;analisi e il ragionamento sui dati.
                 </dd>
               </Reveal>
-              <Reveal className="trust-item" delay={60}>
+              <Reveal className="trust-row" delay={60}>
+                <span className="trust-check" aria-hidden="true">
+                  ✓
+                </span>
                 <dt>Accessi personali</dt>
                 <dd>
                   Login con email e password; cruscotti, promemoria e conversazioni sono privati
                   per ciascun utente.
                 </dd>
               </Reveal>
-              <Reveal className="trust-item" delay={120}>
+              <Reveal className="trust-row" delay={120}>
+                <span className="trust-check" aria-hidden="true">
+                  ✓
+                </span>
                 <dt>Solo lettura, per progetto</dt>
                 <dd>
                   Le query dei cruscotti vengono riverificate a ogni aggiornamento: possono
                   soltanto leggere i dati, mai modificarli.
                 </dd>
               </Reveal>
-              <Reveal className="trust-item" delay={180}>
+              <Reveal className="trust-row" delay={180}>
+                <span className="trust-check" aria-hidden="true">
+                  ✓
+                </span>
                 <dt>Costi sotto controllo</dt>
                 <dd>
                   Ogni conversazione ha un tetto di spesa configurato: nessuna sorpresa a fine

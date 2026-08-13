@@ -313,9 +313,14 @@ a {
 
 .hero {
   background: var(--dark);
-  background-image: linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+  background-image: radial-gradient(
+      640px 320px at 50% 12%,
+      rgba(162, 182, 255, 0.13),
+      transparent 70%
+    ),
+    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
-  background-size: 44px 44px;
+  background-size: auto, 44px 44px, 44px 44px;
   color: var(--od-text);
   text-align: center;
   padding-block: clamp(4rem, 9vw, 7.5rem) clamp(3rem, 6vw, 5rem);
@@ -852,53 +857,83 @@ a {
   }
 }
 
-/* ---------- Come funziona: card con etichetta PASSO ---------- */
+/* ---------- Come funziona: timeline con numeri sulla linea ---------- */
 
-.steps {
+.flow {
+  list-style: none;
+  margin: clamp(3rem, 6vw, 4.5rem) 0 0;
+  padding: 0;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
-  gap: 1.2rem;
-  margin-top: clamp(2.5rem, 5vw, 3.5rem);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(1.5rem, 4vw, 3rem);
+  position: relative;
 }
 
-.step-card {
-  background: var(--card);
-  border: 1px solid var(--line);
-  border-radius: 14px;
-  padding: 1.6rem 1.5rem;
+/* la linea tratteggiata che collega i tre passi */
+.flow::before {
+  content: "";
+  position: absolute;
+  top: 1.25rem;
+  left: 1rem;
+  right: 18%;
+  border-top: 1.5px dashed rgba(30, 58, 138, 0.35);
 }
 
-.step-tag {
-  font-family: var(--font-mono);
-  font-size: 0.65rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--ember);
+.flow-step {
+  position: relative;
 }
 
-.step-card h3 {
+.flow-num {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--dark);
+  color: var(--cream);
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 500;
+  box-shadow: 0 0 0 8px var(--cream);
+  position: relative;
+  z-index: 1;
+}
+
+.flow-step h3 {
   font-size: 1.45rem;
-  margin-top: 0.9rem;
+  margin-top: 1.1rem;
 }
 
-.step-card p {
+.flow-step p {
   margin-top: 0.7rem;
   color: var(--muted);
   font-size: 0.9875rem;
+  max-width: 34em;
 }
 
-.step-card em {
+.flow-step em {
   font-style: italic;
   color: var(--ink);
 }
 
 /* ---------- Viste e capacità (card alla Compri con etichetta mono) ---------- */
 
+/* griglia bento: sei card, tre taglie, nessuna uguale alla vicina */
 .caps {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1.2rem;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 1rem;
   margin-top: clamp(2.5rem, 5vw, 3.5rem);
+}
+
+.b-4 {
+  grid-column: span 4;
+}
+.b-3 {
+  grid-column: span 3;
+}
+.b-2 {
+  grid-column: span 2;
 }
 
 .cap-card {
@@ -908,6 +943,130 @@ a {
   padding: 1.5rem;
   display: flex;
   flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.25s var(--ease-out), box-shadow 0.25s var(--ease-out),
+    border-color 0.25s var(--ease-out);
+}
+
+.cap-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(30, 58, 138, 0.3);
+  box-shadow: 0 16px 40px -24px rgba(4, 8, 24, 0.35);
+}
+
+/* spotlight che segue il puntatore */
+.spot::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    260px circle at var(--mx, 50%) var(--my, 50%),
+    rgba(30, 58, 138, 0.09),
+    transparent 65%
+  );
+  opacity: 0;
+  transition: opacity 0.3s var(--ease-out);
+  pointer-events: none;
+}
+
+.spot:hover::before {
+  opacity: 1;
+}
+
+/* mini-visual: chat */
+.cap-vis {
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: var(--cream);
+  padding: 0.8rem;
+  margin-bottom: 1.1rem;
+}
+
+.cv-row {
+  display: block;
+  height: 0.5rem;
+  border-radius: 3px;
+  margin-top: 0.45rem;
+}
+.cv-row:first-child {
+  margin-top: 0;
+}
+.cv-user {
+  width: 44%;
+  margin-left: auto;
+  background: var(--navy);
+}
+.cv-ai {
+  width: 70%;
+  background: rgba(30, 58, 138, 0.22);
+}
+.cv-ai.short {
+  width: 52%;
+}
+
+.cv-bars {
+  display: flex;
+  gap: 0.35rem;
+  align-items: flex-end;
+  height: 1.5rem;
+  margin-top: 0.7rem;
+}
+.cv-bars i {
+  flex: 1;
+  background: var(--navy);
+  border-radius: 2px 2px 0 0;
+  opacity: 0.85;
+}
+.cv-bars i:nth-child(1) {
+  height: 50%;
+}
+.cv-bars i:nth-child(2) {
+  height: 100%;
+}
+.cv-bars i:nth-child(3) {
+  height: 35%;
+}
+.cv-bars i:nth-child(4) {
+  height: 70%;
+}
+.cv-bars i:nth-child(5) {
+  height: 55%;
+}
+
+/* mini-visual: cruscotto */
+.cap-vis-tiles {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+  border: 0;
+  background: none;
+  padding: 0;
+  margin-bottom: 1.1rem;
+}
+
+.cvt {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--cream);
+  padding: 0.6rem 0.7rem;
+}
+
+.cvt-label {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.5625rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.cvt-val {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 500;
+  margin-top: 0.15rem;
 }
 
 .cap-card h3 {
@@ -1196,32 +1355,61 @@ a {
 
 /* ---------- Sicurezza (banda scura con badge) ---------- */
 
-.trust {
+/* layout diviso: intro a sinistra, garanzie come righe a destra */
+.trust-split {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-  gap: 1rem;
-  margin-top: clamp(2.5rem, 5vw, 3.5rem);
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: clamp(2.5rem, 6vw, 5rem);
   text-align: left;
+  align-items: start;
 }
 
-.trust-item {
-  border: 1px solid var(--od-line);
-  border-radius: 12px;
-  padding: 1.3rem 1.35rem;
-  background: rgba(255, 255, 255, 0.03);
+.trust-split h2 {
+  margin: 1.1rem 0 0;
+  text-align: left;
+  font-size: clamp(2rem, 4vw, 3.2rem);
 }
 
-.trust-item dt {
+.trust-split .band-sub {
+  margin: 1.2rem 0 0;
+  text-align: left;
+  max-width: 36em;
+}
+
+.trust-rows {
+  margin: 0;
+}
+
+.trust-row {
+  border-top: 1px solid var(--od-line);
+  padding-block: 1.35rem;
+  display: grid;
+  grid-template-columns: 2rem minmax(0, 1fr);
+  gap: 1rem;
+  align-items: baseline;
+}
+.trust-row:last-child {
+  border-bottom: 1px solid var(--od-line);
+}
+
+.trust-check {
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  color: var(--periwinkle);
+}
+
+.trust-row dt {
   font-family: var(--font-display);
   font-weight: 500;
-  font-size: 1.15rem;
+  font-size: 1.2rem;
   letter-spacing: -0.01em;
 }
 
-.trust-item dd {
-  margin: 0.55rem 0 0;
+.trust-row dd {
+  margin: 0.4rem 0 0;
   color: var(--od-muted);
-  font-size: 0.9rem;
+  font-size: 0.9375rem;
+  grid-column: 2;
 }
 
 /* ---------- FAQ ---------- */
@@ -1385,6 +1573,24 @@ a {
   .foot-grid {
     grid-template-columns: 1fr;
   }
+  .caps {
+    grid-template-columns: 1fr;
+  }
+  .b-4,
+  .b-3,
+  .b-2 {
+    grid-column: auto;
+  }
+  .flow {
+    grid-template-columns: 1fr;
+    gap: 2.25rem;
+  }
+  .flow::before {
+    display: none;
+  }
+  .trust-split {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (max-width: 560px) {
@@ -1421,6 +1627,14 @@ a {
   }
   .faq-item::details-content {
     transition: none;
+  }
+  .cap-card,
+  .cap-card:hover {
+    transform: none;
+    transition: none;
+  }
+  .spot::before {
+    display: none;
   }
   .js .status-dot,
   .js .live-dot {
