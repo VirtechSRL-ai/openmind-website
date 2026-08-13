@@ -67,6 +67,13 @@ h3 {
   line-height: 1.08;
   text-wrap: balance;
   margin: 0;
+  font-optical-sizing: auto;
+}
+
+/* Tracking specifico per dimensione: i titoli piccoli respirano di più */
+h3 {
+  letter-spacing: -0.01em;
+  line-height: 1.2;
 }
 
 p {
@@ -154,7 +161,18 @@ a {
   border-radius: 6px;
   text-decoration: none;
   transition: background-color 0.2s var(--ease-out), color 0.2s var(--ease-out),
-    border-color 0.2s var(--ease-out);
+    border-color 0.2s var(--ease-out), transform 0.1s ease-out;
+}
+
+/* Risposta al tocco: il feedback vive sulla pressione, non sul rilascio */
+.btn:active {
+  transform: scale(0.97);
+}
+
+.chat-chips span:active,
+.lang-pill:active,
+.domain-card:active {
+  transform: scale(0.97);
 }
 
 .btn-light {
@@ -192,13 +210,34 @@ a {
 
 /* ---------- Nav ---------- */
 
+/* Barra come materiale traslucido: il contenuto scorre sotto,
+   il bordo duro è sostituito da un'ombra-scrim morbida */
 .site-head {
   position: sticky;
   top: 0;
   z-index: var(--z-sticky);
-  background: rgba(12, 16, 30, 0.92);
-  backdrop-filter: blur(8px);
-  border-bottom: 1px solid var(--od-line);
+  background: rgba(12, 16, 30, 0.72);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 12px 24px -16px rgba(4, 8, 24, 0.5);
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .site-head {
+    background: var(--dark);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+}
+
+@media (prefers-contrast: more) {
+  .site-head {
+    background: var(--dark);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+  }
 }
 
 .head-row {
@@ -319,12 +358,13 @@ a {
   text-align: left;
 }
 
+/* Superfici grandi = più spesse: ombra di contatto + ombra ambientale profonda */
 .panel {
   background: var(--card);
   color: var(--ink);
   border-radius: 16px;
   border: 1px solid rgba(0, 0, 0, 0.06);
-  box-shadow: 0 18px 40px -28px rgba(4, 8, 24, 0.7);
+  box-shadow: 0 1px 2px rgba(4, 8, 24, 0.25), 0 24px 56px -28px rgba(4, 8, 24, 0.75);
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -672,6 +712,23 @@ a {
   transform: none;
   transition: opacity 0.5s var(--ease-out), transform 0.5s var(--ease-out);
 }
+
+/* Il messaggio inviato è l'unico elemento con «momento» reale:
+   arriva con una molla leggermente sottosmorzata (piccolo overshoot).
+   Tutto il resto resta criticamente smorzato. */
+.js .chat-seq .msg-user {
+  transform: translateY(14px) scale(0.96);
+  transform-origin: 100% 100%;
+}
+.js .chat-seq .msg-user.shown {
+  transition: opacity 0.3s ease-out,
+    transform 0.6s linear(
+      0, 0.0157, 0.0605, 0.1289, 0.2157, 0.3164, 0.4266, 0.5426, 0.661, 0.779,
+      0.8942, 1.0046, 1.0736, 1.1085, 1.1155, 1.1004, 1.0714, 1.0364, 1.0021,
+      0.9738, 0.9547, 0.9463, 0.9483, 0.9591, 0.976, 0.9962, 1.0064, 1.0093,
+      1.0072, 1.003, 0.999, 0.9974, 0.998, 0.9996, 1.0007, 1.0009, 1.0004, 1
+    );
+}
 .js .msg-status.done {
   display: none;
 }
@@ -977,7 +1034,8 @@ a {
   font-size: clamp(3.2rem, 6.5vw, 5rem);
   line-height: 1;
   color: var(--navy);
-  letter-spacing: -0.02em;
+  letter-spacing: -0.03em; /* più il testo è grande, più il tracking stringe */
+  font-optical-sizing: auto;
 }
 
 .result .result-label {
@@ -1018,6 +1076,7 @@ a {
   display: flex;
   gap: 0.9rem;
   width: max-content;
+  will-change: transform;
 }
 
 .js .marquee-track {
@@ -1215,6 +1274,22 @@ a {
   max-width: 62ch;
 }
 
+/* Apertura FAQ animata dove il browser lo consente (interpolate-size),
+   con la stessa curva morbida del resto della pagina */
+@supports (interpolate-size: allow-keywords) {
+  :root {
+    interpolate-size: allow-keywords;
+  }
+  .faq-item::details-content {
+    block-size: 0;
+    overflow: hidden;
+    transition: block-size 0.35s var(--ease-out), content-visibility 0.35s allow-discrete;
+  }
+  .faq-item[open]::details-content {
+    block-size: auto;
+  }
+}
+
 /* ---------- CTA finale ---------- */
 
 .closing .hero-actions {
@@ -1332,9 +1407,19 @@ a {
   }
   .js .reveal,
   .js .chat-seq [data-step],
+  .js .chat-seq .msg-user,
   .js .feed-row {
     opacity: 1;
     transform: none;
+    transition: none;
+  }
+  .btn:active,
+  .chat-chips span:active,
+  .lang-pill:active,
+  .domain-card:active {
+    transform: none;
+  }
+  .faq-item::details-content {
     transition: none;
   }
   .js .status-dot,

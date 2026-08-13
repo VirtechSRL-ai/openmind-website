@@ -19,6 +19,10 @@ const jetbrainsMono = JetBrains_Mono({
   variable: "--font-jbmono",
 });
 
+export const viewport = {
+  themeColor: "#0c101e",
+};
+
 export const metadata = {
   title: "OpenMind — L'analista dati AI della tua azienda",
   description:
