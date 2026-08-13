@@ -30,8 +30,8 @@ export default function Sectors() {
       </div>
       <div className="sectors" role="list">
         {SECTORS.map(({ slug, label }, i) => {
-          const file = `/settori/${slug}.png`;
-          const exists = fs.existsSync(path.join(dir, `${slug}.png`));
+          const file = `/settori/${slug}.jpg`;
+          const exists = fs.existsSync(path.join(dir, `${slug}.jpg`));
           return (
             <Reveal key={slug} className="sector-card" role="listitem" delay={(i % 3) * 60}>
               <span className="sector-label">{label}</span>
