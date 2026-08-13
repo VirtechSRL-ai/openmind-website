@@ -28,25 +28,32 @@ export default function Sectors() {
           </h2>
         </div>
       </div>
-      <div className="sectors" role="list">
-        {SECTORS.map(({ slug, label }, i) => {
-          const file = `/settori/${slug}.jpg`;
-          const exists = fs.existsSync(path.join(dir, `${slug}.jpg`));
-          return (
-            <Reveal key={slug} className="sector-card" role="listitem" delay={(i % 3) * 60}>
-              <span className="sector-label">{label}</span>
-              <div className="sector-sheet">
-                {exists ? (
-                  /* eslint-disable-next-line @next/next/no-img-element */
-                  <img src={file} alt={`Illustrazione a matita: ${label}`} loading="lazy" />
-                ) : (
-                  <span className="sector-marks" aria-hidden="true" />
-                )}
-              </div>
-            </Reveal>
-          );
-        })}
-      </div>
+      <Reveal>
+        <div
+          className="marquee sectors-marquee"
+          aria-label="Settori: meccanica di precisione, carpenteria e lamiera, materie plastiche, elettromeccanica, automazione, lavorazioni CNC"
+        >
+          <div className="marquee-track">
+            {[...SECTORS, ...SECTORS].map(({ slug, label }, i) => {
+              const file = `/settori/${slug}.jpg`;
+              const exists = fs.existsSync(path.join(dir, `${slug}.jpg`));
+              return (
+                <div key={`${slug}-${i}`} className="sector-card" aria-hidden={i >= SECTORS.length}>
+                  <span className="sector-label">{label}</span>
+                  <div className="sector-sheet">
+                    {exists ? (
+                      /* eslint-disable-next-line @next/next/no-img-element */
+                      <img src={file} alt="" loading="lazy" />
+                    ) : (
+                      <span className="sector-marks" aria-hidden="true" />
+                    )}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </Reveal>
     </section>
   );
 }

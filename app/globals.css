@@ -1224,23 +1224,18 @@ a {
 
 /* ---------- Settori: slider di fogli tecnici ---------- */
 
-.sectors {
-  display: flex;
-  gap: 1rem;
+/* nastro dei settori: scorre da solo, più lento dei nastri dati */
+.sectors-marquee {
   margin-top: clamp(2.5rem, 5vw, 3.5rem);
-  padding-inline: clamp(1.25rem, 4vw, 2.5rem);
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  scrollbar-width: none;
 }
-.sectors::-webkit-scrollbar {
-  display: none;
+
+.js .sectors-marquee .marquee-track {
+  animation-duration: 90s;
 }
 
 .sector-card {
   flex: 0 0 auto;
   width: clamp(240px, 24vw, 300px);
-  scroll-snap-align: center;
   background: var(--card);
   border: 1px solid var(--line);
   border-radius: 14px;
@@ -1323,7 +1318,12 @@ a {
 }
 
 .js .marquee-track {
-  animation: slide 36s linear infinite;
+  animation: slide 55s linear infinite;
+}
+
+/* il nastro si ferma sotto il puntatore, per leggere con calma */
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
 }
 
 @keyframes slide {
