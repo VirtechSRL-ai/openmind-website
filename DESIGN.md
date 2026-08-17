@@ -31,7 +31,9 @@ Niente gradienti decorativi, niente glass. L'arancio non supera il ~2% della sup
 
 ## Components
 
-- **Bottoni**: radius 8px; primario navy pieno (su carta) / carta piena (su navy); secondario bordo 1px, niente ombre larghe.
+- **Bottoni**: a pillola (radius 999px); primario carta piena su navy con luce interna, micro-lift all'hover e freccia `→` che scorre di 3px; secondario bordo 1px, niente ombre larghe.
+- **Hero badge**: pill mono maiuscoletto con puntino ember sopra l'H1 («Costruito per le PMI…»); su mobile la coda «· da Virtech Srl» sparisce.
+- **Ribbon field**: gradiente a nastri (da 21st.dev) bianco → azzurro → oltremare → iris disegnato su canvas a bassa risoluzione (`components/RibbonField.jsx`), con onda lenta, grana SVG e mask: nell'hero quieto dietro il titolo e pieno attorno alle CTA, nella chiusura a cornice radiale. Statico con `prefers-reduced-motion`, rAF sospeso fuori viewport.
 - **Card**: radius 12px, bordo 1px `--line` **oppure** ombra ≤ 8px, mai entrambi.
 - **Mockup chat**: riproduce l'app reale (saluto, bolle, stati di lavoro in mono, campo «Chiedi qualcosa a OpenMind…»).
 - **FAQ**: `<details>` nativi con filetti.
@@ -39,7 +41,7 @@ Niente gradienti decorativi, niente glass. L'arancio non supera il ~2% della sup
 
 ## Motion
 
-Sobria e orchestrata: sequenza della chat nell'hero (messaggio → stati di lavoro → risposta con barre), reveal on-scroll solo con JS attivo (default visibile), easing `cubic-bezier(.16,1,.3,1)`, tutto disattivato con `prefers-reduced-motion`.
+Sobria e orchestrata: coreografia d'ingresso dell'hero (badge → H1 → sottotitolo → CTA → pannelli, rise + blur-in scalati di 80ms), sequenza della chat nell'hero (messaggio → stati di lavoro → risposta con barre), reveal on-scroll con blur che si dissolve solo con JS attivo (default visibile), easing `cubic-bezier(.16,1,.3,1)`, tutto disattivato con `prefers-reduced-motion`.
 
 ## Layout
 

@@ -2,6 +2,7 @@ import ChatCard from "../components/ChatCard";
 import HubDiagram from "../components/HubDiagram";
 import LivePanel from "../components/LivePanel";
 import Reveal from "../components/Reveal";
+import RibbonField from "../components/RibbonField";
 import Sectors from "../components/Sectors";
 
 const APP_URL = "https://openmind-drab.vercel.app";
@@ -39,7 +40,15 @@ export default function Home() {
       <main>
         {/* ============ HERO ============ */}
         <section className="hero">
+          <RibbonField className="hero-field" />
           <div className="wrap">
+            <p className="hero-badge">
+              <span className="hero-badge-dot" aria-hidden="true" />
+              <span>
+                Costruito per le PMI manifatturiere italiane
+                <span className="hero-badge-extra"> · da Virtech Srl</span>
+              </span>
+            </p>
             <h1>
               L&apos;<span className="ai ai-dark">analista dati AI</span>
               <br />
@@ -52,7 +61,10 @@ export default function Home() {
             </p>
             <div className="hero-actions">
               <a className="btn btn-light btn-lg" href={DEMO_MAILTO}>
-                Richiedi una demo →
+                Richiedi una demo
+                <span className="btn-arrow" aria-hidden="true">
+                  →
+                </span>
               </a>
               <a className="btn btn-outline-dark btn-lg" href="#come-funziona">
                 Guardala in azione
@@ -65,13 +77,6 @@ export default function Home() {
             </div>
           </div>
         </section>
-
-        {/* ============ STRISCIA ============ */}
-        <div className="strip">
-          <span className="kicker kicker-bare">
-            Costruito per le PMI manifatturiere italiane · da Virtech Srl
-          </span>
-        </div>
 
         {/* ============ IL PROBLEMA ============ */}
         <section className="section section-cream" id="problema">
@@ -495,6 +500,7 @@ export default function Home() {
 
         {/* ============ CTA FINALE ============ */}
         <section className="dark-band closing">
+          <RibbonField className="closing-field" />
           <div className="wrap">
             <span className="kicker">Inizia ora</span>
             <h2>
@@ -507,7 +513,10 @@ export default function Home() {
             </p>
             <div className="hero-actions">
               <a className="btn btn-light btn-lg" href={APP_URL}>
-                Accedi a OpenMind →
+                Accedi a OpenMind
+                <span className="btn-arrow" aria-hidden="true">
+                  →
+                </span>
               </a>
               <a className="btn btn-outline-dark btn-lg" href={DEMO_MAILTO}>
                 Richiedi una demo
