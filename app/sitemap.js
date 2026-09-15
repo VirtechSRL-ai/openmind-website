@@ -10,6 +10,12 @@ export default function sitemap() {
       changeFrequency: "monthly",
       priority: 0.7,
     },
+    {
+      url: `${SITE_URL}/risorse`,
+      lastModified,
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
     ...HYGIENE_PAGES.map((page) => ({
       url: `${SITE_URL}/risorse/${page.slug}`,
       lastModified,
