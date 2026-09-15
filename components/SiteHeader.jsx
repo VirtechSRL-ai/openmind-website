@@ -43,9 +43,6 @@ export default function SiteHeader() {
           </div>
         </nav>
         <div className="head-cta">
-          <a className="btn btn-light" href="/#demo">
-            Richiedi una demo
-          </a>
           <a className="lang-pill" href={APP_URL}>
             Accedi
           </a>
@@ -82,9 +79,6 @@ export default function SiteHeader() {
             </a>
           ))}
           <div className="mobile-menu-cta">
-            <a className="btn btn-light" href="/#demo">
-              Richiedi una demo
-            </a>
             <a className="lang-pill" href={APP_URL}>
               Accedi
             </a>
