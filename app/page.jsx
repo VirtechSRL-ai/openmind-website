@@ -1,41 +1,17 @@
 import ChatCard from "../components/ChatCard";
+import DemoCta from "../components/DemoCta";
 import HubDiagram from "../components/HubDiagram";
 import LivePanel from "../components/LivePanel";
 import Reveal from "../components/Reveal";
 import RibbonField from "../components/RibbonField";
 import Sectors from "../components/Sectors";
-
-const APP_URL = "https://openmind-drab.vercel.app";
-const DEMO_MAILTO = "mailto:info.virtechsrl@gmail.com?subject=Demo%20OpenMind";
+import SiteFooter from "../components/SiteFooter";
+import SiteHeader from "../components/SiteHeader";
 
 export default function Home() {
   return (
     <>
-      <header className="site-head" id="top">
-        <div className="wrap head-row">
-          <a className="brand" href="#top" aria-label="OpenMind, torna all'inizio">
-            <span className="brand-mark" aria-hidden="true">
-              Om
-            </span>
-            <span className="brand-word">OpenMind</span>
-          </a>
-          <nav className="site-nav" aria-label="Sezioni della pagina">
-            <a href="#come-funziona">Come funziona</a>
-            <a href="#dentro">Dentro OpenMind</a>
-            <a href="#esempi">Esempi</a>
-            <a href="#sicurezza">Sicurezza</a>
-            <a href="#faq">FAQ</a>
-          </nav>
-          <div className="head-cta">
-            <a className="btn btn-light" href={DEMO_MAILTO}>
-              Richiedi una demo
-            </a>
-            <a className="lang-pill" href={APP_URL}>
-              Accedi
-            </a>
-          </div>
-        </div>
-      </header>
+      <SiteHeader />
 
       <main>
         {/* ============ HERO ============ */}
@@ -60,7 +36,7 @@ export default function Home() {
               esatti, grafici e consigli operativi.
             </p>
             <div className="hero-actions">
-              <a className="btn btn-light btn-lg" href={DEMO_MAILTO}>
+              <a className="btn btn-light btn-lg" href="#demo">
                 Richiedi una demo
                 <span className="btn-arrow" aria-hidden="true">
                   →
@@ -499,65 +475,10 @@ export default function Home() {
         </section>
 
         {/* ============ CTA FINALE ============ */}
-        <section className="dark-band closing">
-          <RibbonField className="closing-field" />
-          <div className="wrap">
-            <span className="kicker">Inizia ora</span>
-            <h2>
-              La prossima domanda,
-              <br />
-              <span className="ai ai-dark">falla ai tuoi dati.</span>
-            </h2>
-            <p className="band-sub">
-              Accedi a OpenMind e chiedi quello che chiederesti al tuo miglior analista.
-            </p>
-            <div className="hero-actions">
-              <a className="btn btn-light btn-lg" href={APP_URL}>
-                Accedi a OpenMind
-                <span className="btn-arrow" aria-hidden="true">
-                  →
-                </span>
-              </a>
-              <a className="btn btn-outline-dark btn-lg" href={DEMO_MAILTO}>
-                Richiedi una demo
-              </a>
-            </div>
-          </div>
-        </section>
+        <DemoCta withField />
       </main>
 
-      <footer className="site-foot">
-        <div className="wrap">
-          <div className="foot-grid">
-            <div>
-              <a className="brand" href="#top">
-                <span className="brand-mark" aria-hidden="true">
-                  Om
-                </span>
-                <span className="brand-word">OpenMind</span>
-              </a>
-              <p className="foot-tagline">L&apos;analista dati AI per la manifattura</p>
-            </div>
-            <nav className="foot-col" aria-label="Sezioni">
-              <p className="foot-col-title">Info</p>
-              <a href="#come-funziona">Come funziona</a>
-              <a href="#dentro">Dentro OpenMind</a>
-              <a href="#esempi">Esempi</a>
-              <a href="#sicurezza">Sicurezza</a>
-              <a href="#faq">FAQ</a>
-            </nav>
-            <nav className="foot-col" aria-label="Azienda">
-              <p className="foot-col-title">Azienda</p>
-              <a href={DEMO_MAILTO}>Contattaci</a>
-              <a href={APP_URL}>Accedi all&apos;app</a>
-            </nav>
-          </div>
-          <div className="foot-bottom">
-            <span>© 2026 Virtech Srl</span>
-            <span>OpenMind v2.0.0 — Powered by Virtech</span>
-          </div>
-        </div>
-      </footer>
+      <SiteFooter />
     </>
   );
 }
