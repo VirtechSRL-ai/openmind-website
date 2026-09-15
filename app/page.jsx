@@ -263,9 +263,7 @@ export default function Home() {
             </div>
 
             <div className="hub">
-              <span className="hub-mark" aria-hidden="true">
-                Om
-              </span>
+              <img className="hub-mark" src="/logo-mark.png" alt="" width="128" height="128" />
               <span className="hub-caption">Motore d&apos;analisi OpenMind</span>
             </div>
           </div>
