@@ -34,12 +34,14 @@ export default function ChatCard() {
           started = true;
           io.disconnect();
 
-          timers.push(setTimeout(() => setStep(1), 600));
-          timers.push(setTimeout(() => setStep(2), 1300));
+          /* se il sipario d'apertura è ancora su, la sequenza parte dopo il velo */
+          const wait = document.querySelector(".intro-veil") ? 3400 : 0;
+          timers.push(setTimeout(() => setStep(1), wait + 600));
+          timers.push(setTimeout(() => setStep(2), wait + 1300));
           STATES.forEach((_, i) => {
-            timers.push(setTimeout(() => setStateIdx(i), 1300 + i * 900));
+            timers.push(setTimeout(() => setStateIdx(i), wait + 1300 + i * 900));
           });
-          timers.push(setTimeout(() => setStep(3), 1300 + STATES.length * 900));
+          timers.push(setTimeout(() => setStep(3), wait + 1300 + STATES.length * 900));
         });
       },
       { threshold: 0.35 }
@@ -81,7 +83,11 @@ export default function ChatCard() {
           <span className="status-text">{STATES[stateIdx]}</span>
         </div>
 
-        <div className={`msg msg-ai${step >= 3 ? " shown" : ""}`} data-step="3">
+        <div className={`msg-ai-row${step >= 3 ? " shown" : ""}`} data-step="3">
+          <span className="om-ava" aria-hidden="true">
+            Om
+          </span>
+          <div className="msg msg-ai">
           <p>
             Sull&apos;ordine <strong>2025/114</strong> il margine è del <strong>23,4%</strong>:
             ricavo 48.600&nbsp;€ contro 37.230&nbsp;€ di costi.
@@ -111,7 +117,7 @@ export default function ChatCard() {
             <div className="bar-row">
               <span className="bar-label">Margine</span>
               <span className="bar-track">
-                <span className="bar bar-ember" style={{ "--w": "23%" }} />
+                <span className="bar bar-accent" style={{ "--w": "23%" }} />
               </span>
               <span className="bar-val">11.370&nbsp;€</span>
             </div>
@@ -120,6 +126,7 @@ export default function ChatCard() {
             Ho valorizzato i materiali a costo medio ponderato — fammi sapere se preferisci un
             altro metodo.
           </p>
+          </div>
         </div>
       </div>
 

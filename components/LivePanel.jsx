@@ -49,8 +49,10 @@ export default function LivePanel() {
           if (!entry.isIntersecting || started) return;
           started = true;
           io.disconnect();
+          /* se il sipario d'apertura è ancora su, le righe partono dopo il velo */
+          const wait = document.querySelector(".intro-veil") ? 3400 : 0;
           ROWS.forEach((_, i) => {
-            timers.push(setTimeout(() => setVisible(i + 1), 400 + i * 550));
+            timers.push(setTimeout(() => setVisible(i + 1), wait + 400 + i * 550));
           });
         });
       },

@@ -7,7 +7,9 @@ export default function SiteFooter() {
         <div className="foot-grid">
           <div>
             <a className="brand" href="/#top">
-              <img className="brand-mark" src="/logo-mark.png" alt="" width="64" height="64" />
+              <span className="brand-mark" aria-hidden="true">
+                Om
+              </span>
               <span className="brand-word">OpenMind</span>
             </a>
             <p className="foot-tagline">L&apos;analista dati AI per la manifattura</p>

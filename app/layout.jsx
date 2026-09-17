@@ -1,24 +1,20 @@
 import { Analytics } from "@vercel/analytics/next";
-import { Fraunces, Inter_Tight, JetBrains_Mono } from "next/font/google";
+import { Cormorant_Garamond, Inter } from "next/font/google";
 import "./globals.css";
 import { SITE_URL } from "../lib/site";
 
-const fraunces = Fraunces({
+/* Coppia tipografica: Cormorant Garamond corsivo per i titoli editoriali
+   e i numeri grandi, Inter per testo, interfaccia, label e navigazione. */
+const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
-  variable: "--font-fraunces",
-  axes: ["opsz"],
+  weight: ["500", "600", "700"],
+  style: ["normal", "italic"],
+  variable: "--font-cormorant",
 });
 
-const interTight = Inter_Tight({
+const inter = Inter({
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
-  variable: "--font-inter-tight",
-});
-
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ["latin"],
-  weight: ["400", "500"],
-  variable: "--font-jbmono",
+  variable: "--font-inter",
 });
 
 export const viewport = {
@@ -50,11 +46,17 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html
-      lang="it"
-      className={`js ${fraunces.variable} ${interTight.variable} ${jetbrainsMono.variable}`}
-    >
+    <html lang="it" className={`js ${cormorant.variable} ${inter.variable}`}>
       <body>
+        {/* Prima del primo paint: attiva il sipario d'apertura (IntroVeil) solo
+            alla prima visita della sessione e mai con animazioni ridotte.
+            Senza JS lo script non gira e il velo resta nascosto. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              'try{if(!sessionStorage.getItem("om-intro")&&!matchMedia("(prefers-reduced-motion: reduce)").matches)document.documentElement.classList.add("intro")}catch(e){}',
+          }}
+        />
         <noscript>
           {/* Senza JS il contenuto resta sempre visibile */}
           <style>{`.js .reveal{opacity:1;transform:none}.js .chat-body [data-step]{opacity:1;transform:none}.js .msg-status{display:none}`}</style>

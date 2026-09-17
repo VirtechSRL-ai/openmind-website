@@ -1,11 +1,9 @@
 import ContactForm from "./ContactForm";
-import RibbonField from "./RibbonField";
 import { APP_URL, DEMO_MAILTO } from "../lib/site";
 
-export default function DemoCta({ withField = false }) {
+export default function DemoCta() {
   return (
     <section className="dark-band closing" id="demo">
-      {withField && <RibbonField className="closing-field" />}
       <div className="wrap">
         <span className="kicker">Richiedi una demo</span>
         <h2>

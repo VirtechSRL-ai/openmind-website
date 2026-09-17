@@ -1,22 +1,29 @@
 import ChatCard from "../components/ChatCard";
+import CountUp from "../components/CountUp";
 import DemoCta from "../components/DemoCta";
+import FluidField from "../components/FluidField";
 import HubDiagram from "../components/HubDiagram";
+import Icon from "../components/Icons";
+import IntroVeil from "../components/IntroVeil";
 import LivePanel from "../components/LivePanel";
+import MidCta from "../components/MidCta";
+import ProcessDemo from "../components/ProcessDemo";
 import Reveal from "../components/Reveal";
-import RibbonField from "../components/RibbonField";
 import Sectors from "../components/Sectors";
 import SiteFooter from "../components/SiteFooter";
 import SiteHeader from "../components/SiteHeader";
+import Ticker from "../components/Ticker";
 
 export default function Home() {
   return (
     <>
+      <IntroVeil />
+      <FluidField />
       <SiteHeader />
 
       <main>
         {/* ============ HERO ============ */}
         <section className="hero">
-          <RibbonField className="hero-field" />
           <div className="wrap">
             <p className="hero-badge">
               <span className="hero-badge-dot" aria-hidden="true" />
@@ -26,14 +33,15 @@ export default function Home() {
               </span>
             </p>
             <h1>
-              L&apos;<span className="ai ai-dark">analista dati AI</span>
+              <span className="h1-line">
+                L&apos;<span className="ai ai-dark">analista dati AI</span>
+              </span>
               <br />
-              per la manifattura
+              <span className="h1-line h1-line-2">per la manifattura</span>
             </h1>
             <p className="hero-sub">
-              Fai domande in italiano su ordini, produzione, costi e magazzino.{" "}
-              <em>OpenMind interroga i dati veri della tua azienda</em> e risponde con numeri
-              esatti, grafici e consigli operativi.
+              Scrivi la domanda come la faresti a un collega. OpenMind interroga i dati veri
+              della tua azienda e risponde con numeri esatti, grafici e consigli operativi.
             </p>
             <div className="hero-actions">
               <a className="btn btn-light btn-lg" href="#demo">
@@ -42,108 +50,288 @@ export default function Home() {
                   →
                 </span>
               </a>
-              <a className="btn btn-outline-dark btn-lg" href="#come-funziona">
+              <a className="btn btn-outline-dark btn-lg" href="#in-azione">
                 Guardala in azione
               </a>
             </div>
 
+            <ul className="hero-proof" aria-label="Tre garanzie in breve">
+              <li>
+                <Icon name="spark" />
+                Risposte in ~30 secondi
+              </li>
+              <li>
+                <Icon name="pen" />
+                In italiano, zero SQL
+              </li>
+              <li>
+                <Icon name="lock" />
+                Dati in sola lettura
+              </li>
+            </ul>
+
             <div className="hero-panels">
+              <span className="sticker sticker-iris" aria-hidden="true">
+                senza Excel
+              </span>
+              <span className="sticker sticker-paper" aria-hidden="true">
+                «come a un collega»
+              </span>
               <LivePanel />
               <ChatCard />
             </div>
           </div>
         </section>
 
-        {/* ============ IL PROBLEMA ============ */}
+        {/* ============ TICKER DOMANDE ============ */}
+        <Ticker />
+
+        {/* ============ FOGLIO: IL PROBLEMA ============ */}
+        <Reveal className="sheet rv-sheet">
         <section className="section section-cream" id="problema">
           <div className="wrap">
             <div className="sec-head">
               <span className="kicker">Il problema</span>
-              <h2>Le risposte ci sono già. Sono solo lente.</h2>
-              <p className="sec-sub">
-                I numeri che ti servono sono nel gestionale. Il problema è arrivarci:
-              </p>
+              <Reveal as="h2" className="rv-title">Le risposte ci sono già. Sono solo lente.</Reveal>
             </div>
             <Reveal className="pains pains-divided">
               <div className="pain">
-                <strong>Mezza giornata</strong>
-                <span>
-                  tra Excel e gestionale per rispondere a una domanda sola: «che margine ho fatto
-                  su quell&apos;ordine?»
-                </span>
+                <strong>½ giornata</strong>
+                <span>per una risposta, tra Excel e gestionale.</span>
               </div>
               <div className="pain">
-                <strong>Tre uffici</strong>
-                <span>
-                  da attraversare per incrociare ordini clienti, magazzino, produzione e fatture.
-                </span>
+                <strong>3 uffici</strong>
+                <span>da attraversare per incrociare ordini, magazzino e fatture.</span>
               </div>
               <div className="pain">
-                <strong>Ogni lunedì</strong>
-                <span>gli stessi report da rifare a mano, già vecchi il giorno dopo.</span>
+                <strong>52 lunedì</strong>
+                <span>l&apos;anno con gli stessi report da rifare a mano.</span>
               </div>
+            </Reveal>
+            <Reveal className="vs-row">
+              <s className="vs-old">Mezza giornata</s>
+              <span className="vs-arrow" aria-hidden="true">
+                →
+              </span>
+              <span className="vs-new">30 secondi</span>
+              <a className="vs-link" href="#in-azione">
+                Guarda come →
+              </a>
             </Reveal>
           </div>
         </section>
+        </Reveal>
 
-        {/* ============ LA SOLUZIONE ============ */}
-        <section className="dark-band">
+        {/* ============ INTERLUDIO SUL FLUIDO ============ */}
+        <section className="fluid-word" aria-label="Dai dati sparsi alle risposte">
+          <Reveal as="p">
+            Dai dati <span className="fw-accent">sparsi</span>…
+          </Reveal>
+        </section>
+
+        {/* ============ IL TUO ANALISTA (soluzione + personalità) ============ */}
+        <section className="dark-band" id="analista">
           <div className="wrap">
             <span className="kicker">La soluzione</span>
-            <h2>
+            <Reveal as="h2" className="rv-title">
               Non un&apos;altra piattaforma di BI.
               <br />
               <span className="ai ai-dark">Un analista che risponde.</span>
-            </h2>
-            <p className="band-sub">
-              Niente da configurare, niente da imparare: scrivi la domanda come la faresti a un
-              collega. OpenMind è volutamente limitato ai dati della tua azienda: chiede
-              chiarimenti quando la domanda è ambigua e dichiara le proprie assunzioni.
-            </p>
+            </Reveal>
+
+            <Reveal className="om-intro">
+              <span className="om-ava om-ava-lg" aria-hidden="true">
+                Om
+              </span>
+              <p className="om-bubble">
+                <strong>Buongiorno.</strong> Come posso aiutarti oggi?
+              </p>
+            </Reveal>
+
+            <div className="traits">
+              <Reveal className="trait rv-scale">
+                <Icon name="ask" />
+                <h3>Chiede, non suppone</h3>
+                <p>«Il più venduto»: per valore o per quantità? Se è ambiguo, te lo chiede.</p>
+              </Reveal>
+              <Reveal className="trait rv-scale" delay={60}>
+                <Icon name="note" />
+                <h3>Dichiara le assunzioni</h3>
+                <p>«Ho interpretato &quot;recente&quot; come ultimi 30 giorni.» Nero su bianco.</p>
+              </Reveal>
+              <Reveal className="trait rv-scale" delay={120}>
+                <Icon name="book" />
+                <h3>Parla il vostro gergo</h3>
+                <p>Marginalità, giacenza, scostamento: il glossario è mappato sui vostri dati.</p>
+              </Reveal>
+              <Reveal className="trait rv-scale" delay={180}>
+                <Icon name="lock" />
+                <h3>Lavora in sola lettura</h3>
+                <p>Legge e analizza. I dati non vengono mai modificati.</p>
+              </Reveal>
+            </div>
           </div>
         </section>
 
-        {/* ============ COME FUNZIONA ============ */}
+        {/* ============ FOGLIO: COME FUNZIONA + IN AZIONE ============ */}
+        <Reveal className="sheet rv-sheet">
         <section className="section section-dots" id="come-funziona">
           <div className="wrap">
             <div className="sec-head">
               <span className="kicker kicker-pill">Come funziona</span>
-              <h2>Dalla domanda all&apos;analisi in tre passi</h2>
+              <Reveal as="h2" className="rv-title">Dalla domanda all&apos;analisi in tre passi</Reveal>
             </div>
-            <ol className="flow">
-              <Reveal as="li" className="flow-step">
-                <span className="flow-num" aria-hidden="true">
-                  1
-                </span>
-                <h3>Chiedi</h3>
-                <p>
-                  Scrivi la domanda come la faresti a un collega:{" "}
-                  <em>«Che margine ho fatto sull&apos;ordine 2025/114?»</em>,{" "}
-                  <em>«Riesco a consegnare tutto quello che ho in portafoglio?»</em>.
-                </p>
+            <ProcessDemo />
+          </div>
+        </section>
+
+        {/* ============ OPENMIND IN AZIONE ============ */}
+        <section className="section section-cream" id="in-azione">
+          <span id="esempi" className="anchor-alias" aria-hidden="true" />
+          <div className="wrap">
+            <div className="sec-head">
+              <span className="kicker">OpenMind in azione</span>
+              <Reveal as="h2" className="rv-title">
+                Domande vere,
+                <br />
+                <span className="ai ai-light">risposte operative</span>
               </Reveal>
-              <Reveal as="li" className="flow-step" delay={70}>
-                <span className="flow-num" aria-hidden="true">
-                  2
-                </span>
-                <h3>OpenMind interroga i dati veri</h3>
-                <p>
-                  Genera ed esegue la query sul database aziendale in quel momento: niente
-                  risposte precotte, niente report statici. Se la domanda è ambigua, ti chiede un
-                  chiarimento invece di tirare a indovinare.
-                </p>
+            </div>
+
+            <div className="dialogs">
+              <Reveal as="article" className="dialog rv-left">
+                <p className="dialog-q">«Riesco a consegnare tutto quello che ho in ordine?»</p>
+                <div className="dialog-a">
+                  <span className="om-ava" aria-hidden="true">
+                    Om
+                  </span>
+                  <div className="dialog-body">
+                    <p>
+                      Quasi: <strong>41 righe su 44 sono coperte</strong>. Per il resto devi
+                      emettere 3 ordini d&apos;acquisto.
+                    </p>
+                    <ul className="verdict">
+                      <li className="v-ok">41 righe coperte da magazzino e produzione</li>
+                      <li className="v-warn">3 ordini da emettere · data ultima 21/08</li>
+                    </ul>
+                    <p className="dialog-insight">
+                      Ecco l&apos;elenco degli ordini, con quantità e data ultima utile.
+                    </p>
+                  </div>
+                </div>
               </Reveal>
-              <Reveal as="li" className="flow-step" delay={140}>
-                <span className="flow-num" aria-hidden="true">
-                  3
-                </span>
-                <h3>Ricevi un&apos;analisi, non solo un numero</h3>
-                <p>
-                  Risposta diretta, cifre esatte con percentuali, confronto con il contesto,
-                  grafico quando aiuta e un insight operativo su cosa fare.
+
+              <Reveal as="article" className="dialog rv-right">
+                <p className="dialog-q">
+                  «Quanto ci è costato davvero l&apos;ordine di produzione 114?»
                 </p>
+                <div className="dialog-a">
+                  <span className="om-ava" aria-hidden="true">
+                    Om
+                  </span>
+                  <div className="dialog-body">
+                    <p>
+                      Costo pieno <strong>148,90 € al pezzo</strong>, contro un ricavo di 194,40 €.
+                    </p>
+                    <div className="mini-chart">
+                      <div className="bar-row">
+                        <span className="bar-label">Materiali</span>
+                        <span className="bar-track">
+                          <span className="bar" style={{ "--w": "68%" }} />
+                        </span>
+                        <span className="bar-val">101,30&nbsp;€</span>
+                      </div>
+                      <div className="bar-row">
+                        <span className="bar-label">Manodopera</span>
+                        <span className="bar-track">
+                          <span className="bar" style={{ "--w": "27%" }} />
+                        </span>
+                        <span className="bar-val">40,10&nbsp;€</span>
+                      </div>
+                      <div className="bar-row">
+                        <span className="bar-label">Scarti 1,8%</span>
+                        <span className="bar-track">
+                          <span className="bar bar-accent" style={{ "--w": "5%" }} />
+                        </span>
+                        <span className="bar-val">7,50&nbsp;€</span>
+                      </div>
+                    </div>
+                    <p className="dialog-insight">
+                      Minuti standard contro effettivi per ogni fase: la fase 30 è quella fuori
+                      tempo.
+                    </p>
+                  </div>
+                </div>
               </Reveal>
-            </ol>
+
+              <Reveal as="article" className="dialog rv-left">
+                <p className="dialog-q">
+                  «Che margine ho fatto sui primi 250 pezzi dell&apos;ordine di Rossi?»
+                </p>
+                <div className="dialog-a">
+                  <span className="om-ava" aria-hidden="true">
+                    Om
+                  </span>
+                  <div className="dialog-body">
+                    <p className="dialog-big">
+                      23,4<small>%</small>
+                    </p>
+                    <p>
+                      Ricavo contro costo di materiali e manodopera, valorizzati a{" "}
+                      <strong>costo medio ponderato</strong> — te lo dichiaro nella risposta,
+                      e puoi scegliere un altro metodo.
+                    </p>
+                  </div>
+                </div>
+              </Reveal>
+            </div>
+
+            <Reveal className="more-chips">
+              <span className="more-chips-label">E poi</span>
+              <ul>
+                <li>Analisi ABC del fatturato</li>
+                <li>Fornitori in ritardo</li>
+                <li>Fatture emesse e incassato</li>
+                <li>Confronto listini tra anni</li>
+                <li>Rotazione di magazzino</li>
+                <li>Lotti d&apos;acquisto fuori misura</li>
+              </ul>
+            </Reveal>
+          </div>
+        </section>
+        </Reveal>
+
+        {/* ============ CTA INTERMEDIA ============ */}
+        <MidCta
+          title="Hai in testa una domanda così anche tu?"
+          note="Falla sui tuoi dati: ti prepariamo una demo con il tuo gestionale."
+        />
+
+        {/* ============ FOGLIO: NUMERI + DENTRO + SETTORI + DATI ============ */}
+        <Reveal className="sheet rv-sheet">
+        <section className="section section-dots" id="numeri">
+          <div className="wrap">
+            <Reveal className="results">
+              <div className="result">
+                <strong>
+                  <CountUp value={30} suffix={" s"} />
+                </strong>
+                <span className="result-label">Per una risposta</span>
+                <span className="result-note">al posto di mezza giornata</span>
+              </div>
+              <div className="result">
+                <strong>0</strong>
+                <span className="result-label">Righe di SQL da scrivere</span>
+                <span className="result-note">query, calcoli e grafici li fa OpenMind</span>
+              </div>
+              <div className="result">
+                <strong>
+                  <CountUp value={100} suffix="%" />
+                </strong>
+                <span className="result-label">Query in sola lettura</span>
+                <span className="result-note">i dati vengono letti, mai modificati</span>
+              </div>
+            </Reveal>
           </div>
         </section>
 
@@ -152,19 +340,18 @@ export default function Home() {
           <div className="wrap">
             <div className="sec-head-left">
               <span className="kicker kicker-pill">Dentro OpenMind</span>
-              <h2>
+              <Reveal as="h2" className="rv-title">
                 Tre viste.
                 <br />
                 Un motore d&apos;analisi alla base.
-              </h2>
-              <p className="sec-sub">
-                Chat, cruscotti e promemoria condividono lo stesso motore: il glossario della tua
-                azienda mappato sui dati veri.
-              </p>
+              </Reveal>
             </div>
 
             <div className="caps">
               <Reveal className="cap-card b-4" spotlight>
+                <span className="cap-icon" aria-hidden="true">
+                  <Icon name="chat" />
+                </span>
                 <div className="cap-vis" aria-hidden="true">
                   <span className="cv-row cv-user" />
                   <span className="cv-row cv-ai" />
@@ -179,8 +366,8 @@ export default function Home() {
                 </div>
                 <h3>Chat analitica</h3>
                 <p>
-                  Domande in italiano, risposte in streaming con tabelle, grafici interattivi e lo
-                  storico di tutte le conversazioni, ricercabile.
+                  Domande in italiano, risposte in streaming con tabelle e grafici interattivi.
+                  Storico ricercabile.
                 </p>
                 <div className="cap-doing">
                   <span className="cap-doing-label">Domanda tipo</span>
@@ -190,30 +377,34 @@ export default function Home() {
                 </div>
               </Reveal>
               <Reveal className="cap-card b-2" delay={60} spotlight>
-                <h3>Chiede, non suppone</h3>
-                <p>
-                  «Il più venduto»: per valore, quantità o numero di ordini? Quando una domanda ha
-                  più letture, OpenMind chiede. E quando assume qualcosa, lo dichiara.
-                </p>
-                <div className="cap-doing">
-                  <span className="cap-doing-label">Trasparenza</span>
-                  <span className="cap-doing-q">
-                    «Ho interpretato &quot;recente&quot; come ultimi 30 giorni»
-                  </span>
-                </div>
-              </Reveal>
-              <Reveal className="cap-card b-2" spotlight>
+                <span className="cap-icon" aria-hidden="true">
+                  <Icon name="bell" />
+                </span>
                 <h3>Promemoria</h3>
-                <p>
-                  Annota attività e scadenze direttamente dove analizzi i dati. Ogni utente vede
-                  solo i propri.
-                </p>
+                <p>Attività e scadenze dove analizzi i dati. Ogni utente vede solo i propri.</p>
                 <div className="cap-doing">
                   <span className="cap-doing-label">Esempio</span>
                   <span className="cap-doing-q">«Sollecitare il fornitore entro venerdì»</span>
                 </div>
               </Reveal>
+              <Reveal className="cap-card b-2" spotlight>
+                <span className="cap-icon" aria-hidden="true">
+                  <Icon name="chart" />
+                </span>
+                <h3>Analisi da vero analista</h3>
+                <p>
+                  ABC e Pareto, confronti anno su anno, scostamenti: elaborazioni anche in
+                  Python, con il CSV dei risultati.
+                </p>
+                <div className="cap-doing">
+                  <span className="cap-doing-label">Domanda tipo</span>
+                  <span className="cap-doing-q">«Fammi un&apos;analisi ABC del fatturato»</span>
+                </div>
+              </Reveal>
               <Reveal className="cap-card b-4" delay={60} spotlight>
+                <span className="cap-icon" aria-hidden="true">
+                  <Icon name="gauge" />
+                </span>
                 <div className="cap-vis cap-vis-tiles" aria-hidden="true">
                   <span className="cvt">
                     <span className="cvt-label">Ordini aperti</span>
@@ -230,118 +421,15 @@ export default function Home() {
                 </div>
                 <h3>Cruscotti sempre aggiornati</h3>
                 <p>
-                  Crei una dashboard conversando e OpenMind la salva. A ogni apertura i dati si
-                  riallineano a oggi, senza rifare nulla.
+                  Crei una dashboard conversando, OpenMind la salva. A ogni apertura i dati si
+                  riallineano a oggi.
                 </p>
                 <div className="cap-doing">
                   <span className="cap-doing-label">Domanda tipo</span>
                   <span className="cap-doing-q">«Crea un cruscotto: top 10 fornitori 2025»</span>
                 </div>
               </Reveal>
-              <Reveal className="cap-card b-3" spotlight>
-                <h3>Parla il vostro gergo</h3>
-                <p>
-                  Fatturato, marginalità, giacenza, scostamento, DFFM: il glossario aziendale è
-                  mappato sui dati, così ogni termine finisce sulla colonna giusta.
-                </p>
-                <div className="cap-doing">
-                  <span className="cap-doing-label">Glossario</span>
-                  <span className="cap-doing-q">«scostamento» → standard vs effettivo</span>
-                </div>
-              </Reveal>
-              <Reveal className="cap-card b-3" delay={60} spotlight>
-                <h3>Analisi da vero analista</h3>
-                <p>
-                  ABC e Pareto, confronti anno su anno, scostamenti standard/effettivo: OpenMind
-                  esegue anche elaborazioni in Python e ti lascia il CSV dei risultati.
-                </p>
-                <div className="cap-doing">
-                  <span className="cap-doing-label">Domanda tipo</span>
-                  <span className="cap-doing-q">«Fammi un&apos;analisi ABC del fatturato»</span>
-                </div>
-              </Reveal>
             </div>
-
-            <div className="hub">
-              <img className="hub-mark" src="/logo-mark.png" alt="" width="128" height="128" />
-              <span className="hub-caption">Motore d&apos;analisi OpenMind</span>
-            </div>
-          </div>
-        </section>
-
-        {/* ============ ESEMPI ============ */}
-        <section className="section section-cream" id="esempi">
-          <div className="wrap">
-            <div className="sec-head">
-              <span className="kicker">Domande vere, risposte operative</span>
-              <h2>
-                Produzione e acquisti sono
-                <br />
-                il <span className="ai ai-light">cuore di OpenMind</span>
-              </h2>
-              <p className="sec-sub">
-                Tre analisi guidate, già pronte, che partono da una semplice domanda in chat.
-              </p>
-            </div>
-
-            <div className="qa-list">
-              <Reveal as="article" className="qa">
-                <h3 className="qa-q">«Riesco a consegnare tutto quello che ho in&nbsp;ordine?»</h3>
-                <p className="qa-a">
-                  OpenMind incrocia ordini clienti aperti, magazzino, distinte base, ordini di
-                  produzione e di acquisto in corso, e ti restituisce un verdetto: cosa è coperto,
-                  cosa manca, e l&apos;elenco esatto degli ordini da emettere — con quantità e
-                  data ultima utile per emetterli.
-                </p>
-              </Reveal>
-              <Reveal as="article" className="qa">
-                <h3 className="qa-q">
-                  «Quanto ci è costato davvero l&apos;ordine di produzione&nbsp;114?»
-                </h3>
-                <p className="qa-a">
-                  Consuntivo completo: minuti standard contro effettivi per ogni fase, scarti,
-                  valorizzazione dei materiali sulla distinta multilivello, costo pieno al pezzo —
-                  confrontato con il ricavo.
-                </p>
-              </Reveal>
-              <Reveal as="article" className="qa">
-                <h3 className="qa-q">
-                  «Che margine ho fatto sui primi 250 pezzi dell&apos;ordine di&nbsp;Rossi?»
-                </h3>
-                <p className="qa-a">
-                  Ricavo contro costo materiali e manodopera, con il metodo di valorizzazione che
-                  scegli tu, dichiarato nero su bianco nella risposta.
-                </p>
-              </Reveal>
-            </div>
-
-            <Reveal as="p" className="qa-more">
-              E poi: analisi ABC del fatturato, fornitori in ritardo sulle consegne, fatture
-              emesse e incassato, confronto listini tra anni, rotazione di magazzino, lotti
-              d&apos;acquisto troppo grandi o troppo piccoli.
-            </Reveal>
-
-            <Reveal className="results">
-              <div className="result">
-                <strong>30 s</strong>
-                <span className="result-label">Per una risposta</span>
-                <span className="result-note">
-                  al posto di mezza giornata tra Excel e gestionale
-                </span>
-              </div>
-              <div className="result">
-                <strong>0</strong>
-                <span className="result-label">Righe di SQL da scrivere</span>
-                <span className="result-note">query, calcoli e grafici li fa OpenMind</span>
-              </div>
-              <div className="result">
-                <strong>100%</strong>
-                <span className="result-label">Query in sola lettura</span>
-                <span className="result-note">
-                  i tuoi dati vengono letti e analizzati, mai modificati
-                </span>
-              </div>
-            </Reveal>
           </div>
         </section>
 
@@ -353,84 +441,85 @@ export default function Home() {
           <div className="wrap">
             <div className="sec-head">
               <span className="kicker">I dati</span>
-              <h2>
+              <Reveal as="h2" className="rv-title">
                 Un&apos;unica interfaccia per l&apos;
                 <span className="ai ai-light">archivio operativo completo</span>
-              </h2>
+              </Reveal>
             </div>
           </div>
           <HubDiagram />
           <div className="wrap">
-            <p className="dati-note">
-              Anagrafica articoli, distinte base multilivello, cicli di lavoro e centri di costo,
-              ordini di produzione con gli avanzamenti di reparto, ordini clienti e fornitori con
-              fatture e pagamenti, listini con le validità per anno, giacenze di magazzino:
-              domande che oggi attraversano tre uffici, in un posto solo.
-            </p>
+            <ul className="data-chips" aria-label="Dati coperti">
+              <li>Anagrafica articoli</li>
+              <li>Distinte base multilivello</li>
+              <li>Cicli e centri di costo</li>
+              <li>OdP e avanzamenti</li>
+              <li>Ordini clienti e fornitori</li>
+              <li>Fatture e pagamenti</li>
+              <li>Listini per anno</li>
+              <li>Giacenze di magazzino</li>
+            </ul>
           </div>
         </section>
+        </Reveal>
 
         {/* ============ SICUREZZA ============ */}
-        <section className="dark-band" id="sicurezza">
-          <div className="wrap trust-split">
-            <div>
-              <span className="kicker">Sicurezza</span>
-              <h2>
-                Affidabile per costruzione.
-                <br />
-                <span className="ai ai-dark">Senza sorprese.</span>
-              </h2>
-              <p className="band-sub">
-                OpenMind legge e analizza: i tuoi dati non vengono mai modificati, e ogni accesso
-                è personale.
-              </p>
+        <section className="dark-band dark-band-calm" id="sicurezza">
+          <div className="wrap">
+            <span className="kicker">Sicurezza</span>
+            <Reveal as="h2" className="rv-title">
+              Affidabile per costruzione.
+              <br />
+              <span className="ai ai-dark">Senza sorprese.</span>
+            </Reveal>
+
+            <div className="trust-cards">
+              <Reveal className="trust-card rv-scale">
+                <span className="trust-icon" aria-hidden="true">
+                  <Icon name="shield" />
+                </span>
+                <h3>Motore AI di ultima generazione</h3>
+                <p>Costruito sui modelli più avanzati per l&apos;analisi dei dati.</p>
+              </Reveal>
+              <Reveal className="trust-card rv-scale" delay={60}>
+                <span className="trust-icon" aria-hidden="true">
+                  <Icon name="lock" />
+                </span>
+                <h3>Solo lettura, per progetto</h3>
+                <p>Le query leggono e basta, riverificate a ogni esecuzione.</p>
+              </Reveal>
+              <Reveal className="trust-card rv-scale" delay={120}>
+                <span className="trust-icon" aria-hidden="true">
+                  <Icon name="user" />
+                </span>
+                <h3>Accessi personali</h3>
+                <p>Chat, cruscotti e promemoria privati per ciascun utente.</p>
+              </Reveal>
+              <Reveal className="trust-card rv-scale" delay={180}>
+                <span className="trust-icon" aria-hidden="true">
+                  <Icon name="euro" />
+                </span>
+                <h3>Costi sotto controllo</h3>
+                <p>Tetto di spesa configurato per ogni conversazione.</p>
+              </Reveal>
             </div>
-            <dl className="trust-rows">
-              <Reveal className="trust-row">
-                <span className="trust-check" aria-hidden="true">
-                  ✓
+
+            <div className="trust-actions">
+              <a className="btn btn-light" href="#demo">
+                Richiedi una demo
+                <span className="btn-arrow" aria-hidden="true">
+                  →
                 </span>
-                <dt>Motore AI di ultima generazione</dt>
-                <dd>
-                  OpenMind è costruito su modelli AI tra i più avanzati al mondo per
-                  l&apos;analisi e il ragionamento sui dati.
-                </dd>
-              </Reveal>
-              <Reveal className="trust-row" delay={60}>
-                <span className="trust-check" aria-hidden="true">
-                  ✓
-                </span>
-                <dt>Accessi personali</dt>
-                <dd>
-                  Login con email e password; cruscotti, promemoria e conversazioni sono privati
-                  per ciascun utente.
-                </dd>
-              </Reveal>
-              <Reveal className="trust-row" delay={120}>
-                <span className="trust-check" aria-hidden="true">
-                  ✓
-                </span>
-                <dt>Solo lettura, per progetto</dt>
-                <dd>
-                  Le query dei cruscotti vengono riverificate a ogni aggiornamento: possono
-                  soltanto leggere i dati, mai modificarli.
-                </dd>
-              </Reveal>
-              <Reveal className="trust-row" delay={180}>
-                <span className="trust-check" aria-hidden="true">
-                  ✓
-                </span>
-                <dt>Costi sotto controllo</dt>
-                <dd>
-                  Ogni conversazione ha un tetto di spesa configurato: nessuna sorpresa a fine
-                  mese.
-                </dd>
-              </Reveal>
-            </dl>
+              </a>
+              <a className="trust-link" href="/sicurezza">
+                Approfondisci la sicurezza →
+              </a>
+            </div>
           </div>
         </section>
 
-        {/* ============ FAQ ============ */}
+        {/* ============ FOGLIO: FAQ ============ */}
+        <Reveal className="sheet rv-sheet">
         <section className="section section-cream" id="faq">
           <div className="wrap wrap-narrow">
             <div className="sec-head">
@@ -471,9 +560,17 @@ export default function Home() {
             </div>
           </div>
         </section>
+        </Reveal>
+
+        {/* ============ INTERLUDIO SUL FLUIDO ============ */}
+        <section className="fluid-word" aria-label="Alle risposte chiare">
+          <Reveal as="p">
+            …alle risposte <span className="fw-accent">chiare</span>.
+          </Reveal>
+        </section>
 
         {/* ============ CTA FINALE ============ */}
-        <DemoCta withField />
+        <DemoCta />
       </main>
 
       <SiteFooter />
