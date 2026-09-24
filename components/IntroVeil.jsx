@@ -109,11 +109,8 @@ export default function IntroVeil() {
             ))}
           </g>
         </svg>
-        <span className="iv-markwrap">
-          <span className="iv-ring" aria-hidden="true" />
-          <span className="iv-mark">Om</span>
-        </span>
-        <span className="iv-word">OpenMind</span>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img className="iv-logo" src="/brand/openmind-logo-640.png" alt="" width="640" height="102" />
         <span className="iv-tag">Analista dati AI · Virtech Srl</span>
       </div>
     </div>

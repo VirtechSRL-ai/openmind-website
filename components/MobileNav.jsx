@@ -51,7 +51,7 @@ export default function MobileNav() {
             ))}
           </nav>
           <div className="mm-actions">
-            <a className="btn btn-light btn-lg" href="/#demo" onClick={close}>
+            <a className="btn btn-light btn-lg btn-glow" href="/#demo" onClick={close}>
               Richiedi una demo
               <span className="btn-arrow" aria-hidden="true">
                 →

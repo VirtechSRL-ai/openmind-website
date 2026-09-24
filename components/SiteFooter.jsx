@@ -1,4 +1,5 @@
 import { APP_URL, DEMO_MAILTO, HYGIENE_PAGES } from "../lib/site";
+import Reveal from "./Reveal";
 
 export default function SiteFooter() {
   return (
@@ -7,10 +8,14 @@ export default function SiteFooter() {
         <div className="foot-grid">
           <div>
             <a className="brand" href="/#top">
-              <span className="brand-mark" aria-hidden="true">
-                Om
-              </span>
-              <span className="brand-word">OpenMind</span>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+              className="brand-logo"
+              src="/brand/openmind-logo-640.png"
+              alt="OpenMind"
+              width="640"
+              height="102"
+            />
             </a>
             <p className="foot-tagline">L&apos;analista dati AI per la manifattura</p>
           </div>
@@ -38,6 +43,11 @@ export default function SiteFooter() {
             <a href={APP_URL}>Accedi all&apos;app</a>
           </nav>
         </div>
+        {/* chiusura: il logo come grande filigrana, rivelato dallo scroll */}
+        <Reveal className="foot-mark rv-mark" aria-hidden="true">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/brand/openmind-logo.png" alt="" width="1862" height="297" loading="lazy" />
+        </Reveal>
         <div className="foot-bottom">
           <span>© 2026 Virtech Srl</span>
           <span>OpenMind v2.0.0 — Powered by Virtech</span>

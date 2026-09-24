@@ -1,8 +1,6 @@
-import DemoCta from "../../../components/DemoCta";
 import Reveal from "../../../components/Reveal";
-import RisorseNav from "../../../components/RisorseNav";
-import SiteFooter from "../../../components/SiteFooter";
-import SiteHeader from "../../../components/SiteHeader";
+import ResShell, { Brief, ResHeadMeta } from "../../../components/res/ResShell";
+import { splitWords } from "../../../components/Words";
 import { HYGIENE_PAGES } from "../../../lib/site";
 
 const PAGE = HYGIENE_PAGES.find((p) => p.slug === "margine-reale-ordine-di-produzione");
@@ -18,147 +16,218 @@ export const metadata = {
   },
 };
 
+const CHAPTERS = [
+  ["problema", "Il problema"],
+  ["calcolo", "Il calcolo"],
+  ["scostamento", "Lo scostamento"],
+  ["openmind", "In 30 secondi"],
+];
+
+/* Firma visiva: la cascata dal ricavo al margine. Esempio illustrativo
+   dell'articolo: ricavo 48.600 €, materiali 25.270 €, manodopera 11.960 €
+   → margine 11.370 € = 23,4% (contro il 28% stimato in offerta). */
+const REV = 48600;
+const WF = [
+  { key: "rev", label: "Ricavo fatturato", val: "48.600 €", from: 0, to: REV },
+  { key: "mat", label: "Materiali a consuntivo", val: "− 25.270 €", from: 23330, to: REV },
+  { key: "lab", label: "Manodopera effettiva", val: "− 11.960 €", from: 11370, to: 23330 },
+  { key: "mar", label: "Margine reale", val: "11.370 € · 23,4%", from: 0, to: 11370 },
+];
+const pct = (v) => `${((v / REV) * 100).toFixed(2)}%`;
+
+const STEPS = [
+  ["Il ricavo", "Le righe fatturate (o l'ordine cliente) collegate all'OdP."],
+  [
+    "I materiali a consuntivo",
+    "I prelievi effettivi sulla distinta base multilivello, scarti inclusi, con un metodo di valorizzazione dichiarato.",
+  ],
+  [
+    "La manodopera effettiva",
+    "I minuti dichiarati per ogni fase, per il costo del centro di lavoro. Effettivi, non quelli standard del preventivo.",
+  ],
+  ["Lo scostamento", "Standard contro effettivo, fase per fase: dice dove il margine si è eroso."],
+];
+
 export default function Page() {
   return (
-    <>
-      <SiteHeader />
-      <main>
-        {/* ============ HERO SPLIT ============ */}
-        <section className="section-cream page-hero">
-          <div className="wrap">
-            <nav className="breadcrumb" aria-label="Percorso">
-              <a href="/">Home</a>
-              <span aria-hidden="true">/</span>
-              <a href="/risorse">Risorse</a>
-              <span aria-hidden="true">/</span>
-              <span aria-current="page">Margine reale</span>
-            </nav>
-            <div className="page-hero-grid art-hero-grid">
-              <div>
-                <span className="kicker kicker-pill">Risorse</span>
-                <h1>{PAGE.title}</h1>
-              </div>
-              <p className="page-hero-sub">
-                Il margine stimato in offerta e il margine reale a fine commessa
-                raramente coincidono. La differenza si nasconde nel consuntivo:
-                materiali, minuti effettivi, scarti.
-              </p>
-            </div>
+    <ResShell slug={PAGE.slug} chapters={CHAPTERS}>
+      {/* ============ APERTURA: split, il numero come immagine ============ */}
+      <header className="a1-hero">
+        <div className="wrap a1-hero-grid">
+          <div className="a1-hero-text">
+            <ResHeadMeta slug={PAGE.slug} crumb="Margine reale" />
+            <Reveal as="h1" className="rv-words">
+              {splitWords(
+                <>
+                  Come calcolare il <span className="ai">margine reale</span> di un ordine di
+                  produzione
+                </>
+              )}
+            </Reveal>
+            <p className="res-lede">
+              Il margine stimato in offerta e quello reale a fine commessa raramente coincidono.
+              La differenza si nasconde nel consuntivo.
+            </p>
           </div>
-        </section>
 
-        <article className="section section-cream article art-body-section">
-          <div className="wrap wrap-narrow">
-            <Reveal className="article-body">
-              <h2>Il problema</h2>
-              <p>
-                Quando l&apos;ordine di produzione si chiude, il gestionale ha già
-                tutto: i prelievi di materiale, gli avanzamenti di reparto, le fasi
-                del ciclo, la fattura emessa. Ma il margine reale nessuno lo
-                calcola, perché ricostruirlo significa esportare tre o quattro
-                tabelle in Excel, valorizzare la distinta base multilivello, sommare
-                i minuti dichiarati in reparto e incrociare il tutto con il ricavo.
-                Mezza giornata di lavoro, e quindi si fa solo sulle commesse
-                «sospette» — quando ormai è tardi.
-              </p>
+          <div className="a1-hero-fig" aria-label="Esempio: margine reale 23,4% contro 28% stimato in offerta">
+            <span className="a1-fig-label">Margine reale · OdP 2025/114</span>
+            <span className="a1-fig-num">
+              23,4<small>%</small>
+            </span>
+            <span className="a1-fig-was">
+              stimato in offerta{" "}
+              <s>
+                28%
+                <span className="a1-fig-strike" aria-hidden="true" />
+              </s>
+            </span>
+            <span className="a1-fig-delta">− 4,6 punti</span>
+          </div>
+        </div>
+      </header>
 
-              <h2>Il metodo</h2>
-              <p>Per arrivare al margine reale di un OdP servono quattro numeri:</p>
+      <Brief
+        items={[
+          ["Il margine reale si calcola sul consuntivo, non sul preventivo.", "#problema"],
+          ["Servono quattro numeri insieme: ricavo, materiali, manodopera, scostamento.", "#calcolo"],
+          ["Nell'esempio: 4,6 punti di margine persi su una sola commessa.", "#scostamento"],
+        ]}
+      />
+
+      {/* ============ IL PROBLEMA: una frase, e ciò che il gestionale ha già ============ */}
+      <section className="res-sec a1-problem" id="problema">
+        <div className="wrap a1-problem-grid">
+          <h2 className="res-q">Perché nessuno lo calcola?</h2>
+          <Reveal as="p" className="a1-statement">
+            Il gestionale ha già tutto. <mark>Ricostruirlo a mano costa mezza giornata</mark>: così
+            si fa solo sulle commesse «sospette», quando ormai è tardi.
+          </Reveal>
+          <div className="a1-has">
+            <span className="a1-has-label">Già nel gestionale</span>
+            <ul>
+              {["Prelievi di materiale", "Avanzamenti di reparto", "Fasi del ciclo", "Fattura emessa"].map(
+                (t, k) => (
+                  <Reveal as="li" className="rv-from-right" delay={k * 120} key={t}>
+                    {t}
+                  </Reveal>
+                )
+              )}
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      {/* ============ IL CALCOLO: scena agganciata, la cascata si costruisce ============ */}
+      <section
+        className="a1-calc scene-pin"
+        id="calcolo"
+        data-scene="pin"
+        data-steps="4"
+        data-step="0"
+        data-lead="0.25"
+      >
+        <div className="a1-stage">
+          <div className="wrap a1-calc-grid">
+            <div className="a1-steps">
+              <h2 className="res-q">Da cosa è fatto il margine reale?</h2>
               <ol>
-                <li>
-                  <strong>Il ricavo</strong> — le righe fatturate (o l&apos;ordine
-                  cliente) collegate all&apos;OdP.
-                </li>
-                <li>
-                  <strong>I materiali a consuntivo</strong> — i prelievi effettivi
-                  valorizzati sulla distinta base multilivello, con un metodo
-                  dichiarato (costo medio ponderato, FIFO o ultimo costo), scarti
-                  inclusi.
-                </li>
-                <li>
-                  <strong>La manodopera effettiva</strong> — i minuti dichiarati per
-                  ogni fase del ciclo, moltiplicati per il costo del centro di
-                  lavoro: minuti effettivi, non i minuti standard del preventivo.
-                </li>
-                <li>
-                  <strong>Lo scostamento</strong> — il confronto tra standard ed
-                  effettivo, fase per fase, che dice <em>dove</em> il margine si è
-                  eroso.
-                </li>
+                {STEPS.map(([h, p], k) => (
+                  <li className={`a1-step a1-s${k}`} key={h}>
+                    <span className="a1-step-n">{k + 1}</span>
+                    <div>
+                      <h3>{h}</h3>
+                      <p>{p}</p>
+                    </div>
+                  </li>
+                ))}
               </ol>
-              <p>
-                Margine reale = (ricavo − materiali a consuntivo − manodopera
-                effettiva) / ricavo. Il punto non è la formula: è avere i quattro
-                numeri insieme, senza ricostruirli a mano.
-              </p>
-            </Reveal>
+            </div>
 
-            <Reveal className="example-box">
-              <span className="example-box-label">Esempio</span>
-              <p>
-                Ordine di produzione <span className="num">2025/114</span>, margine
-                stimato in offerta <span className="num">28%</span>. Il consuntivo
-                racconta un&apos;altra storia:
-              </p>
-              <div className="example-rows">
-                <div className="example-row">
-                  <span>Ricavo fatturato</span>
-                  <strong>48.600 €</strong>
-                </div>
-                <div className="example-row">
-                  <span>Materiali a consuntivo</span>
-                  <strong>25.270 €</strong>
-                </div>
-                <div className="example-row">
-                  <span>Manodopera effettiva</span>
-                  <strong>11.960 €</strong>
-                </div>
-                <div className="example-row example-row-highlight">
-                  <span>Margine reale</span>
-                  <strong>23,4%</strong>
-                </div>
+            <figure
+              className="a1-chart"
+              aria-label="Esempio illustrativo: ricavo 48.600 €, materiali 25.270 €, manodopera 11.960 €, margine reale 11.370 € pari al 23,4%, contro il 28% stimato"
+            >
+              <div className="wf" aria-hidden="true">
+                {WF.map((c) => (
+                  <div className={`wf-col wf-${c.key}`} key={c.key}>
+                    <span className="wf-plot">
+                      <span
+                        className="wf-bar"
+                        style={{ "--b": pct(c.from), "--h": pct(c.to - c.from) }}
+                      />
+                      {c.key === "mar" && (
+                        <span className="wf-est">
+                          <span>stimato in offerta 28%</span>
+                        </span>
+                      )}
+                    </span>
+                    <span className="wf-val">{c.val}</span>
+                    <span className="wf-lab">{c.label}</span>
+                  </div>
+                ))}
               </div>
-              <p>
-                Sono <span className="num">4,6 punti</span> di margine regalati
-                senza saperlo — su una sola commessa.
-              </p>
-              <p className="example-note">
-                I numeri sono un esempio illustrativo, non dati di un cliente reale.
-              </p>
-            </Reveal>
-
-            <Reveal as="section" className="article-body">
-              <h2>Come risponde OpenMind in 30 secondi</h2>
-              <div className="om-chat">
-                <div className="om-chat-q">
-                  <span className="om-chat-label">Tu chiedi</span>
-                  <p>«Che margine ho fatto sull&apos;OdP 114?»</p>
-                </div>
-                <div className="om-chat-a">
-                  <span className="om-chat-label">OpenMind risponde</span>
-                  <p>
-                    Interroga il gestionale che già usi, in quel momento: valorizza
-                    i materiali sulla distinta multilivello con il metodo che scegli
-                    tu (dichiarato nella risposta), somma i minuti effettivi per
-                    fase, confronta con il ricavo e ti restituisce margine reale,
-                    scostamento contro lo stimato e le fasi dove il costo è
-                    scappato.
-                  </p>
-                </div>
-              </div>
-              <p>
-                Nessuna esportazione, nessun foglio Excel: una domanda in italiano,
-                il calcolo lo fa OpenMind sui dati veri della tua azienda.
-              </p>
-            </Reveal>
-
-            <RisorseNav current={PAGE.slug} />
+              <figcaption>
+                Margine reale = (ricavo − materiali − manodopera) / ricavo. Numeri di esempio, non
+                dati di un cliente.
+              </figcaption>
+            </figure>
           </div>
-        </article>
+        </div>
+      </section>
 
-        <DemoCta />
-      </main>
-      <SiteFooter />
-    </>
+      {/* ============ LO SCOSTAMENTO: il numero enorme ============ */}
+      <section className="res-sec a1-gap" id="scostamento" data-scene="pass" data-end="0.25">
+        <div className="wrap">
+          <h2 className="res-q a1-gap-q">Quanto costa non saperlo?</h2>
+          <p className="a1-gap-num" aria-hidden="true">
+            −4,6
+          </p>
+          <p className="a1-gap-text">
+            <strong>4,6 punti di margine</strong> regalati senza saperlo.{" "}
+            <span className="ai">Su una sola commessa.</span>
+          </p>
+        </div>
+      </section>
+
+      {/* ============ OPENMIND: la domanda, il lavoro, la risposta ============ */}
+      <section className="res-sec a1-om" id="openmind">
+        <div className="wrap a1-om-grid">
+          <div>
+            <h2 className="res-q">E con OpenMind?</h2>
+            <p className="res-lede">
+              Una domanda in italiano. Nessuna esportazione, nessun foglio Excel: il calcolo lo fa
+              OpenMind sui dati veri della tua azienda.
+            </p>
+          </div>
+          <Reveal className="a1-chat rv-from-right">
+            <p className="a1-user">Che margine ho fatto sull&apos;OdP 114?</p>
+            <div className="a1-answer">
+              <span className="om-ava" aria-hidden="true">
+                Om
+              </span>
+              <div>
+                <ul className="a1-does">
+                  {[
+                    "Interroga il gestionale che già usi, in quel momento",
+                    "Valorizza i materiali sulla distinta, con il metodo che scegli tu",
+                    "Somma i minuti effettivi per fase",
+                    "Confronta con il ricavo",
+                  ].map((t, k) => (
+                    <li style={{ "--k": k }} key={t}>
+                      {t}
+                    </li>
+                  ))}
+                </ul>
+                <p className="a1-returns">
+                  Ti restituisce <strong>margine reale</strong>, <strong>scostamento</strong> contro
+                  lo stimato e <strong>le fasi</strong> dove il costo è scappato.
+                </p>
+              </div>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+    </ResShell>
   );
 }

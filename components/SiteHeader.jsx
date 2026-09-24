@@ -6,10 +6,14 @@ export default function SiteHeader() {
     <header className="site-head" id="top">
       <div className="wrap head-row">
         <a className="brand" href="/#top" aria-label="OpenMind, torna all'inizio">
-          <span className="brand-mark" aria-hidden="true">
-            Om
-          </span>
-          <span className="brand-word">OpenMind</span>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+              className="brand-logo"
+              src="/brand/openmind-logo-640.png"
+              alt=""
+              width="640"
+              height="102"
+            />
         </a>
         <nav className="site-nav" aria-label="Sezioni del sito">
           <a href="/#come-funziona">Come funziona</a>
@@ -25,15 +29,17 @@ export default function SiteHeader() {
             <div className="nav-drop-menu">
               {HYGIENE_PAGES.map((page) => (
                 <a key={page.slug} href={`/risorse/${page.slug}`}>
-                  {page.label}
+                  <span className="nd-label">{page.label}</span>
+                  <span className="nd-fig">{page.figure}</span>
                 </a>
               ))}
             </div>
           </div>
         </nav>
         <div className="head-cta">
-          <a className="btn btn-light" href="/#demo">
-            Richiedi una demo
+          <a className="btn btn-light btn-glow head-demo" href="/#demo" aria-label="Richiedi una demo">
+            <span className="head-demo-full">Richiedi una demo</span>
+            <span className="head-demo-short">Demo</span>
           </a>
           <a className="lang-pill" href={APP_URL}>
             Accedi

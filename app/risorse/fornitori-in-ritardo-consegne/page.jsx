@@ -1,8 +1,6 @@
-import DemoCta from "../../../components/DemoCta";
 import Reveal from "../../../components/Reveal";
-import RisorseNav from "../../../components/RisorseNav";
-import SiteFooter from "../../../components/SiteFooter";
-import SiteHeader from "../../../components/SiteHeader";
+import ResShell, { Brief, ResHeadMeta } from "../../../components/res/ResShell";
+import { splitWords } from "../../../components/Words";
 import { HYGIENE_PAGES } from "../../../lib/site";
 
 const PAGE = HYGIENE_PAGES.find((p) => p.slug === "fornitori-in-ritardo-consegne");
@@ -18,131 +16,214 @@ export const metadata = {
   },
 };
 
+const CHAPTERS = [
+  ["problema", "Il problema"],
+  ["ritardo", "Il ritardo"],
+  ["domande", "Le tre domande"],
+  ["openmind", "In 30 secondi"],
+];
+
+const DAYS = 9; /* dalla data promessa (giorno 0) a oggi (+8): esempio dell'articolo */
+
+const QUESTIONS = [
+  [
+    "Quali righe sono in ritardo?",
+    "Le righe d'acquisto aperte con data promessa superata e quantità non ancora ricevuta. Non l'ordine intero: la singola riga.",
+    "5 righe",
+  ],
+  [
+    "Quanto pesa il ritardo?",
+    "Giorni oltre la data promessa, fornitore per fornitore: per distinguere lo slittamento fisiologico dal problema cronico.",
+    "+8 giorni",
+  ],
+  [
+    "Cosa blocca?",
+    "L'incrocio con i fabbisogni: quali ordini di produzione aspettano quel componente, e quali consegne ai clienti rischiano di slittare.",
+    "2 OdP",
+  ],
+];
+
 export default function Page() {
   return (
-    <>
-      <SiteHeader />
-      <main>
-        <section className="section-cream page-hero">
-          <div className="wrap">
-            <nav className="breadcrumb" aria-label="Percorso">
-              <a href="/">Home</a>
-              <span aria-hidden="true">/</span>
-              <a href="/risorse">Risorse</a>
-              <span aria-hidden="true">/</span>
-              <span aria-current="page">Fornitori in ritardo</span>
-            </nav>
-            <div className="page-hero-grid art-hero-grid">
-              <div>
-                <span className="kicker kicker-pill">Risorse</span>
-                <h1>{PAGE.title}</h1>
-              </div>
-              <p className="page-hero-sub">
-                Il ritardo di un fornitore non è un problema d&apos;ufficio
-                acquisti: è un OdP fermo, una consegna al cliente che slitta. Va
-                visto prima, non dopo.
-              </p>
+    <ResShell slug={PAGE.slug} chapters={CHAPTERS}>
+      {/* ============ APERTURA: il numero che sborda, il titolo sotto ============ */}
+      <header className="a3-hero">
+        <span className="a3-hero-num" aria-hidden="true">
+          +8
+        </span>
+        <div className="wrap a3-hero-inner">
+          <ResHeadMeta slug={PAGE.slug} crumb="Fornitori in ritardo" />
+          <Reveal as="h1" className="rv-words">
+            {splitWords(
+              <>
+                Come monitorare i <span className="ai">fornitori in ritardo</span> sulle consegne
+              </>
+            )}
+          </Reveal>
+          <p className="res-lede a3-lede">
+            Il ritardo di un fornitore non è un problema d&apos;ufficio acquisti: è un OdP fermo.
+            Va visto prima, non dopo.
+          </p>
+        </div>
+      </header>
+
+      <Brief
+        items={[
+          ["Il ritardo si guarda riga per riga, non ordine per ordine.", "#domande"],
+          ["Conta di quanto, e soprattutto cosa blocca in produzione.", "#ritardo"],
+          ["Pochi giorni su un codice critico pesano più di tanti su una scorta.", "#domande"],
+        ]}
+      />
+
+      {/* ============ IL PROBLEMA: oggi → prima ============ */}
+      <section className="res-sec a3-problem" id="problema">
+        <div className="wrap">
+          <h2 className="res-q">Come lo scopri oggi?</h2>
+          <ol className="a3-today">
+            {[
+              ["Le date promesse", "sono nel gestionale, riga per riga"],
+              ["Il monitoraggio", "sono telefonate di sollecito quando il materiale non arriva"],
+              ["L'Excel dei ritardi", "si aggiorna quando c'è tempo. Cioè mai"],
+              ["Il ritardo", "lo scopri quando il reparto si ferma"],
+            ].map(([a, b], k) => (
+              <Reveal as="li" className={k % 2 ? "rv-from-right" : "rv-from-left"} delay={60} key={a}>
+                <strong>{a}</strong> {b}.
+              </Reveal>
+            ))}
+          </ol>
+          <Reveal as="p" className="a3-express">
+            A quel punto, l&apos;unica leva rimasta è <span className="ai">il corriere espresso.</span>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* ============ IL RITARDO: i giorni scorrono in orizzontale ============ */}
+      <section
+        className="a3-late scene-pin"
+        id="ritardo"
+        data-scene="pin"
+        data-steps={DAYS}
+        data-step="0"
+        data-lead="0.2"
+      >
+        <div className="a3-stage">
+          <div className="wrap a3-late-head">
+            <h2 className="res-q">Di quanto, e cosa si ferma?</h2>
+            <p className="a3-counter" aria-label="Ritardo: 8 giorni oltre la data promessa">
+              <span className="a3-count" aria-hidden="true" />
+              <span className="a3-count-static" aria-hidden="true">
+                +8
+              </span>
+              <span className="a3-count-unit">giorni oltre la data promessa</span>
+            </p>
+          </div>
+
+          <div className="a3-strip-wrap" aria-hidden="true">
+            <ol className="a3-strip">
+              {Array.from({ length: DAYS }, (_, d) => (
+                <li className="a3-day" style={{ "--d": d }} key={d}>
+                  <span className="a3-day-n">{d === 0 ? "0" : `+${d}`}</span>
+                  <span className="a3-day-l">
+                    {d === 0 ? "Data promessa" : d === DAYS - 1 ? "Oggi" : "giorno"}
+                  </span>
+                </li>
+              ))}
+            </ol>
+          </div>
+
+          <div className="wrap a3-effects">
+            <div className="a3-effect a3-e1">
+              <span className="a3-e-k">Fornitore X</span>
+              componente critico, non ancora ricevuto
+            </div>
+            <span className="a3-e-arrow" aria-hidden="true">
+              →
+            </span>
+            <div className="a3-effect a3-e2">
+              <span className="a3-e-k">2 OdP bloccati</span>
+              aspettano quel componente
+            </div>
+            <span className="a3-e-arrow" aria-hidden="true">
+              →
+            </span>
+            <div className="a3-effect a3-e3">
+              <span className="a3-e-k">Consegne a rischio</span>
+              ai clienti, a cascata
             </div>
           </div>
-        </section>
+          <p className="wrap res-note a3-note">Esempio illustrativo, non dati di un cliente reale.</p>
+        </div>
+      </section>
 
-        <article className="section section-cream article art-body-section">
-          <div className="wrap wrap-narrow">
-            <Reveal className="article-body">
-              <h2>Il problema</h2>
-              <p>
-                Le date promesse dai fornitori sono nel gestionale, riga per riga.
-                Ma il monitoraggio, in molte aziende, è fatto di telefonate di
-                sollecito quando il materiale non arriva e di un Excel dei ritardi
-                aggiornato quando c&apos;è tempo — cioè mai. Così il ritardo lo
-                scopri quando il reparto si ferma, e a quel punto l&apos;unica
-                leva rimasta è il corriere espresso.
-              </p>
+      {/* ============ LE TRE DOMANDE: carte che si impilano ============ */}
+      <section className="res-sec a3-stack-sec" id="domande">
+        <div className="wrap">
+          <h2 className="res-q">Tre domande, in quest&apos;ordine</h2>
+          <ol className="a3-stack">
+            {QUESTIONS.map(([q, a, fig], k) => (
+              <li className="a3-card" style={{ "--k": k }} key={q}>
+                <span className="a3-card-n">{String(k + 1).padStart(2, "0")}</span>
+                <div className="a3-card-body">
+                  <h3>{q}</h3>
+                  <p>{a}</p>
+                </div>
+                <span className="a3-card-fig">{fig}</span>
+              </li>
+            ))}
+          </ol>
 
-              <h2>Il metodo</h2>
-              <p>Il monitoraggio utile risponde a tre domande, in quest&apos;ordine:</p>
-              <ol>
-                <li>
-                  <strong>Quali righe sono in ritardo?</strong> Le righe degli
-                  ordini d&apos;acquisto aperte con data promessa superata e
-                  quantità non ancora ricevuta — non l&apos;ordine intero, la
-                  singola riga.
-                </li>
-                <li>
-                  <strong>Quanto pesa il ritardo?</strong> Giorni oltre la data
-                  promessa, fornitore per fornitore, per distinguere lo slittamento
-                  fisiologico dal problema cronico.
-                </li>
-                <li>
-                  <strong>Cosa blocca?</strong> L&apos;incrocio con i fabbisogni:
-                  quali ordini di produzione aspettano quel componente, e quali
-                  consegne ai clienti rischiano di slittare a cascata.
-                </li>
-              </ol>
-              <p>
-                È la terza domanda che trasforma un elenco di ritardi in una
-                priorità: un ritardo di dieci giorni su un componente a scorta non
-                vale quanto tre giorni su un codice che ferma una commessa.
-              </p>
-            </Reveal>
-
-            <Reveal className="example-box">
-              <span className="example-box-label">Esempio</span>
-              <p>La fotografia di stamattina sugli ordini d&apos;acquisto aperti:</p>
-              <div className="example-rows">
-                <div className="example-row">
-                  <span>Righe oltre la data promessa</span>
-                  <strong>5</strong>
-                </div>
-                <div className="example-row example-row-highlight">
-                  <span>Ritardo del fornitore X sul componente critico</span>
-                  <strong>8 giorni</strong>
-                </div>
-                <div className="example-row">
-                  <span>OdP bloccati da quel componente</span>
-                  <strong>2</strong>
-                </div>
+          <figure className="a3-weigh" data-scene="pass" data-end="0.3">
+            <blockquote>
+              Dieci giorni su un componente a scorta non valgono{" "}
+              <span className="ai">tre giorni su un codice che ferma una commessa.</span>
+            </blockquote>
+            <div className="a3-bars" aria-hidden="true">
+              <div className="a3-bar a3-bar-a">
+                <span className="a3-bar-l">10 giorni · componente a scorta</span>
+                <span className="a3-bar-t">
+                  <span style={{ "--w": "100%" }} />
+                </span>
               </div>
-              <p>
-                Il sollecito giusto, al fornitore giusto, prima che i due OdP si
-                fermino.
-              </p>
-              <p className="example-note">
-                I numeri sono un esempio illustrativo, non dati di un cliente reale.
-              </p>
-            </Reveal>
-
-            <Reveal as="section" className="article-body">
-              <h2>Come risponde OpenMind in 30 secondi</h2>
-              <div className="om-chat">
-                <div className="om-chat-q">
-                  <span className="om-chat-label">Tu chiedi</span>
-                  <p>«Quali fornitori sono in ritardo sulle consegne?»</p>
-                </div>
-                <div className="om-chat-a">
-                  <span className="om-chat-label">OpenMind risponde</span>
-                  <p>
-                    Legge le righe d&apos;acquisto aperte nel gestionale, calcola i
-                    giorni oltre la data promessa, raggruppa per fornitore e incrocia
-                    con i fabbisogni degli OdP in corso: ti dice chi è in ritardo,
-                    di quanto, e quali produzioni rischiano di fermarsi — aggiornato
-                    al momento della domanda.
-                  </p>
-                </div>
+              <div className="a3-bar a3-bar-b">
+                <span className="a3-bar-l">3 giorni · ferma una commessa</span>
+                <span className="a3-bar-t">
+                  <span style={{ "--w": "30%" }} />
+                </span>
+                <span className="a3-bar-flag">priorità</span>
               </div>
-              <p>
-                E se vuoi tenerla d&apos;occhio ogni giorno, la stessa domanda
-                diventa un cruscotto che si riallinea a oggi a ogni apertura.
-              </p>
-            </Reveal>
+            </div>
+          </figure>
+        </div>
+      </section>
 
-            <RisorseNav current={PAGE.slug} />
-          </div>
-        </article>
-
-        <DemoCta />
-      </main>
-      <SiteFooter />
-    </>
+      {/* ============ OPENMIND: il lavoro in quattro gesti ============ */}
+      <section className="res-sec a3-om" id="openmind" data-scene="pass" data-end="0.3">
+        <div className="wrap">
+          <p className="a3-om-q">
+            <span className="cf-tag">Tu chiedi</span>
+            «Quali fornitori sono in ritardo sulle consegne?»
+          </p>
+          <ol className="a3-pipe">
+            {[
+              ["Legge", "le righe d'acquisto aperte nel gestionale"],
+              ["Calcola", "i giorni oltre la data promessa"],
+              ["Raggruppa", "per fornitore"],
+              ["Incrocia", "con i fabbisogni degli OdP in corso"],
+            ].map(([v, t], k) => (
+              <li style={{ "--k": k }} key={v}>
+                <strong>{v}</strong>
+                <span>{t}</span>
+              </li>
+            ))}
+          </ol>
+          <Reveal as="p" className="a3-om-out">
+            Ti dice <strong>chi</strong> è in ritardo, <strong>di quanto</strong>, e{" "}
+            <strong>quali produzioni</strong> rischiano di fermarsi. E se vuoi guardarla ogni
+            giorno, la stessa domanda diventa{" "}
+            <span className="ai">un cruscotto che si riallinea a oggi.</span>
+          </Reveal>
+        </div>
+      </section>
+    </ResShell>
   );
 }

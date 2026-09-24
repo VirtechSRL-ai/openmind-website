@@ -1,5 +1,7 @@
 /* Banda che scorre con domande vere: l'elemento-firma tra hero e resto
-   della pagina. Solo CSS (riusa la logica marquee), niente librerie. */
+   della pagina. Solo CSS (riusa la logica marquee), niente librerie.
+   .ticker-clip taglia gli angoli della banda ruotata: senza, la banda
+   allarga il documento e su iPhone la pagina scivola di lato. */
 
 const QUESTIONS = [
   "Che margine ho fatto sull'ordine 2025/114?",
@@ -13,6 +15,7 @@ const QUESTIONS = [
 
 export default function Ticker() {
   return (
+    <div className="ticker-clip">
     <div className="ticker" aria-label="Esempi di domande a cui OpenMind risponde">
       <div className="ticker-track">
         {[...QUESTIONS, ...QUESTIONS].map((q, i) => (
@@ -24,6 +27,7 @@ export default function Ticker() {
           </span>
         ))}
       </div>
+    </div>
     </div>
   );
 }

@@ -22,9 +22,18 @@ Tema notte completo (refinement 09/2026): tutto il sito vive in tonalità blu no
 
 ## Typography
 
-- **Cormorant Garamond corsivo** (500/600/700) — h1/h2, numeri grandi (½ giornata, 30 s, 23,4%), domande dei dialoghi, ticker, interludi, wordmark. Alto contrasto editoriale, è l'elemento distintivo del brand.
-- **Inter** (variable) — corpo, navigazione, bottoni, h3 e titoli funzionali delle card, numeri secondari (tile del cruscotto) e tutte le etichette maiuscolettate (che prima erano in mono: `--font-mono` ora punta a Inter).
-- Contrasto intenzionale: headline editoriali corsive vs testo moderno e pulito. Scala fluida `clamp()`; Cormorant ha occhio piccolo, quindi corpi maggiorati (hero fino a 6rem).
+Redesign 09/2026 · II (richiesta esplicita del cliente): **Cormorant Garamond non si usa più.**
+
+- **DM Sans** (`--font-display`, 400–700) — struttura di tutti i titoli e dei numeri grandi (23,4%, 139 / 142, +8, 2023 vs 2024). Peso 500, tracking stretto (−0,035em titoli, −0,045em numeri).
+- **DM Serif Display corsivo** (`--font-accent`) — solo le parole evidenziate nei titoli (`.ai`, `.fw-accent`), i numeri-contorno dei capitoli (01, 02…) e poche frasi-risposta. Mai per interi paragrafi.
+- **Inter** — corpo, interfaccia, label, navigazione (ora anche in corsivo vero).
+- `font-size-adjust: var(--fsa)` (0,45) su titoli e numeri display: allinea l'occhio di DM Sans e DM Serif Display nella stessa riga e conserva le misure calibrate sul vecchio serif. `html { font-synthesis: none }`: nessun falso corsivo, le vecchie regole «italic» sui titoli restano dritte.
+
+## Logo
+
+Logo ufficiale del cliente (`public/brand/openmind-logo.png`, PNG chiaro trasparente, solo ritagliato ai bordi; `openmind-logo-640.png` per header/footer). Mai ricreato né sostituito con testo. Posizioni: header in alto a sinistra (25px, 21px su mobile), footer, sipario d'apertura, e **filigrana finale** gigante nel footer (opacità 0,16, maschera a gradiente verso il basso, rivelazione lenta dal fondo con `rv-mark` — 2,4 s expo). Nota: il wordmark del logo si legge «Open Mind»; nei testi resta «OpenMind».
+
+**Simbolo** (senza scritta, fornito dal cliente): `public/brand/openmind-symbol.png` e `-480.png` (trasparente, solo ritagliato) — centro della mappa dei settori, origine del circuito mobile, separatore nelle fasce «OPENMIND». **Favicon**: il simbolo su fondo navy fornito dal cliente → `app/icon.png` (512), `app/apple-icon.png` (180), `app/favicon.ico` (16/32/48); il vecchio `icon.svg` «Om» è eliminato.
 
 ## Components
 
@@ -59,12 +68,36 @@ Tema notte completo (refinement 09/2026): tutto il sito vive in tonalità blu no
 
 ## Motion
 
-Sobria e orchestrata: coreografia d'ingresso dell'hero (badge → H1 → sottotitolo → CTA → pannelli, rise + blur-in scalati di 80ms), sequenza della chat nell'hero (messaggio → stati di lavoro → risposta con barre), reveal on-scroll con blur che si dissolve solo con JS attivo (default visibile), easing `cubic-bezier(.16,1,.3,1)`, tutto disattivato con `prefers-reduced-motion`.
+Redesign 10/2026: un **linguaggio di transizione in quattro famiglie** (`app/experience.css`), non un effetto diverso per sezione.
+
+- **A · Reveal** (contenuti informativi): salita breve 28px + blur che si scioglie, expo `cubic-bezier(.19,1,.22,1)` 1–1,2 s; titoli a maschera (`rv-title`) o parola per parola (`rv-words`, parole spezzate lato server da `components/Words.jsx`).
+- **B · Slide** (esempi, confronti): domanda da sinistra, risposta da destra (max 120px, `--slide`), una linea le collega. Su ≤760px diventa verticale (36px).
+- **C · Transform** (passaggi di fase): un elemento arretra e il successivo prende il suo posto — scena del problema, mappa dei settori, fogli che emergono dal fluido (`rv-sheet` con scala .965).
+- **D · Focus** (CTA, numeri chiave): il blocco si mette a fuoco (`rv-focus`), la luce resta sul bottone (`btn-glow`).
+
+**Due livelli di movimento** (principio preso da Grizzly): solo le scene marcate `data-scene` sono legate allo scroll — Problema, Esempi, Settori, interludi, capitoli 01/02/03/05 delle Risorse; tutto il resto parte una volta all'ingresso. `components/ScrollFx.jsx` è l'unico motore: scrive `--p` (0→1, interpolato) sugli elementi `data-scene="pin|pass"`, `data-step`/`--step` per le scene a capitoli; il CSS usa `--p` solo su transform/opacity. Le scene agganciate (sticky 100vh) esistono solo con `html.fx` e su schermi ≥1000×620; altrove e con `prefers-reduced-motion` il contenuto è lo stesso, in verticale, allo stato finale.
+
+**Fluido come filo conduttore**: ogni sezione dichiara `data-phase` (hero, problem, analysis, examples, cta-mid, data, sectors, security, cta); `FluidField` legge quella al centro dello schermo e cambia umore con due strati in opacità/transform (`.ff-shade`, `.ff-glow`): spento sul problema, luce a sinistra sull'analisi, fuoco al centro sugli esempi, quiete sulla sicurezza, convergenza sulla chiusura.
+
+**CTA con aura** (`.btn-glow`, su navbar, hero, CTA intermedia, form finale, menu mobile): alone sfumato che respira (5,6 s), anello conico periwinkle che gira piano (11 s, `@property --om-angle`), pozza di luce sotto l'etichetta; all'hover l'alone cresce e l'anello si ferma. Su mobile la navbar mostra «Demo» con la stessa aura.
 
 ## Layout
 
-Colonna contenuti max 1120px; sezioni con spaziatura fluida `clamp(4rem, 10vw, 8rem)`; ritmo alternato per struttura, non solo per colore: hero denso → ticker → numeri giganti del problema (½ giornata / 3 uffici / 52 lunedì, con il «prima → dopo» ~~Mezza giornata~~ → 30 secondi) → banda scura col personaggio → passi → dialoghi → CTA navy → numeri enormi (`clamp(4.2rem, 10vw, 7.5rem)`) → bento → marquee. Un'unica sequenza numerata (i 3 passi reali); nessun eyebrow ripetuto sopra ogni sezione.
+**Settori** (`SectorsMap`): scena in otto tappe — 0 il simbolo da solo con «Sei settori, un solo motore d'analisi»; 1–6 ogni settore compare, il suo raggio si traccia dal simbolo e resta, flusso di particelle verso il centro sul settore attivo; 7 tutto il sistema acceso, «Settori diversi. Un unico sistema. OpenMind al centro.» Regole «da questa tappa in poi» elencate in CSS.
+
+**I dati** (`components/DataFlow.jsx`): non più righe icona+testo. Una frase tipografica in grande («OpenMind legge anagrafica articoli, distinte base…») le cui aree si accendono con lo scroll, chiusa da cosa torna indietro in serif corsivo con ingresso laterale. Su mobile resta una frase, non una colonna di card.
+
+**CTA intermedia** (`MidCta`): due fasce «OPENMIND» giganti (DM Sans maiuscolo, simbolo come separatore) scorrono in loop continuo sopra (verso sinistra, piena) e sotto (verso destra, contorno) il riquadro — due metà identiche traslate del −50%, sfumate ai lati, ferme con reduced-motion. Riquadro arrotondato con l'immagine viola del cliente (`public/cta/openmind-cta-1100|2000.jpg`, crop 58% / 64% su mobile), apertura a maschera (clip-path) all'ingresso e parallax dell'immagine (±7%); velo radiale solo ai bordi. La vecchia sfocatura è rimossa.
+
+**Risorse** (`app/resources.css`, `components/res/`): famiglia comune — barra-indice sticky sotto l'header con scroll-spy e filo di lettura (`ResBar`, su mobile «capitolo ▾»), «In breve» con tre conclusioni cliccabili, titoli di sezione formulati come domande, «Prossima risorsa» con il numero-simbolo dell'articolo successivo (`figure` in `lib/site.js`), CTA demo. Firma visiva diversa per ogni articolo: 01 cascata ricavo→margine agganciata (4 passi); 02 catena dei cinque incroci + cerchio 142→139→3→21/08 e split notte/carta; 03 «+8» che sborda, giorni che scorrono in orizzontale con contatore CSS, carte-domanda che si impilano, barre 10 gg vs 3 gg; 04 duello 12/78%, nastro del rituale che scorre, curva di Pareto disegnata a passi, parola che cambia con lo scroll, «file» consegnati; 05 2023 vs 2024 gigante, il totale che si divide in +12%/−8%, quattro accortezze con micro-visual, selettore del raggruppamento (`GroupSwitch`). Numeri solo dagli esempi illustrativi già presenti, sempre dichiarati. Il menu Risorse mostra accanto a ogni voce il suo numero.
+
+
+Due sezioni consecutive non hanno mai lo stesso impianto. Sequenza homepage: hero centrato con pannelli → ticker ruotato → **Problema** (scena agganciata: ½ giornata / 3 uffici / 52 lunedì arrivano uno alla volta, poi arretrano e ~~Mezza giornata~~ → 30 secondi) → interludio a parole che si accendono → **Soluzione** (titolo editoriale a sinistra, saluto Om a destra, tratti in fila separati da filetti) → Come funziona (split interattivo) → **Esempi** (tre scene cinematografiche: domanda → OpenMind analizza → linea → risultato gigante su carta → dettaglio → dissolvenza; «Esempi illustrativi» dichiarato) → **CTA focus** «Vuoi vedere cosa può trovare nei tuoi dati?» → numeri giganti → bento Dentro OpenMind → **Dati come registro** (titolo sticky a sinistra, 10 aree in righe con filetto che si disegna) → **Settori come mappa** (Om al centro, sei nodi in orbita, un settore alla volta si accende con il suo percorso dati; su mobile circuito verticale) → Sicurezza split → FAQ → interludio → CTA finale.
+
+**Risorse** (`/risorse`): indice a registro + cinque capitoli con layout diversi e cambio di fondo come stacco — 01 numero gigante (23,4%, 28% barrato), 02 domanda/risposta che si incontrano (139 su 142), 03 editoriale con linea del ritardo (+8 giorni), 04 cruscotto ABC (200 punti, 12 accesi, 78%), 05 rivelazione a tutto schermo (+12% / −8%). Ogni capitolo: Domanda → OpenMind → Risultato + perché serve; numeri = esempi illustrativi già presenti negli articoli.
+
+**Mobile**: `overflow-x: clip` su `html`, `body` e `main` (con il solo body il valore passava al viewport come hidden e su iOS la pagina scivolava di lato); il ticker ruotato è tagliato da `.ticker-clip`; il fluido usa `100lvh`. Verificato senza overflow a 1440/1280/1024/768/430/390/375.
 
 ## Stack
 
-Next.js 15 (App Router, output statico) · React 19 · CSS globale in `app/globals.css` · font via `next/font` (Cormorant Garamond, Inter). Componenti client: `components/ChatCard.jsx` (sequenza chat dell'hero) e `components/Reveal.jsx` (reveal on scroll con fallback). La versione HTML statica precedente è archiviata in `legacy-static/`. Nuovi componenti client: `FluidField` (fluido scroll-driven), `MobileNav`, `IntroVeil`, `ProcessDemo`, `CountUp`.
+Next.js 15 (App Router, output statico) · React 19 · CSS globale in `app/globals.css` · font via `next/font` (Cormorant Garamond, Inter). Componenti client: `components/ChatCard.jsx` (sequenza chat dell'hero) e `components/Reveal.jsx` (reveal on scroll con fallback). La versione HTML statica precedente è archiviata in `legacy-static/`. Nuovi componenti client: `FluidField` (fluido scroll-driven), `MobileNav`, `IntroVeil`, `ProcessDemo`, `CountUp`, `ScrollFx` (motore delle scene), `SectorsMap`. Server: `ProblemScene`, `Examples`, `DataLedger`, `Words`. Rimossi `HubDiagram` e `Sectors` (marquee). Stili del redesign 10/2026 in `app/experience.css`, caricato dopo `globals.css`.

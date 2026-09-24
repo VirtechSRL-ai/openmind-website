@@ -1,8 +1,7 @@
-import DemoCta from "../../../components/DemoCta";
 import Reveal from "../../../components/Reveal";
-import RisorseNav from "../../../components/RisorseNav";
-import SiteFooter from "../../../components/SiteFooter";
-import SiteHeader from "../../../components/SiteHeader";
+import GroupSwitch from "../../../components/res/GroupSwitch";
+import ResShell, { Brief, ResHeadMeta } from "../../../components/res/ResShell";
+import { splitWords } from "../../../components/Words";
 import { HYGIENE_PAGES } from "../../../lib/site";
 
 const PAGE = HYGIENE_PAGES.find((p) => p.slug === "confronto-fatturato-anno-su-anno");
@@ -18,129 +17,170 @@ export const metadata = {
   },
 };
 
+const CHAPTERS = [
+  ["problema", "Il problema"],
+  ["divergenza", "Il totale inganna"],
+  ["accortezze", "Le accortezze"],
+  ["openmind", "In 30 secondi"],
+];
+
 export default function Page() {
   return (
-    <>
-      <SiteHeader />
-      <main>
-        <section className="section-cream page-hero">
-          <div className="wrap">
-            <nav className="breadcrumb" aria-label="Percorso">
-              <a href="/">Home</a>
-              <span aria-hidden="true">/</span>
-              <a href="/risorse">Risorse</a>
-              <span aria-hidden="true">/</span>
-              <span aria-current="page">Fatturato anno su anno</span>
-            </nav>
-            <div className="page-hero-grid art-hero-grid">
-              <div>
-                <span className="kicker kicker-pill">Risorse</span>
-                <h1>{PAGE.title}</h1>
-              </div>
-              <p className="page-hero-sub">
-                Il totale anno su anno dice poco: è il confronto per linea di
-                prodotto che mostra chi cresce, chi cala e dove guardare.
-              </p>
-            </div>
+    <ResShell slug={PAGE.slug} chapters={CHAPTERS}>
+      {/* ============ APERTURA: due anni a confronto, a tutta larghezza ============ */}
+      <header className="a5-hero">
+        <div className="wrap">
+          <ResHeadMeta slug={PAGE.slug} crumb="Fatturato anno su anno" />
+          <p className="a5-years" aria-hidden="true">
+            <span className="a5-y">2023</span>
+            <span className="a5-vs">vs</span>
+            <span className="a5-y a5-y2">2024</span>
+          </p>
+          <Reveal as="h1" className="rv-words a5-title">
+            {splitWords(
+              <>
+                Come confrontare il fatturato anno su anno <span className="ai">per linea di prodotto</span>
+              </>
+            )}
+          </Reveal>
+          <p className="res-lede a5-lede">
+            Il totale anno su anno dice poco: è il confronto per linea che mostra chi cresce, chi
+            cala e dove guardare.
+          </p>
+        </div>
+      </header>
+
+      <Brief
+        items={[
+          ["Il totale nasconde le tendenze: servono le linee, una per una.", "#divergenza"],
+          ["Perimetri uguali, riclassifica stabile, valori netti, delta assoluto e percentuale.", "#accortezze"],
+          ["Per famiglia, cliente o agente cambia solo la domanda.", "#openmind"],
+        ]}
+      />
+
+      {/* ============ IL PROBLEMA: la domanda da trenta secondi ============ */}
+      <section className="res-sec a5-problem" id="problema">
+        <div className="wrap a5-problem-grid">
+          <div>
+            <h2 className="res-q">Sembra una domanda da trenta secondi. Perché non lo è?</h2>
+            <p className="a5-quote">«Come sta andando il fatturato rispetto all&apos;anno scorso?»</p>
           </div>
-        </section>
+          <ol className="a5-chores">
+            {[
+              "Estrarre due anni di righe fatturate",
+              "Riclassificarle per linea",
+              "Allineare i periodi",
+              "Rifare tutto il mese dopo. O quando lo chiedono per famiglia, cliente o agente.",
+            ].map((t, k) => (
+              <Reveal as="li" delay={k * 120} key={t}>
+                <span className="a5-chore-n">{k + 1}</span>
+                {t}
+              </Reveal>
+            ))}
+          </ol>
+        </div>
+      </section>
 
-        <article className="section section-cream article art-body-section">
-          <div className="wrap wrap-narrow">
-            <Reveal className="article-body">
-              <h2>Il problema</h2>
-              <p>
-                «Come sta andando il fatturato rispetto all&apos;anno scorso?»
-                sembra una domanda da trenta secondi, finché non serve la risposta
-                per linea di prodotto. A quel punto significa estrarre due anni di
-                righe fatturate, riclassificarle per linea, allineare i periodi — e
-                rifare tutto il mese dopo, o quando qualcuno chiede lo stesso
-                confronto per famiglia, per cliente o per agente.
-              </p>
-
-              <h2>Il metodo</h2>
-              <p>Perché il confronto anno su anno sia onesto servono quattro accortezze:</p>
-              <ol>
-                <li>
-                  <strong>Perimetri uguali</strong> — stesso intervallo di date nei
-                  due anni (gennaio–agosto contro gennaio–agosto, non contro
-                  l&apos;anno intero).
-                </li>
-                <li>
-                  <strong>Una riclassifica stabile</strong> — ogni articolo assegnato
-                  alla sua linea di prodotto dall&apos;anagrafica, non da una colonna
-                  Excel compilata a memoria.
-                </li>
-                <li>
-                  <strong>Valori confrontabili</strong> — fatturato al netto di note
-                  di credito nei due periodi, con lo stesso criterio.
-                </li>
-                <li>
-                  <strong>Delta assoluto e percentuale</strong> — il +12% di una
-                  linea piccola non compensa il −8% di una linea grande: servono
-                  entrambe le letture.
-                </li>
-              </ol>
-              <p>
-                Il risultato utile è una tabella per linea con i due anni
-                affiancati, il delta e la variazione percentuale — e la stessa
-                logica pronta per qualsiasi altro raggruppamento.
-              </p>
-            </Reveal>
-
-            <Reveal className="example-box">
-              <span className="example-box-label">Esempio</span>
-              <p>Confronto anno su anno per linea di prodotto, a parità di periodo:</p>
-              <div className="example-rows">
-                <div className="example-row">
-                  <span>Linea «Componenti CNC»</span>
-                  <strong>+12%</strong>
-                </div>
-                <div className="example-row example-row-highlight">
-                  <span>Linea «Carpenteria standard»</span>
-                  <strong>−8%</strong>
-                </div>
-              </div>
-              <p>
-                Il totale aziendale, da solo, avrebbe nascosto entrambe le
-                tendenze: una linea che tira e una che perde terreno.
-              </p>
-              <p className="example-note">
-                I numeri sono un esempio illustrativo, non dati di un cliente reale.
-              </p>
-            </Reveal>
-
-            <Reveal as="section" className="article-body">
-              <h2>Come risponde OpenMind in 30 secondi</h2>
-              <div className="om-chat">
-                <div className="om-chat-q">
-                  <span className="om-chat-label">Tu chiedi</span>
-                  <p>«Confronta il fatturato 2023 vs 2024 per linea di prodotto»</p>
-                </div>
-                <div className="om-chat-a">
-                  <span className="om-chat-label">OpenMind risponde</span>
-                  <p>
-                    Interroga il gestionale, allinea i periodi, raggruppa per linea
-                    dall&apos;anagrafica articoli e ti restituisce tabella e grafico
-                    con delta assoluti e percentuali. Qualsiasi periodo, qualsiasi
-                    raggruppamento — per famiglia, cliente o agente — cambiando solo
-                    la domanda.
-                  </p>
-                </div>
-              </div>
-              <p>
-                E il confronto che guardi ogni mese diventa un cruscotto salvato,
-                che si riallinea a oggi a ogni apertura.
-              </p>
-            </Reveal>
-
-            <RisorseNav current={PAGE.slug} />
+      {/* ============ IL TOTALE INGANNA: una linea che si divide ============ */}
+      <section
+        className="a5-split scene-pin"
+        id="divergenza"
+        data-scene="pin"
+        data-lead="0.2"
+      >
+        <div className="a5-stage">
+          <div className="wrap a5-split-inner">
+            <h2 className="res-q a5-split-q">Cosa nasconde il totale?</h2>
+            <figure
+              className="a5-chart"
+              aria-label="Esempio illustrativo: la linea Componenti CNC cresce del 12%, la linea Carpenteria standard cala dell'8%; il totale da solo non lo mostra."
+            >
+              <svg viewBox="0 0 600 260" preserveAspectRatio="none" aria-hidden="true">
+                <line className="a5-base" x1="0" y1="130" x2="600" y2="130" />
+                <path className="a5-total" d="M 0 130 L 600 130" pathLength="100" />
+                <path className="a5-up" d="M 250 130 C 380 130, 430 60, 600 40" pathLength="100" />
+                <path className="a5-down" d="M 250 130 C 380 130, 430 180, 600 196" pathLength="100" />
+              </svg>
+              <span className="a5-lab a5-lab-total">Totale aziendale</span>
+              <span className="a5-lab a5-lab-up">
+                <strong>+12%</strong> Componenti CNC
+              </span>
+              <span className="a5-lab a5-lab-down">
+                <strong>−8%</strong> Carpenteria standard
+              </span>
+            </figure>
+            <p className="a5-split-text">
+              Il totale, da solo, avrebbe nascosto entrambe le tendenze:{" "}
+              <span className="ai">una linea che tira e una che perde terreno.</span>
+            </p>
+            <p className="res-note">Esempio illustrativo, non dati di un cliente reale.</p>
           </div>
-        </article>
+        </div>
+      </section>
 
-        <DemoCta />
-      </main>
-      <SiteFooter />
-    </>
+      {/* ============ LE ACCORTEZZE: quattro regole, quattro micro-visual ============ */}
+      <section className="res-sec a5-rules" id="accortezze">
+        <div className="wrap">
+          <h2 className="res-q">Quando un confronto è onesto?</h2>
+          <ol className="a5-rules-grid">
+            <Reveal as="li" className="a5-rule rv-from-left">
+              <div className="a5-viz a5-viz-period" aria-hidden="true">
+                <span>
+                  <i />
+                  gen–ago 2023
+                </span>
+                <span>
+                  <i />
+                  gen–ago 2024
+                </span>
+              </div>
+              <h3>Perimetri uguali</h3>
+              <p>Stesso intervallo nei due anni. Gennaio–agosto contro gennaio–agosto, non contro l&apos;anno intero.</p>
+            </Reveal>
+            <Reveal as="li" className="a5-rule rv-from-right">
+              <div className="a5-viz a5-viz-class" aria-hidden="true">
+                <span className="a5-chip">articolo</span>
+                <span className="a5-arr">→</span>
+                <span className="a5-chip a5-chip-on">linea</span>
+              </div>
+              <h3>Una riclassifica stabile</h3>
+              <p>Ogni articolo nella sua linea dall&apos;anagrafica, non da una colonna Excel compilata a memoria.</p>
+            </Reveal>
+            <Reveal as="li" className="a5-rule rv-from-left">
+              <div className="a5-viz a5-viz-net" aria-hidden="true">
+                <span className="a5-net-bar">
+                  <span className="a5-net-nc">note di credito</span>
+                </span>
+              </div>
+              <h3>Valori confrontabili</h3>
+              <p>Fatturato al netto delle note di credito, con lo stesso criterio nei due periodi.</p>
+            </Reveal>
+            <Reveal as="li" className="a5-rule rv-from-right">
+              <div className="a5-viz a5-viz-delta" aria-hidden="true">
+                <span className="a5-blk a5-blk-s">+12%</span>
+                <span className="a5-blk a5-blk-l">−8%</span>
+              </div>
+              <h3>Delta assoluto e percentuale</h3>
+              <p>Il +12% di una linea piccola non compensa il −8% di una linea grande: servono entrambe le letture.</p>
+            </Reveal>
+          </ol>
+        </div>
+      </section>
+
+      {/* ============ OPENMIND: la domanda si riscrive ============ */}
+      <section className="res-sec a5-om" id="openmind">
+        <div className="wrap a5-om-grid">
+          <div>
+            <h2 className="res-q">Cambiando solo la domanda</h2>
+            <p className="res-lede">
+              OpenMind interroga il gestionale, allinea i periodi e raggruppa dall&apos;anagrafica
+              articoli. Il confronto che guardi ogni mese diventa un cruscotto che si riallinea a
+              oggi.
+            </p>
+          </div>
+          <GroupSwitch />
+        </div>
+      </section>
+    </ResShell>
   );
 }

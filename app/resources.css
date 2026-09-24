@@ -1,0 +1,3036 @@
+/* ==========================================================================
+   OpenMind — le cinque risorse
+   Una famiglia comune (barra-indice, in breve, domande come titoli,
+   prossima risorsa) e una firma visiva per ogni articolo:
+   01 cascata dei costi · 02 cerchio di copertura · 03 giorni che scorrono
+   04 curva di Pareto · 05 il totale che si divide.
+   Le scene agganciate esistono solo con .fx e schermi ≥ 1000 × 620;
+   altrove lo stesso contenuto scorre in verticale allo stato finale.
+   ========================================================================== */
+
+/* ---------- Famiglia ---------- */
+
+.res-article {
+  color: var(--ink);
+  background: var(--cream);
+}
+
+.res-article section[id],
+.res-article [id] {
+  scroll-margin-top: 8rem;
+}
+
+.res-chap {
+  display: flex;
+  align-items: baseline;
+  gap: 0.9rem;
+  margin-top: 1.4rem;
+}
+
+.res-chap .chap-num {
+  font-size: clamp(2.6rem, 5vw, 3.6rem);
+}
+
+.res-lede {
+  margin-top: 1.3rem;
+  font-size: clamp(1.05rem, 1.4vw, 1.2rem);
+  line-height: 1.55;
+  color: var(--muted);
+  max-width: 34em;
+}
+
+.res-q {
+  font-size: clamp(2.1rem, 4.2vw, 3.5rem);
+  line-height: 1.04;
+  max-width: 17em;
+}
+
+.res-note {
+  margin-top: 1rem;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.res-sec {
+  position: relative;
+  padding-block: clamp(4.5rem, 10vw, 8rem);
+}
+
+.res-article h1 {
+  margin-top: 1.1rem;
+  font-size: clamp(2.6rem, 5.6vw, 5rem);
+  line-height: 1.02;
+}
+
+.res-article h1 .ai,
+.res-article .res-q .ai {
+  color: var(--periwinkle);
+}
+
+/* ---------- Barra-indice ---------- */
+
+.res-bar {
+  position: sticky;
+  top: calc(4.1rem + 1px);
+  z-index: 9;
+  background: rgba(7, 11, 22, 0.86);
+  -webkit-backdrop-filter: blur(16px) saturate(160%);
+  backdrop-filter: blur(16px) saturate(160%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.res-bar-row {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  min-height: 2.9rem;
+}
+
+.rbar-title {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--od-text);
+  white-space: nowrap;
+}
+
+.rbar-list {
+  list-style: none;
+  margin: 0 0 0 auto;
+  padding: 0;
+  display: flex;
+  gap: 0.2rem;
+}
+
+.rbar-list a {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.45rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.82rem;
+  color: var(--od-muted);
+  text-decoration: none;
+  transition: color 0.3s var(--ease-out), background-color 0.3s var(--ease-out);
+}
+
+.rbar-list a:hover {
+  color: var(--od-text);
+}
+
+.rbar-list a[aria-current="true"] {
+  color: var(--od-text);
+  background: rgba(162, 182, 255, 0.12);
+}
+
+.rbar-n {
+  font-size: 0.7rem;
+  color: var(--periwinkle);
+}
+
+.rbar-toggle {
+  display: none;
+}
+
+.rbar-track {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 2px;
+}
+
+.rbar-track span {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, var(--iris), var(--periwinkle));
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+}
+
+@media (max-width: 860px) {
+  .rbar-title {
+    display: none;
+  }
+  .rbar-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: none;
+    border: 0;
+    padding: 0.5rem 0;
+    color: var(--od-text);
+    font: inherit;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+  }
+  .rbar-caret {
+    font-size: 0.7em;
+    color: var(--periwinkle);
+    transition: transform 0.3s var(--ease-out);
+  }
+  .res-bar.is-open .rbar-caret {
+    transform: rotate(180deg);
+  }
+  .rbar-list {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    gap: 0;
+    margin: 0;
+    padding: 0.5rem clamp(1.25rem, 4vw, 2.5rem) 1rem;
+    background: rgba(7, 11, 22, 0.97);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-6px);
+    transition: opacity 0.25s var(--ease-out), transform 0.3s var(--ease-out), visibility 0.25s;
+  }
+  .res-bar.is-open .rbar-list {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+  }
+  .rbar-list a {
+    display: flex;
+    padding: 0.8rem 0;
+    border-radius: 0;
+    font-size: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+  }
+  .rbar-list a[aria-current="true"] {
+    background: none;
+    color: var(--periwinkle);
+  }
+}
+
+/* ---------- In breve ---------- */
+
+.res-brief {
+  border-block: 1px solid var(--line);
+  background: var(--cream-2);
+}
+
+.res-brief-row {
+  display: grid;
+  grid-template-columns: 8rem minmax(0, 1fr);
+  gap: 1.5rem;
+  align-items: start;
+  padding-block: 1.6rem;
+}
+
+.res-brief-label {
+  padding-top: 0.2rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--periwinkle);
+}
+
+.res-brief ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.5rem;
+}
+
+.res-brief a {
+  display: flex;
+  gap: 0.75rem;
+  font-size: 0.98rem;
+  line-height: 1.45;
+  text-decoration: none;
+  color: var(--ink);
+}
+
+.res-brief a:hover span:last-child {
+  color: var(--periwinkle);
+}
+
+.rb-n {
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: 1.6rem;
+  height: 1.6rem;
+  border-radius: 50%;
+  border: 1px solid rgba(162, 182, 255, 0.45);
+  color: var(--periwinkle);
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+@media (max-width: 900px) {
+  .res-brief-row {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1rem;
+  }
+  .res-brief ol {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.9rem;
+  }
+}
+
+/* ---------- Prossima risorsa ---------- */
+
+.res-next {
+  padding-block: clamp(4rem, 9vw, 7rem);
+}
+
+.rn-card {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.7fr);
+  grid-template-areas: "kicker kicker" "q fig" "go fig";
+  gap: 1.2rem clamp(1.5rem, 5vw, 4rem);
+  padding: clamp(1.8rem, 5vw, 3.6rem);
+  border-radius: clamp(20px, 3vw, 32px);
+  text-decoration: none;
+  color: var(--od-text);
+  overflow: hidden;
+  isolation: isolate;
+  background: linear-gradient(135deg, #16235a, #0c1433 60%);
+  box-shadow: 0 0 0 1px rgba(162, 182, 255, 0.16), 0 50px 100px -60px rgba(40, 60, 200, 0.9);
+  transition: transform 0.6s var(--ease-expo), box-shadow 0.6s var(--ease-expo);
+}
+
+.rn-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: radial-gradient(60% 90% at 90% 20%, rgba(120, 140, 255, 0.4), transparent 70%);
+  opacity: 0.5;
+  transition: opacity 0.6s var(--ease-out), transform 0.9s var(--ease-expo);
+}
+
+.rn-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 0 0 1px rgba(162, 182, 255, 0.35), 0 60px 110px -60px rgba(60, 80, 230, 1);
+}
+
+.rn-card:hover::before {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+.rn-kicker {
+  grid-area: kicker;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--periwinkle);
+}
+
+.rn-n {
+  margin-left: 0.4rem;
+  color: var(--od-muted);
+}
+
+.rn-q {
+  grid-area: q;
+  font-family: var(--font-display);
+  font-size-adjust: var(--fsa);
+  font-weight: 500;
+  font-size: clamp(2rem, 4.2vw, 3.6rem);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+}
+
+.rn-fig {
+  grid-area: fig;
+  align-self: end;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  text-align: right;
+}
+
+.rn-fig-num {
+  font-family: var(--font-display);
+  font-size-adjust: var(--fsa);
+  font-weight: 500;
+  font-size: clamp(3rem, 7vw, 6rem);
+  line-height: 1;
+  letter-spacing: -0.045em;
+  color: var(--periwinkle);
+  white-space: nowrap;
+}
+
+.rn-fig-label {
+  margin-top: 0.4rem;
+  color: var(--od-muted);
+  font-size: 0.9rem;
+  max-width: 16em;
+}
+
+.rn-go {
+  grid-area: go;
+  display: grid;
+  place-items: center;
+  width: 3.4rem;
+  height: 3.4rem;
+  border-radius: 50%;
+  background: var(--paper);
+  color: var(--dark);
+  font-size: 1.2rem;
+  transition: transform 0.5s var(--ease-expo);
+}
+
+.rn-card:hover .rn-go {
+  transform: translateX(8px);
+}
+
+.rn-others {
+  list-style: none;
+  margin: 1.2rem 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.8rem;
+}
+
+.rn-others a {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.8rem;
+  padding: 1rem 1.1rem;
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  text-decoration: none;
+  font-size: 0.92rem;
+  transition: border-color 0.3s var(--ease-out), background-color 0.3s var(--ease-out);
+}
+
+.rn-others a:hover {
+  border-color: rgba(162, 182, 255, 0.45);
+  background: rgba(162, 182, 255, 0.06);
+}
+
+.rn-o-fig {
+  color: var(--periwinkle);
+  white-space: nowrap;
+}
+
+@media (max-width: 760px) {
+  .rn-card {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: "kicker" "q" "fig" "go";
+  }
+  .rn-fig {
+    align-items: flex-start;
+    text-align: left;
+  }
+  .rn-others {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* ---------- Menu Risorse: ogni voce porta il suo numero ---------- */
+
+.nav-drop-menu {
+  min-width: 22rem;
+  background: rgba(10, 16, 34, 0.98);
+}
+
+.nav-drop-menu a {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  color: var(--od-text);
+}
+
+.nd-fig {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 0.9rem;
+  color: var(--periwinkle);
+  white-space: nowrap;
+}
+
+/* ==========================================================================
+   01 · Margine reale — la cascata
+   ========================================================================== */
+
+.a1-hero {
+  position: relative;
+  padding-block: clamp(3rem, 7vw, 5.5rem) clamp(3rem, 7vw, 5rem);
+  background: radial-gradient(60% 80% at 85% 45%, rgba(86, 103, 255, 0.18), transparent 70%);
+}
+
+.a1-hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  gap: clamp(2rem, 6vw, 5rem);
+  align-items: center;
+}
+
+.a1-hero-fig {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.a1-fig-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.a1-fig-num {
+  font-family: var(--font-display);
+  font-size-adjust: var(--fsa);
+  font-weight: 500;
+  font-size: clamp(6rem, 15vw, 12rem);
+  line-height: 0.9;
+  letter-spacing: -0.05em;
+  color: var(--periwinkle);
+  text-shadow: 0 0 80px rgba(120, 140, 255, 0.35);
+}
+
+.a1-fig-num small {
+  font-size: 0.45em;
+  letter-spacing: 0;
+}
+
+.a1-fig-was {
+  margin-top: 0.8rem;
+  color: var(--muted);
+}
+
+.a1-fig-was s {
+  position: relative;
+  text-decoration: none;
+  margin-left: 0.3rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.a1-fig-strike {
+  position: absolute;
+  left: -8%;
+  right: -8%;
+  top: 52%;
+  height: 2px;
+  background: var(--periwinkle);
+  transform-origin: 0 50%;
+}
+
+.a1-fig-delta {
+  margin-top: 1rem;
+  padding: 0.4rem 0.85rem;
+  border-radius: 999px;
+  background: rgba(162, 182, 255, 0.12);
+  border: 1px solid rgba(162, 182, 255, 0.35);
+  color: var(--periwinkle);
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+/* ingresso: il numero sale da una maschera, poi il 28% viene barrato */
+.js .a1-fig-num {
+  animation: res-mask-up 1.4s var(--ease-expo) 0.35s both;
+}
+
+.js .a1-fig-strike {
+  animation: res-strike 0.9s var(--ease-expo) 1.4s both;
+}
+
+.js .a1-fig-delta,
+.js .a1-fig-was,
+.js .a1-fig-label {
+  animation: res-rise 1s var(--ease-expo) 0.9s both;
+}
+
+@keyframes res-mask-up {
+  from {
+    clip-path: inset(100% 0 0 0);
+    transform: translate3d(0, 0.2em, 0);
+  }
+  to {
+    clip-path: inset(-10% -5% -10% 0);
+    transform: none;
+  }
+}
+
+@keyframes res-strike {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes res-rise {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 14px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.a1-problem-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.7fr);
+  grid-template-areas: "q q" "st has";
+  gap: clamp(1.8rem, 4vw, 3rem) clamp(2rem, 6vw, 5rem);
+  align-items: end;
+}
+
+.a1-problem .res-q {
+  grid-area: q;
+}
+
+.a1-statement {
+  grid-area: st;
+  font-family: var(--font-display);
+  font-size-adjust: var(--fsa);
+  font-weight: 500;
+  font-size: clamp(1.7rem, 3.2vw, 2.6rem);
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+}
+
+.a1-statement mark {
+  background: none;
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--periwinkle);
+  text-decoration-thickness: 0.07em;
+  text-underline-offset: 0.16em;
+}
+
+.a1-has {
+  grid-area: has;
+}
+
+.a1-has-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--periwinkle);
+}
+
+.a1-has ul {
+  list-style: none;
+  margin: 0.9rem 0 0;
+  padding: 0;
+}
+
+.a1-has li {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding-block: 0.7rem;
+  border-top: 1px solid var(--line);
+  font-size: 1.02rem;
+}
+
+.a1-has li::before {
+  content: "✓";
+  color: var(--periwinkle);
+  font-size: 0.85rem;
+}
+
+/* la cascata */
+.a1-calc {
+  background: var(--dark-2);
+}
+
+.a1-stage {
+  padding-block: clamp(4.5rem, 10vw, 7rem);
+}
+
+.a1-calc-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+  gap: clamp(2rem, 6vw, 5rem);
+  align-items: center;
+}
+
+.a1-steps ol {
+  list-style: none;
+  margin: 2rem 0 0;
+  padding: 0;
+}
+
+.a1-step {
+  display: grid;
+  grid-template-columns: 2.6rem minmax(0, 1fr);
+  gap: 0.9rem;
+  padding-block: 1rem;
+  border-top: 1px solid var(--line);
+  transition: opacity 0.6s var(--ease-out);
+}
+
+.a1-step-n {
+  display: grid;
+  place-items: center;
+  width: 2.2rem;
+  height: 2.2rem;
+  border-radius: 50%;
+  border: 1px solid rgba(162, 182, 255, 0.45);
+  color: var(--periwinkle);
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: background-color 0.5s var(--ease-out), color 0.5s var(--ease-out);
+}
+
+.a1-step h3 {
+  font-size: 1.12rem;
+}
+
+.a1-step p {
+  margin-top: 0.3rem;
+  color: var(--muted);
+  font-size: 0.95rem;
+  max-width: 30em;
+}
+
+.a1-chart {
+  margin: 0;
+}
+
+.wf {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.6rem;
+  height: clamp(18rem, 52vh, 26rem);
+}
+
+.wf-col {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.wf-plot {
+  position: relative;
+  flex: 1;
+  border-bottom: 1px solid var(--line);
+}
+
+.wf-bar {
+  position: absolute;
+  left: 14%;
+  right: 14%;
+  bottom: var(--b);
+  height: var(--h);
+  border-radius: 6px;
+  transition: transform 1s var(--ease-expo), opacity 0.6s var(--ease-out);
+}
+
+.wf-rev .wf-bar {
+  background: linear-gradient(180deg, #7f95ff, #4057e6);
+  transform-origin: 50% 100%;
+}
+
+.wf-mat .wf-bar,
+.wf-lab .wf-bar {
+  background: repeating-linear-gradient(
+    -45deg,
+    rgba(162, 182, 255, 0.22) 0 6px,
+    rgba(162, 182, 255, 0.08) 6px 12px
+  );
+  box-shadow: inset 0 0 0 1px rgba(162, 182, 255, 0.4);
+  transform-origin: 50% 0;
+}
+
+.wf-mar .wf-bar {
+  background: linear-gradient(180deg, #c9d4ff, var(--periwinkle));
+  box-shadow: 0 0 30px rgba(162, 182, 255, 0.5);
+  transform-origin: 50% 100%;
+}
+
+.wf-val {
+  margin-top: 0.7rem;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(0.8rem, 1.2vw, 1.05rem);
+  letter-spacing: -0.02em;
+  transition: opacity 0.6s var(--ease-out);
+}
+
+.wf-mar .wf-val {
+  color: var(--periwinkle);
+}
+
+.wf-lab {
+  margin-top: 0.2rem;
+  font-size: 0.75rem;
+  color: var(--muted);
+  line-height: 1.3;
+}
+
+/* la linea parte dall'ultima colonna e attraversa tutto il grafico */
+.wf-est {
+  position: absolute;
+  left: calc(-300% - 1.8rem);
+  right: 0;
+  bottom: 28%;
+  border-top: 1.5px dashed rgba(233, 236, 245, 0.45);
+  pointer-events: none;
+  transition: opacity 0.6s var(--ease-out);
+}
+
+.wf-est span {
+  position: absolute;
+  right: 0;
+  top: -1.5rem;
+  font-size: 0.75rem;
+  color: var(--ink);
+}
+
+.a1-chart figcaption {
+  margin-top: 1.2rem;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+@media (min-width: 1000px) and (min-height: 620px) {
+  .fx .a1-calc {
+    height: 330vh;
+  }
+  .fx .a1-stage {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    display: grid;
+    align-items: center;
+    padding-block: 7rem 2rem;
+  }
+  .fx .a1-step {
+    opacity: 0.28;
+  }
+  .fx .a1-calc[data-step="0"] .a1-s0,
+  .fx .a1-calc[data-step="1"] .a1-s1,
+  .fx .a1-calc[data-step="2"] .a1-s2,
+  .fx .a1-calc[data-step="3"] .a1-s3 {
+    opacity: 1;
+  }
+  .fx .a1-calc[data-step="0"] .a1-s0 .a1-step-n,
+  .fx .a1-calc[data-step="1"] .a1-s1 .a1-step-n,
+  .fx .a1-calc[data-step="2"] .a1-s2 .a1-step-n,
+  .fx .a1-calc[data-step="3"] .a1-s3 .a1-step-n {
+    background: var(--periwinkle);
+    color: var(--dark);
+  }
+  /* le barre entrano una per passo e restano */
+  .fx .a1-calc .wf-bar {
+    transform: scaleY(0);
+  }
+  .fx .a1-calc .wf-col .wf-val {
+    opacity: 0;
+  }
+  .fx .a1-calc .wf-rev .wf-bar,
+  .fx .a1-calc:is([data-step="1"], [data-step="2"], [data-step="3"]) .wf-mat .wf-bar,
+  .fx .a1-calc:is([data-step="2"], [data-step="3"]) .wf-lab .wf-bar,
+  .fx .a1-calc[data-step="3"] .wf-mar .wf-bar {
+    transform: none;
+  }
+  .fx .a1-calc .wf-rev .wf-val,
+  .fx .a1-calc:is([data-step="1"], [data-step="2"], [data-step="3"]) .wf-mat .wf-val,
+  .fx .a1-calc:is([data-step="2"], [data-step="3"]) .wf-lab .wf-val,
+  .fx .a1-calc[data-step="3"] .wf-mar .wf-val {
+    opacity: 1;
+  }
+  .fx .a1-calc .wf-est {
+    opacity: 0;
+  }
+  .fx .a1-calc[data-step="3"] .wf-est {
+    opacity: 1;
+    transition-delay: 0.5s;
+  }
+}
+
+/* il numero enorme */
+.a1-gap {
+  text-align: center;
+  background: linear-gradient(180deg, var(--dark-2), var(--cream));
+  overflow: clip;
+}
+
+.a1-gap-q {
+  margin-inline: auto;
+}
+
+.a1-gap-num {
+  font-family: var(--font-display);
+  font-size-adjust: var(--fsa);
+  font-weight: 500;
+  font-size: clamp(8rem, 30vw, 24rem);
+  line-height: 0.95;
+  letter-spacing: -0.06em;
+  background: linear-gradient(180deg, #d6deff, #6f84ff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.a1-gap-text {
+  font-family: var(--font-display);
+  font-size-adjust: var(--fsa);
+  font-weight: 500;
+  font-size: clamp(1.6rem, 3.4vw, 2.8rem);
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  max-width: 20em;
+  margin-inline: auto;
+}
+
+.a1-gap-text .ai {
+  color: var(--periwinkle);
+}
+
+.fx .a1-gap-num {
+  --t: clamp(0, calc((var(--p, 0) - 0.15) / 0.6), 1);
+  opacity: calc(0.15 + var(--t) * 0.85);
+  transform: scale(calc(0.8 + var(--t) * 0.2));
+}
+
+/* openmind */
+.a1-om-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  gap: clamp(2rem, 6vw, 5rem);
+  align-items: center;
+}
+
+.a1-chat {
+  --ink: #1b1c22;
+  --muted: #5b5b64;
+  color: var(--ink);
+  background: #fff;
+  border-radius: 22px;
+  padding: clamp(1.3rem, 3vw, 2rem);
+  box-shadow: 0 50px 100px -50px rgba(20, 30, 90, 0.9), 0 0 0 1px rgba(162, 182, 255, 0.2);
+}
+
+.a1-user {
+  margin-left: auto;
+  width: fit-content;
+  max-width: 85%;
+  background: var(--navy);
+  color: #fff;
+  padding: 0.75rem 1.1rem;
+  border-radius: 16px 16px 4px 16px;
+  font-size: 0.98rem;
+}
+
+.a1-answer {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 0.8rem;
+  margin-top: 1.3rem;
+}
+
+.a1-does {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.a1-does li {
+  display: flex;
+  gap: 0.6rem;
+  padding-block: 0.45rem;
+  font-size: 0.95rem;
+  color: var(--muted);
+}
+
+.a1-does li::before {
+  content: "";
+  flex-shrink: 0;
+  width: 0.55rem;
+  height: 0.55rem;
+  margin-top: 0.45rem;
+  border-radius: 50%;
+  background: var(--iris);
+}
+
+.js .a1-chat.reveal .a1-does li {
+  opacity: 0;
+  transform: translate3d(-10px, 0, 0);
+}
+
+.js .a1-chat.reveal.in .a1-does li {
+  opacity: 1;
+  transform: none;
+  transition: opacity 0.6s var(--ease-out), transform 0.8s var(--ease-expo);
+  transition-delay: calc(0.5s + var(--k) * 0.28s);
+}
+
+.a1-returns {
+  margin-top: 1rem;
+  padding-top: 0.9rem;
+  border-top: 1px solid #e6e3dc;
+  font-size: 1rem;
+}
+
+@media (max-width: 900px) {
+  .a1-hero-grid,
+  .a1-calc-grid,
+  .a1-om-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .a1-problem-grid {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: "q" "st" "has";
+  }
+}
+
+/* ==========================================================================
+   02 · Copertura del portafoglio — il cerchio
+   ========================================================================== */
+
+.a2-hero {
+  padding-block: clamp(3rem, 7vw, 5.5rem) clamp(3rem, 7vw, 5rem);
+}
+
+.a2-title {
+  font-size: clamp(2.8rem, 6.6vw, 6rem) !important;
+  max-width: 14em;
+}
+
+.a2-honest {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.5rem 1.4rem;
+  margin-top: clamp(1.8rem, 4vw, 2.8rem);
+}
+
+.a2-honest-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.a2-dipende {
+  position: relative;
+  font-family: var(--font-accent);
+  font-style: italic;
+  font-size-adjust: var(--fsa);
+  font-size: clamp(2.6rem, 6vw, 5rem);
+  line-height: 1;
+  color: var(--muted);
+}
+
+.a2-dipende-strike {
+  position: absolute;
+  left: -3%;
+  right: -3%;
+  top: 55%;
+  height: 3px;
+  border-radius: 3px;
+  background: var(--periwinkle);
+  transform-origin: 0 50%;
+}
+
+.js .a2-dipende-strike {
+  animation: res-strike 1s var(--ease-expo) 1.6s both;
+}
+
+.a2-problem-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  gap: clamp(2rem, 6vw, 5rem);
+  align-items: start;
+}
+
+.a2-depends {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.a2-depends li {
+  padding-block: 1.1rem;
+  border-top: 1px solid var(--line);
+  font-family: var(--font-display);
+  font-size-adjust: var(--fsa);
+  font-weight: 500;
+  font-size: clamp(1.4rem, 2.6vw, 2.1rem);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.a2-dep-word {
+  font-family: var(--font-accent);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--periwinkle);
+}
+
+.a2-problem-note {
+  grid-column: 2;
+  color: var(--muted);
+  font-size: 1.05rem;
+}
+
+/* la catena dei cinque incroci */
+.a2-cross {
+  background: var(--dark-2);
+}
+
+.a2-chain {
+  position: relative;
+  list-style: none;
+  margin: clamp(2.5rem, 6vw, 4rem) 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 1.4rem;
+}
+
+.a2-chain::before {
+  content: "";
+  position: absolute;
+  top: 1.5rem;
+  left: 1.5rem;
+  right: 1.5rem;
+  height: 2px;
+  background: linear-gradient(90deg, var(--periwinkle), var(--iris));
+  transform-origin: 0 50%;
+}
+
+.a2-node {
+  position: relative;
+}
+
+.a2-node-dot {
+  display: grid;
+  place-items: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  background: var(--dark-2);
+  border: 1.5px solid var(--periwinkle);
+  color: var(--periwinkle);
+  font-weight: 600;
+}
+
+.a2-node:last-child .a2-node-dot {
+  background: var(--periwinkle);
+  color: var(--dark);
+  box-shadow: 0 0 0 8px rgba(162, 182, 255, 0.15);
+}
+
+.a2-node h3 {
+  margin-top: 1.1rem;
+  font-size: 1.1rem;
+}
+
+.a2-node p {
+  margin-top: 0.4rem;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.fx .a2-chain::before {
+  transform: scaleX(clamp(0, calc(var(--p, 0) * 1.25), 1));
+}
+
+.fx .a2-node {
+  --t: clamp(0, calc((var(--p, 0) - 0.08 - var(--k) * 0.14) / 0.14), 1);
+  opacity: calc(0.15 + var(--t) * 0.85);
+  transform: translate3d(0, calc((1 - var(--t)) * 22px), 0);
+}
+
+/* il verdetto */
+.a2-verdict {
+  background: radial-gradient(60% 70% at 30% 55%, rgba(86, 103, 255, 0.16), transparent 70%),
+    var(--cream);
+}
+
+.a2-stage {
+  padding-block: clamp(4.5rem, 10vw, 7rem);
+}
+
+.a2-verdict-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-areas: "head head" "gauge list";
+  gap: clamp(1.5rem, 4vw, 2.5rem) clamp(2rem, 6vw, 5rem);
+  align-items: center;
+}
+
+.a2-verdict-head {
+  grid-area: head;
+}
+
+.a2-gauge {
+  grid-area: gauge;
+  position: relative;
+  justify-self: center;
+  width: min(100%, 25rem, 50vh);
+  aspect-ratio: 1;
+}
+
+.a2-gauge svg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.a2-gauge circle {
+  fill: none;
+  stroke-width: 7;
+}
+
+.a2-ring-bg {
+  stroke: rgba(162, 182, 255, 0.14);
+}
+
+.a2-ring {
+  transition: stroke-dasharray 1.2s var(--ease-expo), opacity 0.4s var(--ease-out);
+  stroke: var(--periwinkle);
+  stroke-linecap: round;
+  stroke-dasharray: 97.9 100;
+}
+
+.a2-ring-gap {
+  stroke: var(--iris);
+  stroke-dasharray: 2.1 100;
+  stroke-dashoffset: -97.9;
+  transition: opacity 0.6s var(--ease-out);
+}
+
+.a2-gauge-nums {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+}
+
+.a2-num {
+  grid-area: 1 / 1;
+  font-family: var(--font-display);
+  font-size-adjust: var(--fsa);
+  font-weight: 500;
+  font-size: clamp(3.6rem, 8vw, 6.4rem);
+  letter-spacing: -0.05em;
+  color: var(--ink);
+  opacity: 0;
+}
+
+.a2-num.a2-v1 {
+  opacity: 1;
+  color: var(--periwinkle);
+}
+
+.a2-verdict-list {
+  grid-area: list;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.a2-vrow {
+  display: grid;
+  grid-template-columns: 6.5rem minmax(0, 1fr);
+  gap: 1rem;
+  align-items: baseline;
+  padding-block: 1rem;
+  border-top: 1px solid var(--line);
+  transition: opacity 0.6s var(--ease-out);
+}
+
+.a2-vrow strong {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 1.9rem;
+  letter-spacing: -0.04em;
+  color: var(--periwinkle);
+}
+
+.a2-vrow span {
+  font-size: 1.02rem;
+}
+
+.a2-vrow em {
+  display: block;
+  font-style: normal;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+@media (min-width: 1000px) and (min-height: 620px) {
+  .fx .a2-verdict {
+    height: 320vh;
+  }
+  .fx .a2-stage {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    display: grid;
+    align-items: center;
+    padding-block: 7rem 2rem;
+  }
+  .fx .a2-num {
+    opacity: 0;
+    transform: translate3d(0, 24px, 0) scale(0.94);
+    transition: opacity 0.5s var(--ease-out), transform 0.8s var(--ease-expo);
+  }
+  .fx .a2-num.a2-v1 {
+    color: var(--ink);
+  }
+  .fx .a2-verdict[data-step="0"] .a2-num.a2-v0,
+  .fx .a2-verdict[data-step="1"] .a2-num.a2-v1,
+  .fx .a2-verdict[data-step="2"] .a2-num.a2-v2,
+  .fx .a2-verdict[data-step="3"] .a2-num.a2-v3 {
+    opacity: 1;
+    transform: none;
+    transition-delay: 0.15s;
+  }
+  .fx .a2-verdict[data-step="1"] .a2-num.a2-v1 {
+    color: var(--periwinkle);
+  }
+  .fx .a2-verdict[data-step="2"] .a2-num.a2-v2,
+  .fx .a2-verdict[data-step="3"] .a2-num.a2-v3 {
+    color: #c9d4ff;
+  }
+  .fx .a2-vrow {
+    opacity: 0.25;
+  }
+  .fx .a2-verdict[data-step="0"] .a2-vrow.a2-v0,
+  .fx .a2-verdict[data-step="1"] .a2-vrow.a2-v1,
+  .fx .a2-verdict[data-step="2"] .a2-vrow.a2-v2,
+  .fx .a2-verdict[data-step="3"] .a2-vrow.a2-v3 {
+    opacity: 1;
+  }
+  /* il cerchio: pieno neutro, poi coperto, poi il vuoto che resta */
+  .fx .a2-verdict[data-step="0"] .a2-ring {
+    stroke-dasharray: 0 100;
+    opacity: 0;
+  }
+  .fx .a2-verdict[data-step="0"] .a2-ring-bg {
+    stroke: rgba(162, 182, 255, 0.3);
+  }
+  .fx .a2-verdict:is([data-step="0"], [data-step="1"]) .a2-ring-gap {
+    opacity: 0;
+  }
+  .fx .a2-verdict[data-step="3"] .a2-ring-gap {
+    animation: a2-pulse 1.6s ease-in-out infinite;
+  }
+}
+
+@keyframes a2-pulse {
+  50% {
+    opacity: 0.35;
+  }
+}
+
+/* openmind: metà notte, metà carta */
+.a2-om {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  min-height: 70vh;
+}
+
+.a2-om-ask {
+  background: linear-gradient(160deg, #1b2d74, #0b1332);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.a2-om-answer {
+  --ink: #1b1c22;
+  --muted: #5b5b64;
+  --line: #e2dfd9;
+  background: var(--paper);
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+}
+
+.a2-om-inner {
+  width: 100%;
+  max-width: 34rem;
+  padding: clamp(3rem, 8vw, 6rem) clamp(1.25rem, 5vw, 3.5rem);
+}
+
+.a2-om-answer .cf-tag {
+  color: var(--navy);
+}
+
+.a2-om-q {
+  margin-top: 1rem;
+  font-family: var(--font-display);
+  font-size-adjust: var(--fsa);
+  font-weight: 500;
+  font-size: clamp(2rem, 4vw, 3.4rem);
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  color: #fff;
+}
+
+.a2-om-rows {
+  list-style: none;
+  margin: 1.2rem 0 0;
+  padding: 0;
+}
+
+.a2-om-rows li {
+  display: grid;
+  grid-template-columns: 7.5rem minmax(0, 1fr);
+  gap: 1rem;
+  align-items: baseline;
+  padding-block: 1rem;
+  border-top: 1px solid var(--line);
+  font-size: 1rem;
+}
+
+.a2-om-k {
+  font-weight: 700;
+  font-size: 0.8rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.a2-ok {
+  color: #2f7d4a;
+}
+
+.a2-miss {
+  color: #b0473f;
+}
+
+.a2-do {
+  color: var(--navy);
+}
+
+.a2-om-note {
+  margin-top: 1.3rem;
+  font-size: 0.92rem;
+  color: var(--muted);
+}
+
+@media (max-width: 900px) {
+  .a2-problem-grid,
+  .a2-verdict-grid,
+  .a2-om {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .a2-verdict-grid {
+    grid-template-areas: "head" "gauge" "list";
+  }
+  .a2-problem-note {
+    grid-column: auto;
+  }
+  .a2-om-ask {
+    justify-content: flex-start;
+  }
+  .a2-chain {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.6rem;
+    padding-left: 4.2rem;
+  }
+  .a2-chain::before {
+    top: 0.5rem;
+    bottom: 0.5rem;
+    left: 1.5rem;
+    right: auto;
+    width: 2px;
+    height: auto;
+    transform-origin: 50% 0;
+  }
+  .fx .a2-chain::before {
+    transform: scaleY(clamp(0, calc(var(--p, 0) * 1.25), 1));
+  }
+  .a2-node-dot {
+    position: absolute;
+    left: -4.2rem;
+    top: -0.2rem;
+  }
+  .a2-node h3 {
+    margin-top: 0;
+  }
+}
+
+/* ==========================================================================
+   03 · Fornitori in ritardo — i giorni che scorrono
+   ========================================================================== */
+
+.a3-hero {
+  position: relative;
+  overflow: clip;
+  padding-block: clamp(3rem, 7vw, 5.5rem) clamp(3.5rem, 8vw, 6rem);
+}
+
+.a3-hero-num {
+  position: absolute;
+  right: -1vw;
+  top: 50%;
+  font-family: var(--font-display);
+  font-size-adjust: var(--fsa);
+  font-weight: 500;
+  font-size: clamp(12rem, 32vw, 30rem);
+  line-height: 0.8;
+  letter-spacing: -0.07em;
+  color: transparent;
+  -webkit-text-stroke: 1.5px rgba(162, 182, 255, 0.32);
+  background: linear-gradient(180deg, rgba(162, 182, 255, 0.14), transparent 80%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  transform: translate3d(0, -50%, 0);
+  pointer-events: none;
+}
+
+.js .a3-hero-num {
+  animation: a3-slide 1.6s var(--ease-expo) 0.2s both;
+}
+
+@keyframes a3-slide {
+  from {
+    opacity: 0;
+    transform: translate3d(12%, -50%, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, -50%, 0);
+  }
+}
+
+.a3-hero-inner {
+  position: relative;
+}
+
+.a3-hero h1 {
+  max-width: 9.5em;
+}
+
+.a3-today {
+  list-style: none;
+  margin: clamp(2rem, 5vw, 3rem) 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 clamp(1.5rem, 5vw, 4rem);
+}
+
+.a3-today li {
+  padding-block: 1.2rem;
+  border-top: 1px solid var(--line);
+  font-size: clamp(1.1rem, 1.8vw, 1.35rem);
+  line-height: 1.35;
+  color: var(--muted);
+}
+
+.a3-today strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.a3-express {
+  margin-top: clamp(2.5rem, 6vw, 4rem);
+  font-family: var(--font-display);
+  font-size-adjust: var(--fsa);
+  font-weight: 500;
+  font-size: clamp(1.9rem, 4vw, 3.4rem);
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  max-width: 16em;
+}
+
+.a3-express .ai {
+  color: var(--periwinkle);
+}
+
+.a3-late {
+  --cell: clamp(8.5rem, 13vw, 11.5rem);
+  background: var(--dark-2);
+}
+
+.a3-stage {
+  padding-block: clamp(4.5rem, 10vw, 7rem);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: clamp(1.8rem, 4vh, 3rem);
+}
+
+.a3-late-head {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 1rem 2rem;
+}
+
+.a3-counter {
+  display: flex;
+  align-items: baseline;
+  gap: 0.8rem;
+}
+
+.a3-count {
+  display: none;
+}
+
+.a3-count-static,
+.a3-count::after {
+  font-family: var(--font-display);
+  font-size-adjust: var(--fsa);
+  font-weight: 500;
+  font-size: clamp(4rem, 8vw, 7rem);
+  line-height: 0.9;
+  letter-spacing: -0.05em;
+  color: var(--periwinkle);
+  font-variant-numeric: tabular-nums;
+}
+
+.a3-count-unit {
+  max-width: 9em;
+  color: var(--muted);
+  font-size: 0.95rem;
+  line-height: 1.3;
+}
+
+.a3-strip-wrap {
+  overflow: clip;
+}
+
+.a3-strip {
+  list-style: none;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(9, minmax(0, 1fr));
+  max-width: var(--wrap);
+  margin-inline: auto;
+  padding: 0 clamp(1.25rem, 4vw, 2.5rem);
+}
+
+.a3-day {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.4rem;
+  padding-top: 1.4rem;
+  border-top: 3px solid var(--periwinkle);
+}
+
+.a3-day::before {
+  content: "";
+  position: absolute;
+  top: -0.55rem;
+  left: 0;
+  width: 0.9rem;
+  height: 0.9rem;
+  border-radius: 50%;
+  background: var(--periwinkle);
+}
+
+.a3-day-n {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(0.95rem, 2vw, 1.6rem);
+  letter-spacing: -0.03em;
+}
+
+.a3-day-l {
+  font-size: 0.72rem;
+  color: var(--muted);
+  visibility: hidden;
+}
+
+.a3-day:first-child .a3-day-l,
+.a3-day:last-child .a3-day-l {
+  visibility: visible;
+}
+
+.a3-effects {
+  width: 100%;
+  display: flex;
+  align-items: stretch;
+  gap: 0.8rem;
+}
+
+.a3-effect {
+  flex: 1;
+  padding: 1rem 1.1rem;
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.a3-e2 {
+  border-color: rgba(162, 182, 255, 0.5);
+  background: rgba(86, 103, 255, 0.12);
+}
+
+.a3-e-k {
+  display: block;
+  margin-bottom: 0.2rem;
+  font-weight: 600;
+  color: var(--ink);
+  font-size: 1.05rem;
+}
+
+.a3-e-arrow {
+  align-self: center;
+  color: var(--periwinkle);
+}
+
+.a3-note {
+  width: 100%;
+  margin-top: 0;
+}
+
+@media (min-width: 1000px) and (min-height: 620px) {
+  .fx .a3-late {
+    height: 340vh;
+  }
+  .fx .a3-stage {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    padding-block: 7rem 2rem;
+    overflow: clip;
+  }
+  .fx .a3-count {
+    display: inline;
+  }
+  .fx .a3-count::after {
+    counter-reset: late var(--step, 0);
+    content: "+" counter(late);
+  }
+  .fx .a3-count-static {
+    display: none;
+  }
+  /* la striscia scorre: il giorno attuale resta al centro */
+  .fx .a3-strip {
+    display: flex;
+    max-width: none;
+    padding: 0 0 0 calc(50% - var(--cell) / 2);
+    transform: translate3d(calc(var(--step, 0) * var(--cell) * -1), 0, 0);
+    transition: transform 0.9s var(--ease-expo);
+  }
+  .fx .a3-day {
+    flex: 0 0 var(--cell);
+    --past: clamp(0, calc(var(--step, 0) - var(--d) + 1), 1);
+    opacity: clamp(0.18, calc(1 - (var(--d) - var(--step, 0)) * 0.3), 1);
+    border-top-color: rgba(162, 182, 255, calc(0.15 + var(--past) * 0.85));
+    transition: opacity 0.6s var(--ease-out), border-color 0.6s var(--ease-out);
+  }
+  .fx .a3-day::before {
+    background: rgba(162, 182, 255, calc(0.2 + var(--past) * 0.8));
+  }
+  .fx .a3-day-n {
+    font-size: clamp(1.6rem, 3vw, 2.4rem);
+  }
+  .fx .a3-day-l {
+    visibility: visible;
+  }
+  /* le conseguenze arrivano negli ultimi giorni */
+  .fx .a3-effect,
+  .fx .a3-e-arrow {
+    transition: opacity 0.7s var(--ease-out), transform 0.9s var(--ease-expo);
+  }
+  .fx .a3-e1 {
+    --t: clamp(0, calc(var(--step, 0) - 5), 1);
+  }
+  .fx .a3-e2,
+  .fx .a3-e-arrow:nth-of-type(1) {
+    --t: clamp(0, calc(var(--step, 0) - 6), 1);
+  }
+  .fx .a3-e3,
+  .fx .a3-e-arrow:nth-of-type(2) {
+    --t: clamp(0, calc(var(--step, 0) - 7), 1);
+  }
+  .fx .a3-effect,
+  .fx .a3-e-arrow {
+    opacity: calc(0.12 + var(--t, 0) * 0.88);
+    transform: translate3d(0, calc((1 - var(--t, 0)) * 16px), 0);
+  }
+}
+
+/* le tre domande: carte che si impilano */
+.a3-stack {
+  list-style: none;
+  margin: clamp(2rem, 5vw, 3rem) 0 0;
+  padding: 0;
+}
+
+.a3-card {
+  position: sticky;
+  top: calc(8.5rem + var(--k) * 1.3rem);
+  display: grid;
+  grid-template-columns: 4rem minmax(0, 1fr) auto;
+  gap: 1.4rem;
+  align-items: start;
+  min-height: 15rem;
+  margin-bottom: 1.4rem;
+  padding: clamp(1.4rem, 3.5vw, 2.4rem);
+  border-radius: 24px;
+  background: linear-gradient(160deg, #18244e, #111a38);
+  border: 1px solid rgba(162, 182, 255, 0.2);
+  box-shadow: 0 -20px 50px -30px rgba(0, 0, 0, 0.8);
+}
+
+.a3-card-n {
+  font-family: var(--font-accent);
+  font-style: italic;
+  font-size: 2.2rem;
+  line-height: 1;
+  color: var(--periwinkle);
+}
+
+.a3-card h3 {
+  font-family: var(--font-display);
+  font-size-adjust: var(--fsa);
+  font-weight: 500;
+  font-size: clamp(1.7rem, 3.2vw, 2.6rem);
+  letter-spacing: -0.03em;
+  line-height: 1.08;
+}
+
+.a3-card p {
+  margin-top: 0.8rem;
+  color: var(--muted);
+  font-size: 1.02rem;
+  max-width: 34em;
+}
+
+.a3-card-fig {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(1.4rem, 2.6vw, 2.2rem);
+  letter-spacing: -0.04em;
+  color: var(--periwinkle);
+  white-space: nowrap;
+}
+
+.a3-weigh {
+  margin: clamp(3rem, 8vw, 5rem) 0 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: center;
+}
+
+.a3-weigh blockquote {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size-adjust: var(--fsa);
+  font-weight: 500;
+  font-size: clamp(1.7rem, 3.4vw, 2.8rem);
+  line-height: 1.12;
+  letter-spacing: -0.03em;
+}
+
+.a3-weigh .ai {
+  color: var(--periwinkle);
+}
+
+.a3-bars {
+  display: grid;
+  gap: 1.4rem;
+}
+
+.a3-bar {
+  position: relative;
+}
+
+.a3-bar-l {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.a3-bar-t {
+  display: block;
+  height: 0.9rem;
+  border-radius: 999px;
+  background: rgba(162, 182, 255, 0.08);
+  overflow: hidden;
+}
+
+.a3-bar-t span {
+  display: block;
+  width: var(--w);
+  height: 100%;
+  border-radius: inherit;
+  background: rgba(162, 182, 255, 0.3);
+  transform-origin: 0 50%;
+}
+
+.a3-bar-b .a3-bar-t span {
+  background: linear-gradient(90deg, var(--iris), var(--periwinkle));
+  box-shadow: 0 0 20px rgba(162, 182, 255, 0.5);
+}
+
+.a3-bar-flag {
+  position: absolute;
+  right: 0;
+  top: 0;
+  padding: 0.15rem 0.6rem;
+  border-radius: 999px;
+  background: var(--periwinkle);
+  color: var(--dark);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.fx .a3-bar-a .a3-bar-t span {
+  transform: scaleX(clamp(0, calc(var(--p, 0) / 0.6), 1));
+}
+
+.fx .a3-bar-b .a3-bar-t span {
+  transform: scaleX(clamp(0, calc((var(--p, 0) - 0.3) / 0.4), 1));
+}
+
+.fx .a3-bar-flag {
+  opacity: clamp(0, calc((var(--p, 0) - 0.65) / 0.15), 1);
+}
+
+/* openmind: quattro gesti */
+.a3-om {
+  background: var(--cream-2);
+}
+
+.a3-om-q {
+  font-family: var(--font-display);
+  font-size-adjust: var(--fsa);
+  font-weight: 500;
+  font-size: clamp(1.9rem, 4vw, 3.3rem);
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  max-width: 18em;
+}
+
+.a3-om-q .cf-tag {
+  margin-bottom: 1rem;
+}
+
+.a3-pipe {
+  position: relative;
+  list-style: none;
+  margin: clamp(2.5rem, 6vw, 3.5rem) 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.a3-pipe li {
+  padding: 1.2rem 1.1rem;
+  border-radius: 16px;
+  background: var(--card);
+  border: 1px solid var(--line);
+}
+
+.a3-pipe strong {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 1.5rem;
+  letter-spacing: -0.03em;
+  color: var(--periwinkle);
+}
+
+.a3-pipe span {
+  display: block;
+  margin-top: 0.3rem;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.fx .a3-pipe li {
+  --t: clamp(0, calc((var(--p, 0) - 0.1 - var(--k) * 0.13) / 0.16), 1);
+  opacity: calc(0.15 + var(--t) * 0.85);
+  transform: translate3d(calc((1 - var(--t)) * 40px), 0, 0);
+  border-color: rgba(162, 182, 255, calc(0.1 + var(--t) * 0.35));
+}
+
+.a3-om-out {
+  margin-top: clamp(2rem, 5vw, 3rem);
+  font-size: clamp(1.1rem, 1.6vw, 1.3rem);
+  max-width: 38em;
+}
+
+.a3-om-out .ai {
+  color: var(--periwinkle);
+}
+
+@media (max-width: 900px) {
+  .a3-today,
+  .a3-weigh {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .a3-pipe {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .a3-effects {
+    flex-direction: column;
+  }
+  .a3-e-arrow {
+    transform: rotate(90deg);
+  }
+}
+
+@media (max-width: 560px) {
+  .a3-hero-num {
+    top: auto;
+    bottom: -4%;
+    right: -6vw;
+    font-size: 13rem;
+    transform: none;
+    opacity: 0.4;
+  }
+  .js .a3-hero-num {
+    animation-name: res-rise;
+  }
+  .a3-card {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.6rem;
+    top: calc(7.5rem + var(--k) * 0.9rem);
+    min-height: 0;
+  }
+  .a3-card-fig {
+    order: -1;
+  }
+  .a3-card-n {
+    display: none;
+  }
+  .a3-pipe {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .a3-day-n {
+    font-size: 0.8rem;
+  }
+}
+
+/* ==========================================================================
+   04 · Analisi ABC — la curva
+   ========================================================================== */
+
+.a4-hero {
+  padding-block: clamp(3rem, 7vw, 5.5rem) clamp(3rem, 7vw, 5rem);
+}
+
+.a4-hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+  gap: clamp(2rem, 6vw, 5rem);
+  align-items: center;
+}
+
+.a4-duel {
+  display: flex;
+  flex-direction: column;
+}
+
+.a4-duel-row {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  padding-block: 0.4rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.a4-duel-num {
+  font-family: var(--font-display);
+  font-size-adjust: var(--fsa);
+  font-weight: 500;
+  font-size: clamp(5rem, 11vw, 9rem);
+  line-height: 0.95;
+  letter-spacing: -0.06em;
+  color: var(--periwinkle);
+}
+
+.a4-duel-b .a4-duel-num {
+  color: var(--ink);
+}
+
+.a4-duel-txt {
+  font-size: 1.05rem;
+  color: var(--muted);
+}
+
+.js .a4-duel-row {
+  animation: res-rise 1.1s var(--ease-expo) 0.5s both;
+}
+
+.js .a4-duel-b {
+  animation-delay: 0.8s;
+}
+
+/* il rituale, un nastro */
+.a4-ritual {
+  background: var(--dark-2);
+  overflow: clip;
+}
+
+.a4-ritual-lede strong {
+  color: var(--ink);
+}
+
+.a4-belt-wrap {
+  margin-top: clamp(2.5rem, 6vw, 4rem);
+}
+
+.a4-belt {
+  list-style: none;
+  margin: 0;
+  padding: 0 clamp(1.25rem, 4vw, 2.5rem);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  max-width: var(--wrap);
+  margin-inline: auto;
+}
+
+.a4-belt li {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 1rem 1.3rem;
+  border-radius: 999px;
+  border: 1.5px dashed rgba(162, 182, 255, 0.35);
+  font-size: clamp(1rem, 1.6vw, 1.3rem);
+  white-space: nowrap;
+}
+
+.a4-belt li:last-child {
+  border-style: solid;
+  border-color: var(--periwinkle);
+  background: rgba(162, 182, 255, 0.1);
+}
+
+.a4-belt-n {
+  display: grid;
+  place-items: center;
+  width: 1.7rem;
+  height: 1.7rem;
+  border-radius: 50%;
+  background: rgba(162, 182, 255, 0.14);
+  color: var(--periwinkle);
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+@media (min-width: 1000px) {
+  .fx .a4-belt {
+    flex-wrap: nowrap;
+    width: max-content;
+    max-width: none;
+    padding-left: 10vw;
+    transform: translate3d(calc(var(--p, 0) * -48%), 0, 0);
+  }
+}
+
+/* il metodo: curva e passi */
+.a4-method {
+  background: var(--cream);
+}
+
+.a4-stage {
+  padding-block: clamp(4.5rem, 10vw, 7rem);
+}
+
+.a4-method-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  gap: clamp(2rem, 6vw, 5rem);
+  align-items: center;
+}
+
+.a4-pareto {
+  margin: 0;
+}
+
+.a4-pareto svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.a4-axis {
+  stroke: var(--line);
+  stroke-width: 1.2;
+}
+
+.a4-band-a {
+  fill: rgba(86, 103, 255, 0.16);
+}
+
+.a4-band-b {
+  fill: rgba(86, 103, 255, 0.07);
+}
+
+.a4-band,
+.a4-th,
+.a4-th-l,
+.a4-mark {
+  transition: opacity 0.8s var(--ease-out);
+}
+
+.a4-th {
+  stroke: rgba(162, 182, 255, 0.5);
+  stroke-dasharray: 4 5;
+}
+
+.a4-th-l,
+.a4-ax-l,
+.a4-mark text {
+  font-family: var(--font-ui);
+  font-size: 12px;
+  fill: var(--muted);
+}
+
+.a4-mark text {
+  fill: var(--ink);
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.a4-curve {
+  fill: none;
+  stroke: var(--periwinkle);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-dasharray: 100 100;
+  stroke-dashoffset: 0;
+  filter: drop-shadow(0 0 6px rgba(162, 182, 255, 0.5));
+  transition: stroke-dashoffset 1.6s var(--ease-expo), opacity 0.4s var(--ease-out);
+}
+
+.a4-mark line {
+  stroke: var(--periwinkle);
+  stroke-dasharray: 3 4;
+}
+
+.a4-mark circle {
+  fill: var(--periwinkle);
+  stroke: var(--cream);
+  stroke-width: 3;
+}
+
+.a4-pareto figcaption {
+  margin-top: 1rem;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.a4-steps ol {
+  list-style: none;
+  margin: 2rem 0 0;
+  padding: 0;
+}
+
+.a4-step {
+  display: grid;
+  grid-template-columns: 2.4rem minmax(0, 1fr);
+  gap: 0.9rem;
+  padding-block: 1rem;
+  border-top: 1px solid var(--line);
+  transition: opacity 0.6s var(--ease-out);
+}
+
+.a4-step-n {
+  font-family: var(--font-accent);
+  font-style: italic;
+  font-size: 1.8rem;
+  line-height: 1;
+  color: var(--periwinkle);
+}
+
+.a4-step h3 {
+  font-size: 1.12rem;
+}
+
+.a4-step p {
+  margin-top: 0.3rem;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+@media (min-width: 1000px) and (min-height: 620px) {
+  .fx .a4-method {
+    height: 320vh;
+  }
+  .fx .a4-stage {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    display: grid;
+    align-items: center;
+    padding-block: 7rem 2rem;
+  }
+  .fx .a4-step {
+    opacity: 0.28;
+  }
+  .fx .a4-method[data-step="0"] .a4-s0,
+  .fx .a4-method[data-step="1"] .a4-s1,
+  .fx .a4-method[data-step="2"] .a4-s2,
+  .fx .a4-method[data-step="3"] .a4-s3 {
+    opacity: 1;
+  }
+  .fx .a4-method[data-step="0"] .a4-curve {
+    stroke-dashoffset: 100;
+    opacity: 0;
+  }
+  .fx .a4-method:is([data-step="0"], [data-step="1"]) :is(.a4-band, .a4-th, .a4-th-l) {
+    opacity: 0;
+  }
+  .fx .a4-method:not([data-step="3"]) .a4-mark {
+    opacity: 0;
+  }
+}
+
+/* altre dimensioni: la parola cambia con lo scroll */
+.a4-dims {
+  background: var(--dark-2);
+  text-align: center;
+}
+
+.a4-dims-line {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+  font-family: var(--font-display);
+  font-size-adjust: var(--fsa);
+  font-weight: 500;
+  font-size: clamp(2.2rem, 5.4vw, 4.8rem);
+  line-height: 1.1;
+  letter-spacing: -0.035em;
+}
+
+.a4-dims-line > span:first-child {
+  color: var(--muted);
+}
+
+.a4-dims-words {
+  display: inline-flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0 0.6em;
+  font-family: var(--font-accent);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--periwinkle);
+}
+
+.a4-dims-words span:not(:last-child)::after {
+  content: " ·";
+  color: var(--muted);
+}
+
+.a4-dims-note {
+  margin-top: 1.4rem;
+  color: var(--muted);
+  font-size: 1.05rem;
+}
+
+.fx .a4-dims-words {
+  display: inline-grid;
+  justify-items: center;
+  height: 1.2em;
+  overflow: clip;
+}
+
+.fx .a4-dims-words span {
+  grid-area: 1 / 1;
+  --on: clamp(0, calc(1 - (var(--step, 0) - var(--w)) * (var(--step, 0) - var(--w))), 1);
+  opacity: var(--on);
+  transform: translate3d(0, calc((var(--w) - var(--step, 0)) * 0.9em), 0);
+  transition: opacity 0.6s var(--ease-out), transform 0.9s var(--ease-expo);
+}
+
+.fx .a4-dims-words span::after {
+  content: none;
+}
+
+.a4-dims-words span:nth-child(1) {
+  --w: 0;
+}
+.a4-dims-words span:nth-child(2) {
+  --w: 1;
+}
+.a4-dims-words span:nth-child(3) {
+  --w: 2;
+}
+.a4-dims-words span:nth-child(4) {
+  --w: 3;
+}
+
+/* openmind: cosa consegna */
+.a4-om-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(2rem, 6vw, 5rem);
+  align-items: center;
+}
+
+.a4-om-q {
+  margin-top: 0.8rem;
+  font-family: var(--font-display);
+  font-size-adjust: var(--fsa);
+  font-weight: 500;
+  font-size: clamp(2rem, 4vw, 3.3rem);
+  line-height: 1.06;
+  letter-spacing: -0.03em;
+}
+
+.a4-files {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.a4-files li {
+  position: relative;
+  padding: 1.4rem 1.3rem 1.2rem;
+  min-height: 8.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  border-radius: 6px 22px 6px 6px;
+  background: #fff;
+  color: #1b1c22;
+  box-shadow: 0 30px 60px -35px rgba(20, 30, 90, 0.9);
+}
+
+.a4-files li::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 1.4rem;
+  height: 1.4rem;
+  border-radius: 0 22px 0 6px;
+  background: linear-gradient(225deg, var(--cream) 50%, #dcd8cf 50%);
+}
+
+.a4-file-t {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 1.6rem;
+  letter-spacing: -0.03em;
+  color: var(--navy);
+}
+
+.a4-file-s {
+  font-size: 0.88rem;
+  color: #5b5b64;
+}
+
+.a4-om-end {
+  grid-column: 1 / -1;
+  font-family: var(--font-display);
+  font-size-adjust: var(--fsa);
+  font-weight: 500;
+  font-size: clamp(1.6rem, 3.2vw, 2.6rem);
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+}
+
+.a4-om-end .ai {
+  color: var(--periwinkle);
+}
+
+@media (max-width: 900px) {
+  .a4-hero-grid,
+  .a4-method-grid,
+  .a4-om-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 560px) {
+  .a4-belt li {
+    white-space: normal;
+    font-size: 0.95rem;
+    padding: 0.75rem 1rem;
+  }
+  .a4-files li {
+    min-height: 7rem;
+  }
+}
+
+/* ==========================================================================
+   05 · Anno su anno — il totale che si divide
+   ========================================================================== */
+
+.a5-hero {
+  padding-block: clamp(3rem, 7vw, 5.5rem) clamp(3rem, 7vw, 5rem);
+  overflow: clip;
+}
+
+.a5-years {
+  display: flex;
+  align-items: baseline;
+  gap: clamp(0.6rem, 2vw, 1.6rem);
+  margin-top: clamp(1.5rem, 4vw, 2.5rem);
+  font-family: var(--font-display);
+  font-size-adjust: var(--fsa);
+  font-weight: 500;
+  font-size: clamp(4.6rem, 17vw, 15rem);
+  line-height: 0.85;
+  letter-spacing: -0.06em;
+}
+
+.a5-y {
+  color: transparent;
+  -webkit-text-stroke: 1.5px rgba(162, 182, 255, 0.55);
+}
+
+.a5-y2 {
+  color: var(--periwinkle);
+  -webkit-text-stroke: 0;
+}
+
+.a5-vs {
+  font-family: var(--font-accent);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 0.25em;
+  letter-spacing: 0;
+  color: var(--muted);
+}
+
+.js .a5-y {
+  animation: a5-from-left 1.4s var(--ease-expo) 0.2s both;
+}
+
+.js .a5-y2 {
+  animation-name: a5-from-right;
+  animation-delay: 0.45s;
+}
+
+.js .a5-vs {
+  animation: res-rise 1s var(--ease-expo) 0.8s both;
+}
+
+@keyframes a5-from-left {
+  from {
+    opacity: 0;
+    transform: translate3d(-10%, 0, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes a5-from-right {
+  from {
+    opacity: 0;
+    transform: translate3d(10%, 0, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.a5-title {
+  max-width: 16em;
+}
+
+.a5-problem-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(2rem, 6vw, 5rem);
+  align-items: start;
+}
+
+.a5-quote {
+  margin-top: 1.6rem;
+  padding-left: 1.2rem;
+  border-left: 2px solid var(--periwinkle);
+  font-size: 1.2rem;
+  color: var(--muted);
+}
+
+.a5-chores {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.a5-chores li {
+  display: grid;
+  grid-template-columns: 2.6rem minmax(0, 1fr);
+  gap: 0.6rem;
+  padding-block: 1.1rem;
+  border-top: 1px solid var(--line);
+  font-size: clamp(1.1rem, 1.8vw, 1.3rem);
+  line-height: 1.35;
+}
+
+.a5-chores li:last-child {
+  color: var(--periwinkle);
+}
+
+.a5-chore-n {
+  font-family: var(--font-accent);
+  font-style: italic;
+  font-size: 1.6rem;
+  line-height: 1;
+  color: var(--muted);
+}
+
+/* il grafico che si divide */
+.a5-split {
+  background: var(--dark-2);
+}
+
+.a5-stage {
+  padding-block: clamp(4.5rem, 10vw, 7rem);
+}
+
+.a5-chart {
+  position: relative;
+  margin: clamp(2rem, 5vw, 3rem) 0 0;
+  height: clamp(15rem, 40vh, 22rem);
+}
+
+.a5-chart svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.a5-chart path,
+.a5-chart line {
+  fill: none;
+  vector-effect: non-scaling-stroke;
+}
+
+.a5-base {
+  stroke: var(--line);
+  stroke-dasharray: 3 6;
+}
+
+.a5-total {
+  stroke: rgba(233, 236, 245, 0.3);
+  stroke-width: 3;
+}
+
+.a5-up,
+.a5-down {
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-dasharray: 100 100;
+}
+
+.a5-up {
+  stroke: var(--periwinkle);
+  filter: drop-shadow(0 0 8px rgba(162, 182, 255, 0.6));
+}
+
+.a5-down {
+  stroke: rgba(162, 182, 255, 0.45);
+}
+
+.a5-lab {
+  position: absolute;
+  font-size: 0.95rem;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.a5-lab strong {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(2.2rem, 4.6vw, 3.8rem);
+  line-height: 1;
+  letter-spacing: -0.05em;
+  color: var(--periwinkle);
+}
+
+.a5-lab-total {
+  left: 0;
+  top: calc(50% + 0.7rem);
+}
+
+.a5-lab-up {
+  right: 0;
+  bottom: calc(85% + 0.6rem);
+  text-align: right;
+}
+
+.a5-lab-down {
+  right: 0;
+  top: calc(75% + 0.6rem);
+  text-align: right;
+}
+
+.a5-lab-down strong {
+  color: var(--od-muted);
+}
+
+.a5-split-text {
+  margin-top: clamp(5rem, 10vh, 7rem);
+  font-family: var(--font-display);
+  font-size-adjust: var(--fsa);
+  font-weight: 500;
+  font-size: clamp(1.6rem, 3.2vw, 2.6rem);
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+  max-width: 22em;
+}
+
+.a5-split-text .ai {
+  color: var(--periwinkle);
+}
+
+@media (min-width: 1000px) and (min-height: 620px) {
+  .fx .a5-split {
+    height: 270vh;
+  }
+  .fx .a5-stage {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    display: grid;
+    align-items: center;
+    padding-block: 7rem 2rem;
+  }
+  .fx .a5-total {
+    stroke-dasharray: 100 100;
+    stroke-dashoffset: calc(100 - clamp(0, calc(var(--p, 0) / 0.22), 1) * 100);
+    opacity: calc(1 - clamp(0, calc((var(--p, 0) - 0.4) / 0.2), 1) * 0.65);
+  }
+  .fx .a5-up {
+    stroke-dashoffset: calc(100 - clamp(0, calc((var(--p, 0) - 0.32) / 0.22), 1) * 100);
+  }
+  .fx .a5-down {
+    stroke-dashoffset: calc(100 - clamp(0, calc((var(--p, 0) - 0.4) / 0.22), 1) * 100);
+  }
+  .fx .a5-lab-total {
+    opacity: clamp(0, calc((var(--p, 0) - 0.1) / 0.1), 1);
+  }
+  .fx .a5-lab-up {
+    --t: clamp(0, calc((var(--p, 0) - 0.5) / 0.1), 1);
+    opacity: var(--t);
+    transform: translate3d(0, calc((1 - var(--t)) * 14px), 0);
+  }
+  .fx .a5-lab-down {
+    --t: clamp(0, calc((var(--p, 0) - 0.58) / 0.1), 1);
+    opacity: var(--t);
+    transform: translate3d(0, calc((1 - var(--t)) * -14px), 0);
+  }
+  .fx .a5-split-text,
+  .fx .a5-split .res-note {
+    --t: clamp(0, calc((var(--p, 0) - 0.7) / 0.14), 1);
+    opacity: var(--t);
+    transform: translate3d(0, calc((1 - var(--t)) * 20px), 0);
+  }
+}
+
+/* le quattro accortezze */
+.a5-rules {
+  background: var(--cream-2);
+}
+
+.a5-rules-grid {
+  list-style: none;
+  margin: clamp(2rem, 5vw, 3rem) 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.2rem;
+}
+
+.a5-rule {
+  padding: clamp(1.4rem, 3vw, 2rem);
+  border-radius: 22px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  transition: border-color 0.4s var(--ease-out), transform 0.5s var(--ease-expo);
+}
+
+.a5-rule:hover {
+  border-color: rgba(162, 182, 255, 0.45);
+  transform: translateY(-3px);
+}
+
+.a5-rule h3 {
+  margin-top: 1.4rem;
+  font-size: 1.25rem;
+}
+
+.a5-rule p {
+  margin-top: 0.4rem;
+  color: var(--muted);
+  font-size: 0.97rem;
+}
+
+.a5-viz {
+  height: 4.6rem;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.a5-viz-period {
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.a5-viz-period span {
+  display: grid;
+  grid-template-columns: 62% auto;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+.a5-viz-period i {
+  height: 0.7rem;
+  border-radius: 999px;
+  background: var(--periwinkle);
+}
+
+.a5-viz-period span + span i {
+  background: var(--iris);
+}
+
+.a5-chip {
+  padding: 0.5rem 0.9rem;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  font-size: 0.9rem;
+}
+
+.a5-chip-on {
+  border-color: var(--periwinkle);
+  color: var(--periwinkle);
+}
+
+.a5-arr {
+  color: var(--periwinkle);
+}
+
+.a5-net-bar {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 1.6rem;
+  border-radius: 8px;
+  background: linear-gradient(90deg, var(--iris) 78%, transparent 78%);
+  box-shadow: inset 0 0 0 1px rgba(162, 182, 255, 0.35);
+}
+
+.a5-net-nc {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 22%;
+  display: grid;
+  place-items: center;
+  font-size: 0.65rem;
+  color: var(--muted);
+  background: repeating-linear-gradient(-45deg, rgba(162, 182, 255, 0.14) 0 5px, transparent 5px 10px);
+  border-radius: 0 8px 8px 0;
+  text-align: center;
+  line-height: 1.1;
+}
+
+.a5-viz-delta {
+  align-items: flex-end;
+}
+
+.a5-blk {
+  display: grid;
+  place-items: center;
+  border-radius: 10px;
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+}
+
+.a5-blk-s {
+  width: 3.4rem;
+  height: 2.4rem;
+  background: rgba(162, 182, 255, 0.2);
+  color: var(--periwinkle);
+  font-size: 0.85rem;
+}
+
+.a5-blk-l {
+  width: 7.5rem;
+  height: 4.4rem;
+  background: rgba(162, 182, 255, 0.08);
+  border: 1px solid rgba(162, 182, 255, 0.35);
+  color: var(--ink);
+  font-size: 1.2rem;
+}
+
+/* il selettore */
+.a5-om-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: clamp(2rem, 6vw, 5rem);
+  align-items: center;
+}
+
+.gs {
+  padding: clamp(1.4rem, 3.5vw, 2.4rem);
+  border-radius: 24px;
+  background: linear-gradient(160deg, #18244e, #0f1733);
+  border: 1px solid rgba(162, 182, 255, 0.2);
+}
+
+.gs-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.gs-tab {
+  padding: 0.55rem 1rem;
+  border-radius: 999px;
+  border: 1px solid rgba(162, 182, 255, 0.3);
+  background: transparent;
+  color: var(--od-muted);
+  font: inherit;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.3s var(--ease-out), color 0.3s var(--ease-out),
+    border-color 0.3s var(--ease-out);
+}
+
+.gs-tab:hover {
+  color: var(--od-text);
+  border-color: var(--periwinkle);
+}
+
+.gs-tab[aria-checked="true"] {
+  background: var(--paper);
+  border-color: var(--paper);
+  color: var(--dark);
+}
+
+.gs-q {
+  margin-top: 1.6rem;
+  font-family: var(--font-display);
+  font-size-adjust: var(--fsa);
+  font-weight: 500;
+  font-size: clamp(1.7rem, 3.4vw, 2.7rem);
+  line-height: 1.12;
+  letter-spacing: -0.03em;
+  min-height: 2.3em;
+}
+
+.gs-var {
+  display: inline-block;
+  font-family: var(--font-accent);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--periwinkle);
+  animation: gs-in 0.7s var(--ease-expo) both;
+}
+
+@keyframes gs-in {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 0.35em, 0);
+    filter: blur(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+}
+
+.gs-out {
+  margin-top: 1.2rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+}
+
+.gs-out strong {
+  color: var(--ink);
+}
+
+@media (max-width: 900px) {
+  .a5-problem-grid,
+  .a5-om-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .a5-rules-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .a5-lab {
+    white-space: normal;
+    max-width: 12em;
+    font-size: 0.85rem;
+  }
+  .a5-split-text {
+    margin-top: 6rem;
+  }
+}
+
+/* ---------- Riduzione del movimento ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .js .a1-fig-num,
+  .js .a1-fig-strike,
+  .js .a1-fig-delta,
+  .js .a1-fig-was,
+  .js .a1-fig-label,
+  .js .a2-dipende-strike,
+  .js .a3-hero-num,
+  .js .a4-duel-row,
+  .js .a5-y,
+  .js .a5-vs,
+  .gs-var,
+  .a2-ring-gap {
+    animation: none !important;
+  }
+  .js .a1-chat.reveal .a1-does li {
+    opacity: 1;
+    transform: none;
+  }
+  .rn-card,
+  .rn-go,
+  .a5-rule {
+    transition: none;
+  }
+}

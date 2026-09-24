@@ -604,78 +604,6 @@ html.intro .intro-veil {
   }
 }
 
-.iv-markwrap {
-  position: relative;
-  display: inline-grid;
-  place-items: center;
-}
-
-/* momento 3: un anello si espande dal marchio, come una messa a fuoco */
-.iv-ring {
-  position: absolute;
-  width: 4.4rem;
-  height: 4.4rem;
-  border-radius: 19px;
-  border: 1px solid rgba(162, 182, 255, 0.55);
-  opacity: 0;
-  animation: iv-ring 1.3s var(--ease-out) 1.75s both;
-  pointer-events: none;
-}
-
-@keyframes iv-ring {
-  0% {
-    opacity: 0;
-    transform: scale(0.7);
-  }
-  30% {
-    opacity: 0.85;
-  }
-  100% {
-    opacity: 0;
-    transform: scale(1.6);
-  }
-}
-
-.iv-mark {
-  font-weight: 700;
-  position: relative;
-  display: grid;
-  place-items: center;
-  width: 4.4rem;
-  height: 4.4rem;
-  border-radius: 15px;
-  background: var(--paper);
-  color: var(--dark);
-  font-family: var(--font-display);
-  font-size: 1.8rem;
-  box-shadow: 0 18px 44px -18px rgba(4, 8, 24, 0.85);
-  animation: iv-pop 0.7s var(--ease-out) 1.6s both;
-}
-
-@keyframes iv-pop {
-  from {
-    opacity: 0;
-    transform: scale(0.7);
-    filter: blur(8px);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-    filter: none;
-  }
-}
-
-.iv-word {
-  position: relative;
-  margin-top: 1.15rem;
-  font-family: var(--font-display);
-  font-style: italic;
-  font-weight: 600;
-  font-size: 1.75rem;
-  letter-spacing: 0;
-  animation: iv-rise 0.6s var(--ease-out) 2.1s both;
-}
-
 .iv-tag {
   position: relative;
   margin-top: 0.7rem;
@@ -4099,8 +4027,7 @@ html.nav-open {
   .scroll-thread {
     display: none;
   }
-  .iv-dots circle,
-  .iv-ring {
+  .iv-dots circle {
     animation: none;
     opacity: 0.9;
     transform: none;

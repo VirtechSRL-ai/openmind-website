@@ -72,7 +72,7 @@ export default function ContactForm() {
         aria-hidden="true"
       />
       <button
-        className="btn btn-light btn-lg"
+        className="btn btn-light btn-lg btn-glow"
         type="submit"
         disabled={status === "sending"}
       >

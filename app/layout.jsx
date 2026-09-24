@@ -1,19 +1,29 @@
 import { Analytics } from "@vercel/analytics/next";
-import { Cormorant_Garamond, Inter } from "next/font/google";
+import { DM_Sans, DM_Serif_Display, Inter } from "next/font/google";
 import "./globals.css";
+import "./experience.css";
+import "./resources.css";
 import { SITE_URL } from "../lib/site";
 
-/* Coppia tipografica: Cormorant Garamond corsivo per i titoli editoriali
-   e i numeri grandi, Inter per testo, interfaccia, label e navigazione. */
-const cormorant = Cormorant_Garamond({
+/* Tipografia: DM Sans per la struttura dei titoli e i numeri grandi,
+   DM Serif Display (corsivo) solo per le parole evidenziate nei titoli,
+   Inter per testo, interfaccia, label e navigazione. */
+const dmSans = DM_Sans({
   subsets: ["latin"],
-  weight: ["500", "600", "700"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-dmsans",
+});
+
+const dmSerif = DM_Serif_Display({
+  subsets: ["latin"],
+  weight: "400",
   style: ["normal", "italic"],
-  variable: "--font-cormorant",
+  variable: "--font-dmserif",
 });
 
 const inter = Inter({
   subsets: ["latin"],
+  style: ["normal", "italic"],
   variable: "--font-inter",
 });
 
@@ -46,7 +56,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="it" className={`js ${cormorant.variable} ${inter.variable}`}>
+    <html lang="it" className={`js ${dmSans.variable} ${dmSerif.variable} ${inter.variable}`}>
       <body>
         {/* Prima del primo paint: attiva il sipario d'apertura (IntroVeil) solo
             alla prima visita della sessione e mai con animazioni ridotte.

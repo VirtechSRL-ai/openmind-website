@@ -3,7 +3,7 @@ import { APP_URL, DEMO_MAILTO } from "../lib/site";
 
 export default function DemoCta() {
   return (
-    <section className="dark-band closing" id="demo">
+    <section className="dark-band closing" id="demo" data-phase="cta">
       <div className="wrap">
         <span className="kicker">Richiedi una demo</span>
         <h2>

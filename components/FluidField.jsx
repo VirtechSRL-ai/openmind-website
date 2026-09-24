@@ -26,7 +26,27 @@ export default function FluidField() {
     const video = videoRef.current;
     if (!root || !video) return;
 
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    /* Fasi del racconto: la sezione che attraversa il centro dello schermo
+       dichiara la sua fase (data-phase) e il fluido cambia umore — più
+       disperso e spento sul problema, acceso sull'analisi, raccolto e quieto
+       su sicurezza e chiusura. Solo opacità e scala, in CSS. */
+    const phases = document.querySelectorAll("[data-phase]");
+    let phaseIo = null;
+    if (phases.length && "IntersectionObserver" in window) {
+      phaseIo = new IntersectionObserver(
+        (entries) => {
+          for (const e of entries) {
+            if (e.isIntersecting) root.dataset.phase = e.target.dataset.phase;
+          }
+        },
+        { rootMargin: "-48% 0px -48% 0px" }
+      );
+      phases.forEach((el) => phaseIo.observe(el));
+    }
+
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      return () => phaseIo && phaseIo.disconnect();
+    }
 
     /* rendition in base al viewport, decisa una volta al caricamento */
     video.src = window.innerWidth < 760 ? "/fluid/fluid-768.mp4" : "/fluid/fluid-1280.mp4";
@@ -88,6 +108,7 @@ export default function FluidField() {
     onScroll();
 
     return () => {
+      if (phaseIo) phaseIo.disconnect();
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onScroll);
       video.removeEventListener("loadedmetadata", onMeta);
@@ -97,7 +118,7 @@ export default function FluidField() {
 
   return (
     <>
-    <div ref={rootRef} className="fluid-field" aria-hidden="true">
+    <div ref={rootRef} className="fluid-field" data-phase="hero" aria-hidden="true">
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img className="ff-media ff-poster" src="/fluid/fluid-poster.jpg" alt="" />
       <video
@@ -109,6 +130,8 @@ export default function FluidField() {
         poster="/fluid/fluid-poster.jpg"
       />
       <span className="ff-tint" />
+      <span className="ff-shade" />
+      <span className="ff-glow" />
       <span className="ff-vignette" />
     </div>
     {/* filo conduttore: sottile linea di avanzamento legata allo scroll */}

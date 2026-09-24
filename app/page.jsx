@@ -1,29 +1,34 @@
 import ChatCard from "../components/ChatCard";
 import CountUp from "../components/CountUp";
+import DataFlow from "../components/DataFlow";
 import DemoCta from "../components/DemoCta";
+import Examples from "../components/Examples";
 import FluidField from "../components/FluidField";
-import HubDiagram from "../components/HubDiagram";
 import Icon from "../components/Icons";
 import IntroVeil from "../components/IntroVeil";
 import LivePanel from "../components/LivePanel";
 import MidCta from "../components/MidCta";
+import ProblemScene from "../components/ProblemScene";
 import ProcessDemo from "../components/ProcessDemo";
 import Reveal from "../components/Reveal";
-import Sectors from "../components/Sectors";
+import ScrollFx from "../components/ScrollFx";
+import SectorsMap from "../components/SectorsMap";
 import SiteFooter from "../components/SiteFooter";
 import SiteHeader from "../components/SiteHeader";
 import Ticker from "../components/Ticker";
+import { splitWords } from "../components/Words";
 
 export default function Home() {
   return (
     <>
       <IntroVeil />
       <FluidField />
+      <ScrollFx />
       <SiteHeader />
 
       <main>
         {/* ============ HERO ============ */}
-        <section className="hero">
+        <section className="hero" data-phase="hero">
           <div className="wrap">
             <p className="hero-badge">
               <span className="hero-badge-dot" aria-hidden="true" />
@@ -44,7 +49,7 @@ export default function Home() {
               della tua azienda e risponde con numeri esatti, grafici e consigli operativi.
             </p>
             <div className="hero-actions">
-              <a className="btn btn-light btn-lg" href="#demo">
+              <a className="btn btn-light btn-lg btn-glow" href="#demo">
                 Richiedi una demo
                 <span className="btn-arrow" aria-hidden="true">
                   →
@@ -86,96 +91,74 @@ export default function Home() {
         {/* ============ TICKER DOMANDE ============ */}
         <Ticker />
 
-        {/* ============ FOGLIO: IL PROBLEMA ============ */}
+        {/* ============ IL PROBLEMA (scena: trasformazione) ============ */}
         <Reveal className="sheet rv-sheet">
-        <section className="section section-cream" id="problema">
-          <div className="wrap">
-            <div className="sec-head">
-              <span className="kicker">Il problema</span>
-              <Reveal as="h2" className="rv-title">Le risposte ci sono già. Sono solo lente.</Reveal>
-            </div>
-            <Reveal className="pains pains-divided">
-              <div className="pain">
-                <strong>½ giornata</strong>
-                <span>per una risposta, tra Excel e gestionale.</span>
-              </div>
-              <div className="pain">
-                <strong>3 uffici</strong>
-                <span>da attraversare per incrociare ordini, magazzino e fatture.</span>
-              </div>
-              <div className="pain">
-                <strong>52 lunedì</strong>
-                <span>l&apos;anno con gli stessi report da rifare a mano.</span>
-              </div>
-            </Reveal>
-            <Reveal className="vs-row">
-              <s className="vs-old">Mezza giornata</s>
-              <span className="vs-arrow" aria-hidden="true">
-                →
-              </span>
-              <span className="vs-new">30 secondi</span>
-              <a className="vs-link" href="#in-azione">
-                Guarda come →
-              </a>
-            </Reveal>
-          </div>
-        </section>
+          <ProblemScene />
         </Reveal>
 
         {/* ============ INTERLUDIO SUL FLUIDO ============ */}
-        <section className="fluid-word" aria-label="Dai dati sparsi alle risposte">
-          <Reveal as="p">
-            Dai dati <span className="fw-accent">sparsi</span>…
-          </Reveal>
+        <section
+          className="fluid-word"
+          aria-label="Dai dati sparsi alle risposte"
+          data-scene="pass"
+          data-end="0.4"
+          data-phase="analysis"
+        >
+          <p style={{ "--n": 3 }}>
+            {splitWords(
+              <>
+                Dai dati <span className="fw-accent">sparsi</span>…
+              </>
+            )}
+          </p>
         </section>
 
-        {/* ============ IL TUO ANALISTA (soluzione + personalità) ============ */}
-        <section className="dark-band" id="analista">
+        {/* ============ LA SOLUZIONE: L'ANALISTA ============ */}
+        <section className="dark-band sol" id="analista" data-phase="analysis">
           <div className="wrap">
-            <span className="kicker">La soluzione</span>
-            <Reveal as="h2" className="rv-title">
-              Non un&apos;altra piattaforma di BI.
-              <br />
-              <span className="ai ai-dark">Un analista che risponde.</span>
-            </Reveal>
-
-            <Reveal className="om-intro">
-              <span className="om-ava om-ava-lg" aria-hidden="true">
-                Om
-              </span>
-              <p className="om-bubble">
-                <strong>Buongiorno.</strong> Come posso aiutarti oggi?
-              </p>
-            </Reveal>
-
-            <div className="traits">
-              <Reveal className="trait rv-scale">
-                <Icon name="ask" />
-                <h3>Chiede, non suppone</h3>
-                <p>«Il più venduto»: per valore o per quantità? Se è ambiguo, te lo chiede.</p>
-              </Reveal>
-              <Reveal className="trait rv-scale" delay={60}>
-                <Icon name="note" />
-                <h3>Dichiara le assunzioni</h3>
-                <p>«Ho interpretato &quot;recente&quot; come ultimi 30 giorni.» Nero su bianco.</p>
-              </Reveal>
-              <Reveal className="trait rv-scale" delay={120}>
-                <Icon name="book" />
-                <h3>Parla il vostro gergo</h3>
-                <p>Marginalità, giacenza, scostamento: il glossario è mappato sui vostri dati.</p>
-              </Reveal>
-              <Reveal className="trait rv-scale" delay={180}>
-                <Icon name="lock" />
-                <h3>Lavora in sola lettura</h3>
-                <p>Legge e analizza. I dati non vengono mai modificati.</p>
+            <div className="sol-top">
+              <div className="sol-title">
+                <span className="kicker">La soluzione</span>
+                <Reveal as="h2" className="rv-words">
+                  {splitWords(
+                    <>
+                      Non un&apos;altra piattaforma di BI.
+                      <br />
+                      <span className="ai">Un analista che risponde.</span>
+                    </>
+                  )}
+                </Reveal>
+              </div>
+              <Reveal className="om-intro rv-from-right">
+                <span className="om-ava om-ava-lg" aria-hidden="true">
+                  Om
+                </span>
+                <p className="om-bubble">
+                  <strong>Buongiorno.</strong> Come posso aiutarti oggi?
+                </p>
               </Reveal>
             </div>
+
+            <ul className="sol-traits">
+              {[
+                ["ask", "Chiede, non suppone", "«Il più venduto»: per valore o per quantità? Se è ambiguo, te lo chiede."],
+                ["note", "Dichiara le assunzioni", "«Ho interpretato \"recente\" come ultimi 30 giorni.» Nero su bianco."],
+                ["book", "Parla il vostro gergo", "Marginalità, giacenza, scostamento: il glossario è mappato sui vostri dati."],
+                ["lock", "Lavora in sola lettura", "Legge e analizza. I dati non vengono mai modificati."],
+              ].map(([icon, title, text], i) => (
+                <Reveal as="li" className="sol-trait" delay={i * 110} key={title}>
+                  <Icon name={icon} />
+                  <h3>{title}</h3>
+                  <p>{text}</p>
+                </Reveal>
+              ))}
+            </ul>
           </div>
         </section>
 
         {/* ============ FOGLIO: COME FUNZIONA + IN AZIONE ============ */}
         <Reveal className="sheet rv-sheet">
-        <section className="section section-dots" id="come-funziona">
+        <section className="section section-dots" id="come-funziona" data-phase="analysis">
           <div className="wrap">
             <div className="sec-head">
               <span className="kicker kicker-pill">Come funziona</span>
@@ -185,131 +168,24 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ============ OPENMIND IN AZIONE ============ */}
-        <section className="section section-cream" id="in-azione">
-          <span id="esempi" className="anchor-alias" aria-hidden="true" />
-          <div className="wrap">
-            <div className="sec-head">
-              <span className="kicker">OpenMind in azione</span>
-              <Reveal as="h2" className="rv-title">
-                Domande vere,
-                <br />
-                <span className="ai ai-light">risposte operative</span>
-              </Reveal>
-            </div>
-
-            <div className="dialogs">
-              <Reveal as="article" className="dialog rv-left">
-                <p className="dialog-q">«Riesco a consegnare tutto quello che ho in ordine?»</p>
-                <div className="dialog-a">
-                  <span className="om-ava" aria-hidden="true">
-                    Om
-                  </span>
-                  <div className="dialog-body">
-                    <p>
-                      Quasi: <strong>41 righe su 44 sono coperte</strong>. Per il resto devi
-                      emettere 3 ordini d&apos;acquisto.
-                    </p>
-                    <ul className="verdict">
-                      <li className="v-ok">41 righe coperte da magazzino e produzione</li>
-                      <li className="v-warn">3 ordini da emettere · data ultima 21/08</li>
-                    </ul>
-                    <p className="dialog-insight">
-                      Ecco l&apos;elenco degli ordini, con quantità e data ultima utile.
-                    </p>
-                  </div>
-                </div>
-              </Reveal>
-
-              <Reveal as="article" className="dialog rv-right">
-                <p className="dialog-q">
-                  «Quanto ci è costato davvero l&apos;ordine di produzione 114?»
-                </p>
-                <div className="dialog-a">
-                  <span className="om-ava" aria-hidden="true">
-                    Om
-                  </span>
-                  <div className="dialog-body">
-                    <p>
-                      Costo pieno <strong>148,90 € al pezzo</strong>, contro un ricavo di 194,40 €.
-                    </p>
-                    <div className="mini-chart">
-                      <div className="bar-row">
-                        <span className="bar-label">Materiali</span>
-                        <span className="bar-track">
-                          <span className="bar" style={{ "--w": "68%" }} />
-                        </span>
-                        <span className="bar-val">101,30&nbsp;€</span>
-                      </div>
-                      <div className="bar-row">
-                        <span className="bar-label">Manodopera</span>
-                        <span className="bar-track">
-                          <span className="bar" style={{ "--w": "27%" }} />
-                        </span>
-                        <span className="bar-val">40,10&nbsp;€</span>
-                      </div>
-                      <div className="bar-row">
-                        <span className="bar-label">Scarti 1,8%</span>
-                        <span className="bar-track">
-                          <span className="bar bar-accent" style={{ "--w": "5%" }} />
-                        </span>
-                        <span className="bar-val">7,50&nbsp;€</span>
-                      </div>
-                    </div>
-                    <p className="dialog-insight">
-                      Minuti standard contro effettivi per ogni fase: la fase 30 è quella fuori
-                      tempo.
-                    </p>
-                  </div>
-                </div>
-              </Reveal>
-
-              <Reveal as="article" className="dialog rv-left">
-                <p className="dialog-q">
-                  «Che margine ho fatto sui primi 250 pezzi dell&apos;ordine di Rossi?»
-                </p>
-                <div className="dialog-a">
-                  <span className="om-ava" aria-hidden="true">
-                    Om
-                  </span>
-                  <div className="dialog-body">
-                    <p className="dialog-big">
-                      23,4<small>%</small>
-                    </p>
-                    <p>
-                      Ricavo contro costo di materiali e manodopera, valorizzati a{" "}
-                      <strong>costo medio ponderato</strong> — te lo dichiaro nella risposta,
-                      e puoi scegliere un altro metodo.
-                    </p>
-                  </div>
-                </div>
-              </Reveal>
-            </div>
-
-            <Reveal className="more-chips">
-              <span className="more-chips-label">E poi</span>
-              <ul>
-                <li>Analisi ABC del fatturato</li>
-                <li>Fornitori in ritardo</li>
-                <li>Fatture emesse e incassato</li>
-                <li>Confronto listini tra anni</li>
-                <li>Rotazione di magazzino</li>
-                <li>Lotti d&apos;acquisto fuori misura</li>
-              </ul>
-            </Reveal>
-          </div>
-        </section>
         </Reveal>
 
-        {/* ============ CTA INTERMEDIA ============ */}
+        {/* ============ OPENMIND IN AZIONE (scene cinematografiche) ============ */}
+        <Examples />
+
+        {/* ============ CTA INTERMEDIA (focus) ============ */}
         <MidCta
-          title="Hai in testa una domanda così anche tu?"
-          note="Falla sui tuoi dati: ti prepariamo una demo con il tuo gestionale."
+          title={
+            <>
+              Vuoi vedere cosa può trovare <span className="ai">nei tuoi dati?</span>
+            </>
+          }
+          note="Ti prepariamo una demo sul tuo gestionale, con le tue domande."
         />
 
-        {/* ============ FOGLIO: NUMERI + DENTRO + SETTORI + DATI ============ */}
+        {/* ============ FOGLIO: NUMERI + DENTRO + DATI ============ */}
         <Reveal className="sheet rv-sheet">
-        <section className="section section-dots" id="numeri">
+        <section className="section section-dots" id="numeri" data-phase="data">
           <div className="wrap">
             <Reveal className="results">
               <div className="result">
@@ -336,7 +212,7 @@ export default function Home() {
         </section>
 
         {/* ============ DENTRO OPENMIND ============ */}
-        <section className="section section-cream" id="dentro">
+        <section className="section section-cream" id="dentro" data-phase="data">
           <div className="wrap">
             <div className="sec-head-left">
               <span className="kicker kicker-pill">Dentro OpenMind</span>
@@ -433,94 +309,72 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ============ SETTORI ============ */}
-        <Sectors />
-
-        {/* ============ DATI COPERTI ============ */}
-        <section className="section section-dots" id="dati">
-          <div className="wrap">
-            <div className="sec-head">
-              <span className="kicker">I dati</span>
-              <Reveal as="h2" className="rv-title">
-                Un&apos;unica interfaccia per l&apos;
-                <span className="ai ai-light">archivio operativo completo</span>
-              </Reveal>
-            </div>
-          </div>
-          <HubDiagram />
-          <div className="wrap">
-            <ul className="data-chips" aria-label="Dati coperti">
-              <li>Anagrafica articoli</li>
-              <li>Distinte base multilivello</li>
-              <li>Cicli e centri di costo</li>
-              <li>OdP e avanzamenti</li>
-              <li>Ordini clienti e fornitori</li>
-              <li>Fatture e pagamenti</li>
-              <li>Listini per anno</li>
-              <li>Giacenze di magazzino</li>
-            </ul>
-          </div>
-        </section>
+        {/* ============ DATI COPERTI (frase che si accende) ============ */}
+        <DataFlow />
         </Reveal>
 
+        {/* ============ SETTORI (mappa) ============ */}
+        <SectorsMap />
+
         {/* ============ SICUREZZA ============ */}
-        <section className="dark-band dark-band-calm" id="sicurezza">
-          <div className="wrap">
-            <span className="kicker">Sicurezza</span>
-            <Reveal as="h2" className="rv-title">
-              Affidabile per costruzione.
-              <br />
-              <span className="ai ai-dark">Senza sorprese.</span>
-            </Reveal>
-
-            <div className="trust-cards">
-              <Reveal className="trust-card rv-scale">
-                <span className="trust-icon" aria-hidden="true">
-                  <Icon name="shield" />
-                </span>
-                <h3>Motore AI di ultima generazione</h3>
-                <p>Costruito sui modelli più avanzati per l&apos;analisi dei dati.</p>
+        <section className="dark-band dark-band-calm trust" id="sicurezza" data-phase="security">
+          <div className="wrap trust-layout">
+            <div className="trust-head">
+              <span className="kicker">Sicurezza</span>
+              <Reveal as="h2" className="rv-title">
+                Affidabile per costruzione.
+                <br />
+                <span className="ai ai-dark">Senza sorprese.</span>
               </Reveal>
-              <Reveal className="trust-card rv-scale" delay={60}>
-                <span className="trust-icon" aria-hidden="true">
-                  <Icon name="lock" />
-                </span>
-                <h3>Solo lettura, per progetto</h3>
-                <p>Le query leggono e basta, riverificate a ogni esecuzione.</p>
-              </Reveal>
-              <Reveal className="trust-card rv-scale" delay={120}>
-                <span className="trust-icon" aria-hidden="true">
-                  <Icon name="user" />
-                </span>
-                <h3>Accessi personali</h3>
-                <p>Chat, cruscotti e promemoria privati per ciascun utente.</p>
-              </Reveal>
-              <Reveal className="trust-card rv-scale" delay={180}>
-                <span className="trust-icon" aria-hidden="true">
-                  <Icon name="euro" />
-                </span>
-                <h3>Costi sotto controllo</h3>
-                <p>Tetto di spesa configurato per ogni conversazione.</p>
-              </Reveal>
+              <div className="trust-actions">
+                <a className="btn btn-light" href="#demo">
+                  Richiedi una demo
+                  <span className="btn-arrow" aria-hidden="true">
+                    →
+                  </span>
+                </a>
+                <a className="trust-link" href="/sicurezza">
+                  Approfondisci la sicurezza →
+                </a>
+              </div>
             </div>
+              <div className="trust-cards">
+                <Reveal className="trust-card rv-scale">
+                  <span className="trust-icon" aria-hidden="true">
+                    <Icon name="shield" />
+                  </span>
+                  <h3>Motore AI di ultima generazione</h3>
+                  <p>Costruito sui modelli più avanzati per l&apos;analisi dei dati.</p>
+                </Reveal>
+                <Reveal className="trust-card rv-scale" delay={60}>
+                  <span className="trust-icon" aria-hidden="true">
+                    <Icon name="lock" />
+                  </span>
+                  <h3>Solo lettura, per progetto</h3>
+                  <p>Le query leggono e basta, riverificate a ogni esecuzione.</p>
+                </Reveal>
+                <Reveal className="trust-card rv-scale" delay={120}>
+                  <span className="trust-icon" aria-hidden="true">
+                    <Icon name="user" />
+                  </span>
+                  <h3>Accessi personali</h3>
+                  <p>Chat, cruscotti e promemoria privati per ciascun utente.</p>
+                </Reveal>
+                <Reveal className="trust-card rv-scale" delay={180}>
+                  <span className="trust-icon" aria-hidden="true">
+                    <Icon name="euro" />
+                  </span>
+                  <h3>Costi sotto controllo</h3>
+                  <p>Tetto di spesa configurato per ogni conversazione.</p>
+                </Reveal>
+              </div>
 
-            <div className="trust-actions">
-              <a className="btn btn-light" href="#demo">
-                Richiedi una demo
-                <span className="btn-arrow" aria-hidden="true">
-                  →
-                </span>
-              </a>
-              <a className="trust-link" href="/sicurezza">
-                Approfondisci la sicurezza →
-              </a>
-            </div>
           </div>
         </section>
 
         {/* ============ FOGLIO: FAQ ============ */}
         <Reveal className="sheet rv-sheet">
-        <section className="section section-cream" id="faq">
+        <section className="section section-cream" id="faq" data-phase="security">
           <div className="wrap wrap-narrow">
             <div className="sec-head">
               <span className="kicker">FAQ</span>
@@ -563,10 +417,20 @@ export default function Home() {
         </Reveal>
 
         {/* ============ INTERLUDIO SUL FLUIDO ============ */}
-        <section className="fluid-word" aria-label="Alle risposte chiare">
-          <Reveal as="p">
-            …alle risposte <span className="fw-accent">chiare</span>.
-          </Reveal>
+        <section
+          className="fluid-word"
+          aria-label="Alle risposte chiare"
+          data-scene="pass"
+          data-end="0.4"
+          data-phase="cta"
+        >
+          <p style={{ "--n": 3 }}>
+            {splitWords(
+              <>
+                …alle risposte <span className="fw-accent">chiare</span>.
+              </>
+            )}
+          </p>
         </section>
 
         {/* ============ CTA FINALE ============ */}
