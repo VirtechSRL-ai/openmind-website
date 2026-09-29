@@ -1,35 +1,39 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef } from "react";
+import { useForm, ValidationError } from "@formspree/react";
 import { DEMO_MAILTO, FORMSPREE_ID } from "../lib/site";
-
-const ENDPOINT = `https://formspree.io/f/${FORMSPREE_ID}`;
+import { capture } from "../lib/analytics";
 
 export default function ContactForm() {
-  const [status, setStatus] = useState("idle");
+  const [state, submit] = useForm(FORMSPREE_ID);
+  const started = useRef(false);
+  const outcomeCaptured = useRef(false);
 
-  async function handleSubmit(event) {
-    event.preventDefault();
-    const form = event.currentTarget;
-    setStatus("sending");
-    try {
-      const res = await fetch(ENDPOINT, {
-        method: "POST",
-        headers: { Accept: "application/json" },
-        body: new FormData(form),
-      });
-      if (res.ok) {
-        form.reset();
-        setStatus("success");
-      } else {
-        setStatus("error");
-      }
-    } catch {
-      setStatus("error");
+  useEffect(() => {
+    if (state.succeeded && !outcomeCaptured.current) {
+      outcomeCaptured.current = true;
+      capture("lead_form_success");
+    } else if (state.errors && !outcomeCaptured.current) {
+      outcomeCaptured.current = true;
+      capture("lead_form_error");
+    }
+  }, [state.errors, state.succeeded]);
+
+  function handleStart() {
+    if (!started.current) {
+      started.current = true;
+      capture("lead_form_started");
     }
   }
 
-  if (status === "success") {
+  function handleSubmit(event) {
+    outcomeCaptured.current = false;
+    capture("lead_form_submitted");
+    return submit(event);
+  }
+
+  if (state.succeeded) {
     return (
       <p className="cf-status cf-status-ok" role="status">
         Grazie. Ti ricontattiamo entro un giorno lavorativo.
@@ -40,17 +44,20 @@ export default function ContactForm() {
   return (
     <form
       className="contact-form"
-      action={ENDPOINT}
+      action={`https://formspree.io/f/${FORMSPREE_ID}`}
       method="POST"
       onSubmit={handleSubmit}
+      onFocusCapture={handleStart}
     >
       <div className="cf-field">
         <label htmlFor="cf-nome">Nome</label>
         <input id="cf-nome" name="nome" type="text" autoComplete="name" required />
+        <ValidationError className="cf-field-error" field="nome" errors={state.errors} />
       </div>
       <div className="cf-field">
         <label htmlFor="cf-email">Email</label>
         <input id="cf-email" name="email" type="email" autoComplete="email" required />
+        <ValidationError className="cf-field-error" field="email" errors={state.errors} />
       </div>
       <div className="cf-field">
         <label htmlFor="cf-azienda">Azienda</label>
@@ -61,6 +68,7 @@ export default function ContactForm() {
           autoComplete="organization"
           required
         />
+        <ValidationError className="cf-field-error" field="azienda" errors={state.errors} />
       </div>
       {/* Honeypot anti-spam (convenzione Formspree): resta vuoto */}
       <input
@@ -74,14 +82,14 @@ export default function ContactForm() {
       <button
         className="btn btn-light btn-lg btn-glow"
         type="submit"
-        disabled={status === "sending"}
+        disabled={state.submitting}
       >
-        {status === "sending" ? "Invio in corso…" : "Richiedi una demo"}
+        {state.submitting ? "Invio in corso…" : "Richiedi una demo"}
         <span className="btn-arrow" aria-hidden="true">
           →
         </span>
       </button>
-      {status === "error" && (
+      {state.errors && (
         <p className="cf-status cf-status-err" role="alert">
           Qualcosa non ha funzionato. Riprova tra poco, oppure{" "}
           <a href={DEMO_MAILTO}>scrivici direttamente</a>.

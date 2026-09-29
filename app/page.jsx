@@ -8,6 +8,7 @@ import Icon from "../components/Icons";
 import IntroVeil from "../components/IntroVeil";
 import LivePanel from "../components/LivePanel";
 import MidCta from "../components/MidCta";
+import TrackedDemoLink from "../components/TrackedDemoLink";
 import ProblemScene from "../components/ProblemScene";
 import ProcessDemo from "../components/ProcessDemo";
 import Reveal from "../components/Reveal";
@@ -49,12 +50,16 @@ export default function Home() {
               della tua azienda e risponde con numeri esatti, grafici e consigli operativi.
             </p>
             <div className="hero-actions">
-              <a className="btn btn-light btn-lg btn-glow" href="#demo">
+              <TrackedDemoLink
+                className="btn btn-light btn-lg btn-glow"
+                href="#demo"
+                placement="hero"
+              >
                 Richiedi una demo
                 <span className="btn-arrow" aria-hidden="true">
                   →
                 </span>
-              </a>
+              </TrackedDemoLink>
               <a className="btn btn-outline-dark btn-lg" href="#in-azione">
                 Guardala in azione
               </a>

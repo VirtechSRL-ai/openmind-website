@@ -2299,6 +2299,12 @@ html.intro .hero-panels {
   outline-offset: 2px;
 }
 
+.cf-field-error {
+  margin-top: 0.35rem;
+  font-size: 0.8125rem;
+  color: #e05c5c;
+}
+
 .contact-form .btn {
   justify-content: center;
   margin-top: 0.4rem;
