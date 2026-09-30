@@ -11,7 +11,7 @@ export default function DemoCta() {
         </h2>
         <p className="band-sub">
           Lascia nome, email e azienda: ti ricontattiamo noi. Oppure scrivi a{" "}
-          <a href={DEMO_MAILTO}>info.virtechsrl@gmail.com</a>.
+          <a href={DEMO_MAILTO}>info@virtechsrl.com</a>.
         </p>
         <ContactForm />
         <p className="cf-alt">
