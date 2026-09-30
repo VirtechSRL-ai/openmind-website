@@ -4,33 +4,14 @@ import { useEffect } from "react";
 import { capture } from "../lib/analytics";
 import { CONTACT_EMAIL } from "../lib/site";
 
-export function ContactPageTracker() {
+export function DemoPageTracker() {
   useEffect(() => {
-    capture("contact_page_viewed", {
-      page_path: "/contatti",
+    capture("demo_page_viewed", {
+      page_path: "/demo",
     });
   }, []);
 
   return null;
-}
-
-export function TrackedContactLink({ placement, className, children }) {
-  return (
-    <a
-      className={className}
-      href="/contatti"
-      data-ph-capture-attribute-placement={placement}
-      data-ph-capture-attribute-destination="/contatti"
-      onClick={() =>
-        capture("contact_link_clicked", {
-          placement,
-          destination: "/contatti",
-        })
-      }
-    >
-      {children}
-    </a>
-  );
 }
 
 export function TrackedEmailLink({ placement, className, children }) {
@@ -43,7 +24,7 @@ export function TrackedEmailLink({ placement, className, children }) {
       onClick={() =>
         capture("contact_email_clicked", {
           placement,
-          page_path: "/contatti",
+          page_path: "/demo",
         })
       }
     >

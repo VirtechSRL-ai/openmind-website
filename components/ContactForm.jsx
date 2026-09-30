@@ -6,10 +6,10 @@ import { DEMO_MAILTO, FORMSPREE_ID } from "../lib/site";
 import { capture } from "../lib/analytics";
 
 const FORM_ANALYTICS = {
-  contact: {
-    form_type: "contact",
-    placement: "contact_page",
-    page_path: "/contatti",
+  demo_page: {
+    form_type: "demo_request",
+    placement: "demo_page",
+    page_path: "/demo",
   },
   demo: {
     form_type: "demo",
@@ -18,7 +18,7 @@ const FORM_ANALYTICS = {
 };
 
 export default function ContactForm({ variant = "demo" }) {
-  const isContact = variant === "contact";
+  const isDemoPage = variant === "demo_page";
   const analyticsProperties = FORM_ANALYTICS[variant] || FORM_ANALYTICS.demo;
   const [state, submit] = useForm(FORMSPREE_ID);
   const started = useRef(false);
@@ -50,7 +50,7 @@ export default function ContactForm({ variant = "demo" }) {
   if (state.succeeded) {
     return (
       <p className="cf-status cf-status-ok" role="status">
-        {isContact
+        {isDemoPage
           ? "Messaggio inviato. Ti risponderemo entro un giorno lavorativo."
           : "Grazie. Ti ricontattiamo entro un giorno lavorativo."}
       </p>
@@ -59,7 +59,7 @@ export default function ContactForm({ variant = "demo" }) {
 
   return (
     <form
-      className={`contact-form${isContact ? " contact-form-page" : ""}`}
+      className={`contact-form${isDemoPage ? " contact-form-page" : ""}`}
       action={`https://formspree.io/f/${FORMSPREE_ID}`}
       method="POST"
       onSubmit={handleSubmit}
@@ -70,7 +70,7 @@ export default function ContactForm({ variant = "demo" }) {
       <input
         type="hidden"
         name="_subject"
-        value={isContact ? "Richiesta dal sito OpenMind" : "Richiesta demo OpenMind"}
+        value="Richiesta demo OpenMind"
       />
       <div className="cf-field">
         <label htmlFor="cf-nome">Nome</label>
@@ -93,7 +93,7 @@ export default function ContactForm({ variant = "demo" }) {
         />
         <ValidationError className="cf-field-error" field="azienda" errors={state.errors} />
       </div>
-      {isContact && (
+      {isDemoPage && (
         <div className="cf-field">
           <label htmlFor="cf-messaggio">Come possiamo aiutarti?</label>
           <textarea
@@ -126,7 +126,7 @@ export default function ContactForm({ variant = "demo" }) {
       >
         {state.submitting
           ? "Invio in corso…"
-          : isContact
+          : isDemoPage
             ? "Invia la richiesta"
             : "Richiedi una demo"}
         <span className="btn-arrow" aria-hidden="true">

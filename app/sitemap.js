@@ -11,7 +11,7 @@ export default function sitemap() {
       priority: 0.7,
     },
     {
-      url: `${SITE_URL}/contatti`,
+      url: `${SITE_URL}/demo`,
       lastModified,
       changeFrequency: "yearly",
       priority: 0.7,

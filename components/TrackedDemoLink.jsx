@@ -5,7 +5,7 @@ import { capture } from "../lib/analytics";
 export default function TrackedDemoLink({
   placement,
   className,
-  href = "/contatti",
+  href = "/demo",
   onClick,
   children,
 }) {
@@ -14,9 +14,9 @@ export default function TrackedDemoLink({
       className={className}
       href={href}
       data-ph-capture-attribute-placement={placement}
-      data-ph-capture-attribute-destination="/contatti"
+      data-ph-capture-attribute-destination="/demo"
       onClick={(event) => {
-        capture("cta_demo_clicked", { placement, destination: "/contatti" });
+        capture("cta_demo_clicked", { placement, destination: "/demo" });
         onClick?.(event);
       }}
     >

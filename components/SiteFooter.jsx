@@ -1,5 +1,4 @@
 import { APP_URL, HYGIENE_PAGES } from "../lib/site";
-import { TrackedContactLink } from "./ContactTracking";
 import TrackedDemoLink from "./TrackedDemoLink";
 import Reveal from "./Reveal";
 
@@ -41,7 +40,6 @@ export default function SiteFooter() {
             <p className="foot-col-title">Azienda</p>
             <a href="/sicurezza">Sicurezza e protezione dati</a>
             <TrackedDemoLink placement="footer">Richiedi una demo</TrackedDemoLink>
-            <TrackedContactLink placement="footer">Contattaci</TrackedContactLink>
             <a href={APP_URL}>Accedi all&apos;app</a>
           </nav>
         </div>

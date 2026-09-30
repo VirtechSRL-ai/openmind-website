@@ -1,33 +1,34 @@
 import ContactForm from "../../components/ContactForm";
-import { ContactPageTracker, TrackedEmailLink } from "../../components/ContactTracking";
+import { DemoPageTracker, TrackedEmailLink } from "../../components/DemoTracking";
 import JsonLd from "../../components/JsonLd";
 import Reveal from "../../components/Reveal";
 import SiteFooter from "../../components/SiteFooter";
 import SiteHeader from "../../components/SiteHeader";
 import { CONTACT_EMAIL, SITE_URL } from "../../lib/site";
 
-const TITLE = "Contatti";
+const TITLE = "Demo OpenMind";
 const DESCRIPTION =
-  "Contatta il team OpenMind di Virtech Srl per richiedere una demo o parlare delle esigenze di analisi dati della tua azienda.";
+  "Richiedi una demo di OpenMind e raccontaci quali domande vorresti fare ai dati della tua azienda manifatturiera.";
 
 export const metadata = {
   title: TITLE,
   description: DESCRIPTION,
-  alternates: { canonical: "/contatti" },
+  alternates: { canonical: "/demo" },
   openGraph: {
     title: TITLE,
     description: DESCRIPTION,
-    url: "/contatti",
+    url: "/demo",
   },
 };
 
-const contactStructuredData = {
+const demoStructuredData = {
   "@context": "https://schema.org",
-  "@type": "ContactPage",
-  name: "Contatti OpenMind",
+  "@type": "WebPage",
+  name: "Demo OpenMind",
   description: DESCRIPTION,
-  url: `${SITE_URL}/contatti`,
-  mainEntity: {
+  url: `${SITE_URL}/demo`,
+  about: { "@id": `${SITE_URL}/#software` },
+  publisher: {
     "@type": "Organization",
     name: "Virtech Srl",
     email: CONTACT_EMAIL,
@@ -38,25 +39,25 @@ const contactStructuredData = {
 export default function Page() {
   return (
     <>
-      <JsonLd data={contactStructuredData} />
-      <ContactPageTracker />
+      <JsonLd data={demoStructuredData} />
+      <DemoPageTracker />
       <SiteHeader />
       <main className="contact-page">
-        <section className="contact-main" aria-labelledby="contact-title">
+        <section className="contact-main" aria-labelledby="demo-title">
           <div className="wrap contact-layout">
             <Reveal className="contact-intro">
-              <span className="kicker kicker-pill">Contatti</span>
-              <h1 id="contact-title">
+              <span className="kicker kicker-pill">Demo</span>
+              <h1 id="demo-title">
                 Parliamo dei <span className="ai ai-light">tuoi dati.</span>
               </h1>
               <p className="contact-lead">
                 Hai una domanda concreta su ordini, produzione, costi o magazzino? Scrivici
-                cosa vorresti ottenere: prepareremo il confronto partendo dal tuo caso.
+                cosa vorresti ottenere: prepareremo la demo partendo dal tuo caso.
               </p>
 
               <div className="contact-direct">
                 <p className="contact-direct-label">Preferisci scrivere direttamente?</p>
-                <TrackedEmailLink placement="contact_page">
+                <TrackedEmailLink placement="demo_page">
                   {CONTACT_EMAIL}
                   <span aria-hidden="true">↗</span>
                 </TrackedEmailLink>
@@ -66,10 +67,10 @@ export default function Page() {
 
             <Reveal className="contact-panel" delay={100}>
               <div className="contact-panel-head">
-                <p>Raccontaci la tua esigenza</p>
+                <p>Prepariamo la tua demo</p>
                 <span>Tutti i campi sono obbligatori</span>
               </div>
-              <ContactForm variant="contact" />
+              <ContactForm variant="demo_page" />
               <p className="contact-privacy">
                 I dati inviati saranno usati esclusivamente per rispondere alla tua richiesta.
               </p>
