@@ -2364,6 +2364,10 @@ html.intro .hero-panels {
   text-decoration: underline;
 }
 
+.closing-demo-link {
+  margin-top: 2.4rem;
+}
+
 .dark-band .band-sub a {
   color: var(--od-text);
 }

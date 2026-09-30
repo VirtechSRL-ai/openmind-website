@@ -56,7 +56,6 @@ export default function Home() {
             <div className="hero-actions">
               <TrackedDemoLink
                 className="btn btn-light btn-lg btn-glow"
-                href="#demo"
                 placement="hero"
               >
                 Richiedi una demo
@@ -336,12 +335,12 @@ export default function Home() {
                 <span className="ai ai-dark">Senza sorprese.</span>
               </Reveal>
               <div className="trust-actions">
-                <a className="btn btn-light" href="#demo">
+                <TrackedDemoLink className="btn btn-light" placement="security_section">
                   Richiedi una demo
                   <span className="btn-arrow" aria-hidden="true">
                     →
                   </span>
-                </a>
+                </TrackedDemoLink>
                 <a className="trust-link" href="/sicurezza">
                   Approfondisci la sicurezza →
                 </a>

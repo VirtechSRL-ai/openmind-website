@@ -1,4 +1,4 @@
-import ContactForm from "./ContactForm";
+import TrackedDemoLink from "./TrackedDemoLink";
 import { APP_URL, DEMO_MAILTO } from "../lib/site";
 
 export default function DemoCta() {
@@ -13,7 +13,15 @@ export default function DemoCta() {
           Lascia nome, email e azienda: ti ricontattiamo noi. Oppure scrivi a{" "}
           <a href={DEMO_MAILTO}>info@virtechsrl.com</a>.
         </p>
-        <ContactForm />
+        <TrackedDemoLink
+          className="btn btn-light btn-lg btn-glow closing-demo-link"
+          placement="closing_cta"
+        >
+          Richiedi una demo
+          <span className="btn-arrow" aria-hidden="true">
+            →
+          </span>
+        </TrackedDemoLink>
         <p className="cf-alt">
           Hai già un account? <a href={APP_URL}>Accedi a OpenMind →</a>
         </p>

@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { APP_URL } from "../lib/site";
+import TrackedDemoLink from "./TrackedDemoLink";
 
 /* Menu mobile: bottone hamburger nella barra e pannello a tutto schermo
    con le quattro voci principali in grande, più le azioni. Il pannello
@@ -51,12 +52,16 @@ export default function MobileNav() {
             ))}
           </nav>
           <div className="mm-actions">
-            <a className="btn btn-light btn-lg btn-glow" href="/#demo" onClick={close}>
+            <TrackedDemoLink
+              className="btn btn-light btn-lg btn-glow"
+              placement="mobile_menu"
+              onClick={close}
+            >
               Richiedi una demo
               <span className="btn-arrow" aria-hidden="true">
                 →
               </span>
-            </a>
+            </TrackedDemoLink>
             <a className="mm-login" href={APP_URL}>
               Hai già un account? Accedi →
             </a>

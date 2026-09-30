@@ -1,4 +1,5 @@
 import Reveal from "./Reveal";
+import TrackedDemoLink from "./TrackedDemoLink";
 
 /* CTA intermedia, famiglia «Focus»: arriva subito dopo gli esempi. Il
    riquadro è una finestra sulla materia (immagine fornita dal cliente): si
@@ -46,12 +47,12 @@ export default function MidCta({ title, note, label = "Richiedi una demo" }) {
           <Reveal className="mc-content">
             <p className="mid-cta-title">{title}</p>
             {note && <p className="mid-cta-note">{note}</p>}
-            <a className="btn btn-light btn-lg btn-glow" href="#demo">
+            <TrackedDemoLink className="btn btn-light btn-lg btn-glow" placement="mid_cta">
               {label}
               <span className="btn-arrow" aria-hidden="true">
                 →
               </span>
-            </a>
+            </TrackedDemoLink>
           </Reveal>
         </div>
       </div>

@@ -1,5 +1,6 @@
 import { APP_URL, HYGIENE_PAGES } from "../lib/site";
 import MobileNav from "./MobileNav";
+import TrackedDemoLink from "./TrackedDemoLink";
 
 export default function SiteHeader() {
   return (
@@ -37,10 +38,10 @@ export default function SiteHeader() {
           </div>
         </nav>
         <div className="head-cta">
-          <a className="btn btn-light btn-glow head-demo" href="/#demo" aria-label="Richiedi una demo">
+          <TrackedDemoLink className="btn btn-light btn-glow head-demo" placement="header">
             <span className="head-demo-full">Richiedi una demo</span>
             <span className="head-demo-short">Demo</span>
-          </a>
+          </TrackedDemoLink>
           <a className="lang-pill" href={APP_URL}>
             Accedi
           </a>
