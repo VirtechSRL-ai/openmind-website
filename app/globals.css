@@ -2279,7 +2279,8 @@ html.intro .hero-panels {
   margin-bottom: 0.4rem;
 }
 
-.cf-field input {
+.cf-field input,
+.cf-field textarea {
   width: 100%;
   font-family: var(--font-ui);
   font-size: 1rem;
@@ -2290,11 +2291,19 @@ html.intro .hero-panels {
   padding: 0.75rem 0.95rem;
 }
 
-.cf-field input::placeholder {
+.cf-field textarea {
+  min-height: 8.5rem;
+  resize: vertical;
+  line-height: 1.55;
+}
+
+.cf-field input::placeholder,
+.cf-field textarea::placeholder {
   color: var(--od-muted);
 }
 
-.cf-field input:focus-visible {
+.cf-field input:focus-visible,
+.cf-field textarea:focus-visible {
   outline: 2px solid var(--periwinkle);
   outline-offset: 2px;
 }
@@ -2357,6 +2366,154 @@ html.intro .hero-panels {
 
 .dark-band .band-sub a {
   color: var(--od-text);
+}
+
+/* ---------- Pagina contatti ---------- */
+
+.contact-page {
+  background: var(--cream);
+}
+
+.contact-main {
+  min-height: calc(100svh - 5rem);
+  padding-block: clamp(4rem, 9vw, 8rem);
+  display: flex;
+  align-items: center;
+}
+
+.contact-layout {
+  width: 100%;
+  display: grid;
+  grid-template-columns: minmax(0, 0.88fr) minmax(22rem, 0.72fr);
+  gap: clamp(3rem, 9vw, 8.5rem);
+  align-items: center;
+}
+
+.contact-intro h1 {
+  margin-top: 1.35rem;
+  max-width: 10ch;
+  font-size: clamp(3rem, 6.5vw, 5.6rem);
+  line-height: 0.98;
+}
+
+.contact-lead {
+  margin-top: 1.7rem;
+  max-width: 54ch;
+  color: var(--muted);
+  font-size: clamp(1rem, 1.4vw, 1.125rem);
+  line-height: 1.7;
+}
+
+.contact-direct {
+  margin-top: clamp(2.8rem, 6vw, 5rem);
+  padding-top: 1.3rem;
+  border-top: 1px solid var(--line);
+  max-width: 34rem;
+}
+
+.contact-direct-label,
+.contact-panel-head span {
+  color: var(--muted);
+  font-size: 0.8125rem;
+}
+
+.contact-direct a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin-top: 0.7rem;
+  color: var(--ink);
+  font-size: clamp(1.05rem, 2vw, 1.35rem);
+  text-decoration: none;
+}
+
+.contact-direct a span {
+  color: var(--periwinkle);
+  transition: transform 220ms cubic-bezier(.19, 1, .22, 1);
+}
+
+.contact-direct a:hover span {
+  transform: translate(2px, -2px);
+}
+
+.contact-direct > p:last-child {
+  margin-top: 0.55rem;
+  color: var(--muted);
+  font-size: 0.875rem;
+}
+
+.contact-panel {
+  padding: clamp(1.4rem, 3vw, 2.2rem);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--dark-2);
+}
+
+.contact-panel-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-bottom: 1.15rem;
+  border-bottom: 1px solid rgba(233, 236, 245, 0.12);
+}
+
+.contact-panel-head > p {
+  color: var(--od-text);
+  font-weight: 600;
+}
+
+.contact-form-page {
+  max-width: none;
+  margin-top: 1.35rem;
+}
+
+.contact-privacy {
+  margin-top: 1rem;
+  color: var(--od-muted);
+  font-size: 0.75rem;
+  line-height: 1.55;
+}
+
+@media (max-width: 860px) {
+  .contact-main {
+    align-items: flex-start;
+  }
+
+  .contact-layout {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+
+  .contact-intro h1 {
+    max-width: 12ch;
+  }
+}
+
+@media (max-width: 480px) {
+  .contact-main {
+    padding-top: 2.5rem;
+  }
+
+  .contact-panel {
+    padding: 1.15rem;
+  }
+
+  .contact-panel-head {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+
+  .contact-direct a {
+    font-size: 1rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .contact-direct a span {
+    transition: none;
+  }
 }
 
 /* ---------- Pagine risorse (articoli hygiene) ---------- */

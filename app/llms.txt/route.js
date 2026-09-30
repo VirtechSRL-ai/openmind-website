@@ -1,4 +1,4 @@
-import { HYGIENE_PAGES, SITE_URL } from "../../lib/site";
+import { CONTACT_EMAIL, HYGIENE_PAGES, SITE_URL } from "../../lib/site";
 
 export function GET() {
   const resources = HYGIENE_PAGES.map(
@@ -14,6 +14,7 @@ Interroga in sola lettura i dati aziendali e restituisce risposte in italiano co
 
 - Home: ${SITE_URL}/
 - Sicurezza e protezione dei dati: ${SITE_URL}/sicurezza
+- Contatti: ${SITE_URL}/contatti
 - Risorse: ${SITE_URL}/risorse
 
 ## Risorse operative
@@ -23,7 +24,7 @@ ${resources}
 ## Contatti
 
 - Azienda: Virtech Srl
-- Email: info.virtechsrl@gmail.com
+- Email: ${CONTACT_EMAIL}
 
 Gli esempi numerici pubblicati nelle risorse sono illustrativi e non rappresentano dati di clienti reali.
 `;
