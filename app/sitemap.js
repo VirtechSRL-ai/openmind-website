@@ -1,7 +1,7 @@
 import { HYGIENE_PAGES, SITE_URL } from "../lib/site";
 
 export default function sitemap() {
-  const lastModified = new Date();
+  const lastModified = new Date("2026-09-30");
   return [
     { url: SITE_URL, lastModified, changeFrequency: "monthly", priority: 1 },
     {

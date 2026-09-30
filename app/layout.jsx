@@ -1,10 +1,12 @@
 import { Analytics } from "@vercel/analytics/next";
 import { DM_Sans, DM_Serif_Display, Inter } from "next/font/google";
 import Script from "next/script";
+import JsonLd from "../components/JsonLd";
 import "./globals.css";
 import "./experience.css";
 import "./resources.css";
 import { SITE_URL } from "../lib/site";
+import { siteStructuredData } from "../lib/structured-data";
 
 /* Tipografia: DM Sans per la struttura dei titoli e i numeri grandi,
    DM Serif Display (corsivo) solo per le parole evidenziate nei titoli,
@@ -42,6 +44,7 @@ export const metadata = {
     template: "%s — OpenMind",
   },
   description: DESCRIPTION,
+  alternates: { canonical: "/" },
   openGraph: {
     siteName: "OpenMind",
     locale: "it_IT",
@@ -59,6 +62,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="it" className={`js ${dmSans.variable} ${dmSerif.variable} ${inter.variable}`}>
       <body>
+        <JsonLd data={siteStructuredData} />
         {/* Prima del primo paint: attiva il sipario d'apertura (IntroVeil) solo
             alla prima visita della sessione e mai con animazioni ridotte.
             Senza JS lo script non gira e il velo resta nascosto. */}

@@ -1,9 +1,11 @@
 import DemoCta from "../DemoCta";
+import JsonLd from "../JsonLd";
 import Reveal from "../Reveal";
 import ScrollFx from "../ScrollFx";
 import SiteFooter from "../SiteFooter";
 import SiteHeader from "../SiteHeader";
 import { HYGIENE_PAGES } from "../../lib/site";
+import { articleStructuredData } from "../../lib/structured-data";
 import ResBar from "./ResBar";
 
 /* Cornice comune delle cinque risorse: la famiglia (barra-indice, in breve,
@@ -95,6 +97,7 @@ export default function ResShell({ slug, chapters, children }) {
   const i = HYGIENE_PAGES.findIndex((p) => p.slug === slug);
   return (
     <>
+      <JsonLd data={articleStructuredData(slug)} />
       <SiteHeader />
       <ScrollFx />
       <ResBar title={HYGIENE_PAGES[i].label} chapters={chapters} />

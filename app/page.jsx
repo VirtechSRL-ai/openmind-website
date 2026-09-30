@@ -6,6 +6,7 @@ import Examples from "../components/Examples";
 import FluidField from "../components/FluidField";
 import Icon from "../components/Icons";
 import IntroVeil from "../components/IntroVeil";
+import JsonLd from "../components/JsonLd";
 import LivePanel from "../components/LivePanel";
 import MidCta from "../components/MidCta";
 import TrackedDemoLink from "../components/TrackedDemoLink";
@@ -18,10 +19,13 @@ import SiteFooter from "../components/SiteFooter";
 import SiteHeader from "../components/SiteHeader";
 import Ticker from "../components/Ticker";
 import { splitWords } from "../components/Words";
+import { FAQS } from "../lib/site";
+import { faqStructuredData } from "../lib/structured-data";
 
 export default function Home() {
   return (
     <>
+      <JsonLd data={faqStructuredData} />
       <IntroVeil />
       <FluidField />
       <ScrollFx />
@@ -386,36 +390,12 @@ export default function Home() {
               <h2>Domande frequenti</h2>
             </div>
             <div className="faq-list">
-              <details className="faq-item">
-                <summary>Serve saper scrivere SQL o usare strumenti di BI?</summary>
-                <p>No. Si scrive in italiano, come in una chat. SQL, calcoli e grafici li fa OpenMind.</p>
-              </details>
-              <details className="faq-item">
-                <summary>Le risposte sono aggiornate?</summary>
-                <p>
-                  Sì: ogni domanda esegue una query sul database in quel momento, e i cruscotti
-                  salvati si riallineano a oggi a ogni apertura.
-                </p>
-              </details>
-              <details className="faq-item">
-                <summary>E se la mia domanda è vaga?</summary>
-                <p>
-                  OpenMind chiede un chiarimento invece di inventare, e quando fa
-                  un&apos;assunzione (per esempio «recente = ultimi 30 giorni») la dichiara
-                  esplicitamente nella risposta.
-                </p>
-              </details>
-              <details className="faq-item">
-                <summary>Può modificare i dati?</summary>
-                <p>
-                  No: OpenMind legge e analizza. Le query salvate nei cruscotti sono verificate
-                  come sola lettura a ogni esecuzione.
-                </p>
-              </details>
-              <details className="faq-item">
-                <summary>Chi vede le mie analisi?</summary>
-                <p>Solo tu: conversazioni, cruscotti e promemoria sono legati al tuo account.</p>
-              </details>
+              {FAQS.map(({ question, answer }) => (
+                <details className="faq-item" key={question}>
+                  <summary>{question}</summary>
+                  <p>{answer}</p>
+                </details>
+              ))}
             </div>
           </div>
         </section>
