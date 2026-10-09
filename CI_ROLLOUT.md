@@ -36,3 +36,8 @@ See `CI_IMPLEMENTATION_PROMPT.md` for the full requested standard. No merge, pro
 - Dependency audit: no vulnerabilities found.
 
 The PR remains a draft. Current-head GitHub Actions results must be reviewed before merging; staging, production promotion and credential rotation remain outside these changes.
+
+
+### Build artifact verification
+
+Next.js writes to the hidden .next directory. Artifact upload now explicitly includes hidden files while still excluding .next/cache; an empty artifact remains a failure. Workflow validation passes. GitHub Actions must verify the uploaded artifact on this head.
