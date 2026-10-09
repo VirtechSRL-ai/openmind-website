@@ -26,3 +26,13 @@ Workflow YAML and git diff are checked locally. A valid configuration is not evi
 Add regression tests for the critical business flow in this repo, configure isolated staging fixtures and E2E, and identify the immutable artifact and rollback target. Enforce required CI checks and approval in GitHub/provider settings after reviewing available plan capabilities. **This PR does not guarantee the existing provider cannot automatically deploy main. Do not merge it as a production-release authorization.**
 
 See `CI_IMPLEMENTATION_PROMPT.md` for the full requested standard. No merge, production deployment, credential change, live data modification or paid resource provisioning performed.
+
+
+## Security corrections verified on 2026-10-09
+
+- Updated postcss 8.5.29 and regenerated the lockfile.
+
+- Local build passed using Node 24.16.0.
+- Dependency audit: no vulnerabilities found.
+
+The PR remains a draft. Current-head GitHub Actions results must be reviewed before merging; staging, production promotion and credential rotation remain outside these changes.
