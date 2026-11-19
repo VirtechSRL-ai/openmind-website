@@ -1,0 +1,65 @@
+.page {
+  padding-block: clamp(7rem, 14vw, 11rem) clamp(4rem, 9vw, 8rem);
+  background: var(--dark);
+  color: var(--ink);
+}
+
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.12fr) minmax(0, 0.88fr);
+  align-items: center;
+  gap: clamp(2rem, 6vw, 5.5rem);
+}
+
+.hero h1 {
+  font-size: clamp(2.55rem, 6vw, 5.5rem);
+  line-height: 1.04;
+  text-wrap: balance;
+}
+
+.intro {
+  max-width: 52ch;
+  margin-block: 1.45rem 1.8rem;
+  color: var(--ink);
+  font-size: clamp(1.025rem, 1.65vw, 1.22rem);
+  line-height: 1.65;
+}
+
+.photo {
+  position: relative;
+  aspect-ratio: 5 / 4;
+  overflow: hidden;
+  border-radius: 1rem;
+}
+
+.photo img { object-fit: cover; }
+
+.examples,
+.proof {
+  margin-block-start: clamp(4rem, 9vw, 7rem);
+}
+
+.page h2 {
+  font-size: clamp(1.85rem, 4vw, 3.25rem);
+  text-wrap: balance;
+}
+
+.examples ul { padding: 0; margin-block-start: 1.75rem; list-style: none; }
+.examples li {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 1.25rem;
+  border-top: 1px solid color-mix(in srgb, var(--ink) 23%, transparent);
+  padding-block: 1.4rem;
+}
+
+.examples li h3 { font-size: clamp(1.18rem, 2vw, 1.45rem); }
+.examples li p, .proof p { color: var(--muted); margin-block: 0 0.55rem; line-height: 1.6; }
+.examples li a, .links a { color: var(--periwinkle); text-decoration: underline; text-underline-offset: 0.22em; }
+.proof p { max-width: 62ch; margin-block: 1rem; }
+.links { display: flex; flex-wrap: wrap; gap: 0.75rem 1.5rem; }
+
+@media (max-width: 760px) {
+  .hero, .examples li { grid-template-columns: minmax(0, 1fr); }
+  .examples li { gap: 0.35rem; }
+}

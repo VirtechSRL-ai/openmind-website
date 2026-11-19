@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { mcpRegistryUrl } from "../lib/discovery";
+import { manufacturingAnalyticsPath, mcpRegistryUrl } from "../lib/discovery";
 import { APP_URL, HYGIENE_PAGES } from "../lib/site";
 import TrackedDemoLink from "./TrackedDemoLink";
 import Reveal from "./Reveal";
@@ -27,6 +27,7 @@ export default function SiteFooter() {
             <a href="/#come-funziona">Come funziona</a>
             <a href="/#dentro">Dentro OpenMind</a>
             <a href="/#esempi">Esempi</a>
+            <Link href={manufacturingAnalyticsPath}>Analisi dati per la manifattura</Link>
             <a href="/sicurezza">Sicurezza</a>
             <a href="/#faq">FAQ</a>
           </nav>
