@@ -22,6 +22,10 @@ import { splitWords } from "../components/Words";
 import { FAQS } from "../lib/site";
 import { faqStructuredData } from "../lib/structured-data";
 
+export const metadata = {
+  alternates: { canonical: "/", types: { "text/markdown": "/index.md" } },
+};
+
 export default function Home() {
   return (
     <>

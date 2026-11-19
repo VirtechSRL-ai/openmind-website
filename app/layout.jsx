@@ -6,7 +6,7 @@ import "./globals.css";
 import "./experience.css";
 import "./resources.css";
 import { SITE_URL } from "../lib/site";
-import { siteStructuredData } from "../lib/structured-data";
+import { ardPath, description, siteStructuredData, siteTitle, socialImage } from "../lib/discovery";
 
 /* Tipografia: DM Sans per la struttura dei titoli e i numeri grandi,
    DM Serif Display (corsivo) solo per le parole evidenziate nei titoli,
@@ -34,24 +34,22 @@ export const viewport = {
   themeColor: "#0c101e",
 };
 
-const DESCRIPTION =
-  "OpenMind è l'analista dati AI della tua azienda: fai domande in italiano su ordini, costi, margini e magazzino e ottieni risposte precise, grafici e cruscotti sempre aggiornati — direttamente dai tuoi dati reali.";
-
 export const metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "OpenMind — L'analista dati AI della tua azienda",
+    default: siteTitle,
     template: "%s — OpenMind",
   },
-  description: DESCRIPTION,
+  description,
   alternates: { canonical: "/" },
   openGraph: {
     siteName: "OpenMind",
     locale: "it_IT",
     type: "website",
+    images: [socialImage],
     url: "/",
-    title: "OpenMind — L'analista dati AI della tua azienda",
-    description: DESCRIPTION,
+    title: siteTitle,
+    description,
   },
   twitter: {
     card: "summary",
@@ -62,6 +60,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="it" className={`js ${dmSans.variable} ${dmSerif.variable} ${inter.variable}`}>
       <head>
+        <link rel="ard" href={`${SITE_URL}${ardPath}`} />
         <script
           id="google-tag-manager"
           dangerouslySetInnerHTML={{

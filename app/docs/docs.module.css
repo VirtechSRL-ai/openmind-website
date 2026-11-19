@@ -1,0 +1,38 @@
+.docs {
+  width: min(100% - 2.5rem, 42rem);
+  margin-inline: auto;
+  padding-block: clamp(2rem, 8vw, 6rem);
+  line-height: 1.6;
+}
+
+.docs h1 {
+  margin-block: 1rem;
+  font-size: clamp(2rem, 6vw, 3.5rem);
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.docs h2 {
+  margin-block: 2rem 0.5rem;
+  font-size: 1.35rem;
+  font-weight: 700;
+}
+
+.docs a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.docs pre {
+  margin-block: 1rem;
+  padding: 0.85rem 1rem;
+  border: 1px solid currentColor;
+  border-radius: 0.75rem;
+  overflow-x: auto;
+}
+
+.docs ul {
+  padding-inline-start: 1.25rem;
+  list-style: disc;
+}
