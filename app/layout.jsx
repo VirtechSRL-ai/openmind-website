@@ -1,5 +1,5 @@
 import { Analytics } from "@vercel/analytics/next";
-import { DM_Sans, DM_Serif_Display, Inter } from "next/font/google";
+import localFont from "next/font/local";
 import Script from "next/script";
 import JsonLd from "../components/JsonLd";
 import "./globals.css";
@@ -11,22 +11,29 @@ import { ardPath, description, siteStructuredData, siteTitle, socialImage } from
 /* Tipografia: DM Sans per la struttura dei titoli e i numeri grandi,
    DM Serif Display (corsivo) solo per le parole evidenziate nei titoli,
    Inter per testo, interfaccia, label e navigazione. */
-const dmSans = DM_Sans({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+const dmSans = localFont({
+  src: "./fonts/dm-sans-latin.woff2",
+  weight: "400 700",
+  display: "swap",
   variable: "--font-dmsans",
 });
 
-const dmSerif = DM_Serif_Display({
-  subsets: ["latin"],
-  weight: "400",
-  style: ["normal", "italic"],
+const dmSerif = localFont({
+  src: [
+    { path: "./fonts/dm-serif-display-latin.woff2", weight: "400", style: "normal" },
+    { path: "./fonts/dm-serif-display-latin-italic.woff2", weight: "400", style: "italic" },
+  ],
+  display: "swap",
+  adjustFontFallback: "Times New Roman",
   variable: "--font-dmserif",
 });
 
-const inter = Inter({
-  subsets: ["latin"],
-  style: ["normal", "italic"],
+const inter = localFont({
+  src: [
+    { path: "./fonts/inter-latin.woff2", weight: "100 900", style: "normal" },
+    { path: "./fonts/inter-latin-italic.woff2", weight: "100 900", style: "italic" },
+  ],
+  display: "swap",
   variable: "--font-inter",
 });
 
