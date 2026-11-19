@@ -36,6 +36,10 @@ export default function ApiDocs() {
       </ul>
       <h2>Versione API</h2>
       <p>L’API corrente è v1. L’indirizzo <a href={profilePath}>{profilePath}</a> continua a restituire la stessa scheda.</p>
+      <p className="mt-3">
+        Le modifiche incompatibili usano un nuovo percorso di versione. La documentazione e l’header <code>Deprecation</code>
+        segnalano le dismissioni. L’header <code>Sunset</code> comunica la data di ritiro quando è programmata.
+      </p>
     </main>
   );
 }

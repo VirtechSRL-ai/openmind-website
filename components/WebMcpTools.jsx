@@ -18,7 +18,7 @@ export function WebMcpTools({ productProfile }) {
       await context.registerTool({
         name: "get_product_profile",
         title: "Consulta il profilo del prodotto",
-        description: `Legge il profilo pubblico di ${productProfile.product.name}, con destinatari, funzionalità e sito ufficiale.`,
+        description: "Legge il profilo pubblico di OpenMind, con destinatari, funzionalità e sito ufficiale.",
         inputSchema: noArguments,
         annotations,
         execute: async () => productProfile,
@@ -27,7 +27,7 @@ export function WebMcpTools({ productProfile }) {
       await context.registerTool({
         name: "find_product_resources",
         title: "Trova risorse ufficiali",
-        description: `Cerca per parola chiave i link ufficiali su ${productProfile.product.name}.`,
+        description: "Cerca per parola chiave i link ufficiali su OpenMind.",
         inputSchema: {
           type: "object",
           properties: {
@@ -48,7 +48,7 @@ export function WebMcpTools({ productProfile }) {
       await context.registerTool({
         name: "get_demo_link",
         title: "Trova il link per una demo",
-        description: `Restituisce la pagina ufficiale dove richiedere una demo di ${productProfile.product.name}.`,
+        description: "Restituisce la pagina ufficiale dove richiedere una demo di OpenMind.",
         inputSchema: noArguments,
         annotations,
         execute: async () => ({ url: productProfile.demo }),
