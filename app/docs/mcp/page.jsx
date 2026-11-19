@@ -1,12 +1,11 @@
 import Link from "next/link";
-import { docsPath, mcpCardPath, mcpDocsPath, mcpPath, mcpServerName, productName, siteUrl } from "../../../lib/discovery";
+import { docsPath, mcpCardPath, mcpDocsPath, mcpPath, mcpRegistryUrl, productName, siteUrl } from "../../../lib/discovery";
 import styles from "../docs.module.css";
 
 const title = "Server MCP di OpenMind";
 const description = "Collega un agente a OpenMind per consultare il profilo dell’analista dati per la manifattura, trovare guide sull’analisi dei margini e ottenere il link alla demo.";
 const canonical = `${siteUrl}${mcpDocsPath}`;
 const endpoint = `${siteUrl}${mcpPath}`;
-const registryUrl = `https://registry.modelcontextprotocol.io/v0.1/servers/${encodeURIComponent(mcpServerName)}/versions/latest`;
 const searchExample = { name: "find_product_resources", arguments: { query: "margine", limit: 3 } };
 
 export const metadata = {
@@ -27,7 +26,7 @@ export default function McpDocs() {
       <p>Aggiungi questo URL come server remoto nel tuo client MCP e scegli il trasporto Streamable HTTP. La connessione al profilo pubblico è in sola lettura e non richiede credenziali.</p>
       <pre><code>{endpoint}</code></pre>
       <p><a href={mcpCardPath}>Scheda del server in formato JSON</a></p>
-      <p><a href={registryUrl}>Scheda di {productName} nel registro MCP ufficiale</a></p>
+      <p><a href={mcpRegistryUrl}>Scheda di {productName} nel registro MCP ufficiale</a></p>
 
       <h2>Strumenti disponibili</h2>
       <ul className="space-y-2">

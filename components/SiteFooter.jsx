@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { mcpRegistryUrl } from "../lib/discovery";
 import { APP_URL, HYGIENE_PAGES } from "../lib/site";
 import TrackedDemoLink from "./TrackedDemoLink";
 import Reveal from "./Reveal";
@@ -42,6 +43,7 @@ export default function SiteFooter() {
             <a href="/sicurezza">Sicurezza e protezione dati</a>
             <TrackedDemoLink placement="footer">Richiedi una demo</TrackedDemoLink>
             <Link href="/docs">Documentazione API del profilo</Link>
+            <a href={mcpRegistryUrl}>Registro MCP ufficiale</a>
             <a href={APP_URL}>Accedi all&apos;app</a>
           </nav>
         </div>
