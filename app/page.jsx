@@ -1,3 +1,5 @@
+import { WebMcpTools } from "../components/WebMcpTools";
+import { profile } from "../lib/discovery";
 import ChatCard from "../components/ChatCard";
 import CountUp from "../components/CountUp";
 import DataFlow from "../components/DataFlow";
@@ -29,6 +31,7 @@ export const metadata = {
 export default function Home() {
   return (
     <>
+      <WebMcpTools productProfile={profile} />
       <JsonLd data={faqStructuredData} />
       <IntroVeil />
       <FluidField />
