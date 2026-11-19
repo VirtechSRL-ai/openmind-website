@@ -1,13 +1,13 @@
 import Link from "next/link";
-import { docsPath, exampleRequest, mcpPath, openApiPath, productName, profileApiDescription, profilePath, siteUrl, versionedProfilePath } from "../../lib/discovery";
+import { docsPath, exampleRequest, mcpDocsPath, mcpPath, openApiPath, productName, profileApiDescription, profilePath, siteUrl, versionedProfilePath } from "../../lib/discovery";
 import styles from "./docs.module.css";
 
-const title = `API del profilo ${productName}`;
+const title = `Documentazione API e MCP di ${productName}`;
 
 export const metadata = {
   title,
   description: profileApiDescription,
-  alternates: { canonical: docsPath, types: { "text/markdown": "/docs.md" } },
+  alternates: { canonical: `${siteUrl}${docsPath}`, types: { "text/markdown": "/docs.md" } },
 };
 
 export default function ApiDocs() {
@@ -34,6 +34,7 @@ export default function ApiDocs() {
         <li><code>find_product_resources</code> cerca le risorse ufficiali per parola chiave.</li>
         <li><code>get_demo_link</code> indica dove richiedere una demo.</li>
       </ul>
+      <p className="mt-3"><Link href={mcpDocsPath}>Guida al server MCP di {productName} con esempi</Link></p>
       <h2>Versione API</h2>
       <p>L’API corrente è v1. L’indirizzo <a href={profilePath}>{profilePath}</a> continua a restituire la stessa scheda.</p>
       <p className="mt-3">

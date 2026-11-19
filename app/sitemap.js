@@ -1,9 +1,11 @@
+import { docsPath, mcpDocsPath } from "../lib/discovery";
 import { HYGIENE_PAGES, SITE_URL } from "../lib/site";
 
 export default function sitemap() {
   const lastModified = new Date("2026-09-30");
   return [
-    { url: `${SITE_URL}/docs` },
+    { url: `${SITE_URL}${docsPath}` },
+    { url: `${SITE_URL}${mcpDocsPath}` },
     { url: `${SITE_URL}/`, lastModified, changeFrequency: "monthly", priority: 1 },
     {
       url: `${SITE_URL}/sicurezza`,
